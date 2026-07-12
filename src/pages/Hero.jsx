@@ -35,6 +35,12 @@ import BokehLights from "../components/BokehLights";
 import RevealSection from "../components/RevealSection";
 import { WHATSAPP_LINK, INSTAGRAM_LINK, FACEBOOK_LINK } from "../constants";
 
+import igShot1 from "../assets/flower/ff1.jpg";
+import igShot2 from "../assets/recepmarriage/bride1.jpg";
+import igShot3 from "../assets/recepmarriage/r1.jpg";
+import igShot4 from "../assets/birthday/birthday1.png";
+import igShot5 from "../assets/anniversory/anni1.jpg";
+import igShot6 from "../assets/devotional/dev1.jpg";
 import image1 from "../assets/f3.png";
 import image42 from "../assets/s42.png";
 import image16 from "../assets/baloons/b1.jpg";
@@ -348,14 +354,14 @@ const Home = () => {
     },
   ];
 
-  const galleryImages = [
-    "https://images.unsplash.com/photo-1519225495810-7512c696505a?auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1546193430-c2d20e1cd1a5?auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1621252178945-886ec55e42b2?auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1607190074257-dd4b7af0309f?auto=format&fit=crop&w=600&q=80",
-  ];
+ const galleryImages = [
+  igShot1,
+  igShot2,
+  igShot3,
+  igShot4,
+  igShot5,
+  igShot6,
+];
 
   return (
     <div className="w-full overflow-hidden bg-[#fafaf9]">

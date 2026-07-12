@@ -52,12 +52,12 @@ import image36 from "../assets/baloons/b2.jpg";
 import image37 from "../assets/baloons/b3.jpg";
 import image38 from "../assets/baloons/b4.jpg";
 import image39 from "../assets/baloons/b5.jpg";
-import image40 from "../assets/candle/can1.jpg";
-import image41 from "../assets/candle/can2.jpg";
-import image42 from "../assets/candle/can3.jpg";
-import image43 from "../assets/candle/can4.jpg";
-import image44 from "../assets/candle/can5.jpg";
-import image45 from "../assets/candle/can6.jpg";
+import image40 from "../assets/candle/cand1.jpg";
+import image41 from "../assets/candle/cand2.jpg";
+import image42 from "../assets/candle/cand3.jpg";
+import image43 from "../assets/candle/cand4.jpg";
+import image44 from "../assets/candle/cand5.jpg";
+import image45 from "../assets/candle/cand6.jpg";
 
 
 // s46 - s85
@@ -100,9 +100,9 @@ import image79 from "../assets/baloons/b6.jpg";
 import image80 from "../assets/baloons/b7.jpg";
 import image81 from "../assets/baloons/b8.jpg";
 import image82 from "../assets/baloons/b9.jpg";
-import image83 from "../assets/candle/can7.jpg";
-import image84 from "../assets/candle/can8.jpg";
-import image85 from "../assets/candle/can9.jpg";
+import image83 from "../assets/candle/cand7.jpg";
+import image84 from "../assets/candle/cand8.jpg";
+import image85 from "../assets/candle/cand9.jpg";
 
 
 import {
