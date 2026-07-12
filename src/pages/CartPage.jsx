@@ -27,7 +27,7 @@ const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbxyISy8Gu-uUIU
 
 // ─────────────────────────────────────────────────────────────────────────────
 
-function CheckoutModal({ isOpen, onClose, grandTotal, items }) {
+function CheckoutModal({ isOpen, onClose, onOrderSuccess, grandTotal, items }) {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -93,7 +93,7 @@ function CheckoutModal({ isOpen, onClose, grandTotal, items }) {
       padding: "16px", fontFamily: "'Inter', sans-serif",
       overflowY: "auto", WebkitOverflowScrolling: "touch",
     }}
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      onClick={(e) => { if (e.target === e.currentTarget) (submitted ? onOrderSuccess : onClose)(); }}
     >
       <style>{`
         .modal-input {
@@ -145,7 +145,7 @@ function CheckoutModal({ isOpen, onClose, grandTotal, items }) {
       }} className="modal-inner">
 
         {/* ── Close button ── */}
-        <button onClick={onClose} style={{
+        <button onClick={submitted ? onOrderSuccess : onClose} style={{
           position: "absolute", top: "14px", right: "16px", zIndex: 10,
           background: "rgba(255,255,255,0.9)", border: "1px solid #e5e7eb",
           borderRadius: "50%", width: "32px", height: "32px",
@@ -212,12 +212,12 @@ function CheckoutModal({ isOpen, onClose, grandTotal, items }) {
               <p style={{ fontSize: "14px", color: "#6b7280", lineHeight: 1.7, maxWidth: "280px" }}>
                 Aapka order receive ho gaya. Hum jaldi aapse contact karenge. 🙏
               </p>
-              <button onClick={onClose} style={{
+              <button onClick={onOrderSuccess} style={{
                 padding: "12px 32px", borderRadius: "18px", border: "1.5px solid #0D1F0F",
                 background: "transparent", color: "#0D1F0F", cursor: "pointer",
                 fontFamily: "'Inter', sans-serif", fontSize: "13px", fontWeight: 600,
               }}>
-                Close
+                Back to Cart
               </button>
             </div>
           ) : (
@@ -338,9 +338,17 @@ export default function CartPage() {
   const count = useSelector(selectCartCount);
 
   const [showCheckout, setShowCheckout] = useState(false);
+  const [orderSuccess, setOrderSuccess] = useState(false);
 
   const delivery = total > 60 ? 0 : 5.99;
   const grandTotal = total + delivery;
+
+  const handleOrderSuccess = () => {
+    setShowCheckout(false);
+    setOrderSuccess(true);
+    dispatch(clearCart());
+    navigate("/cart");
+  };
 
   // Empty cart
   if (items.length === 0) {
@@ -364,10 +372,12 @@ export default function CartPage() {
           style={{ fontSize: "72px", marginBottom: "20px" }}
         >🌸</motion.div>
         <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "2rem", fontWeight: 400, color: "#0D1F0F", margin: "0 0 12px" }}>
-          Your cart is empty
+          {orderSuccess ? "Your order is packed!" : "Your cart is empty"}
         </h2>
         <p style={{ fontSize: "14px", color: "#9ca3af", lineHeight: 1.7, maxWidth: "320px", margin: "0 0 32px" }}>
-          Explore our beautiful collection and add your favourite blooms.
+          {orderSuccess
+            ? "Thank you for your order. We have received your payment details and will contact you shortly."
+            : "Explore our beautiful collection and add your favourite blooms."}
         </p>
         <motion.button
           whileHover={{ scale: 1.04 }}
@@ -411,6 +421,7 @@ export default function CartPage() {
       <CheckoutModal
         isOpen={showCheckout}
         onClose={() => setShowCheckout(false)}
+        onOrderSuccess={handleOrderSuccess}
         grandTotal={grandTotal}
         items={items}
       />
