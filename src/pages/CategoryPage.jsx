@@ -23,7 +23,7 @@ import image10 from "../assets/Bouquet/Bouquet10.jpg";
 
 
 import image11 from "../assets/recepmarriage/bride1.jpg";
-import image12 from "../assets/recepmarriage/bride2.jpg";
+import image12 from "../assets/optimized/bride2-320.webp";
 import image13 from "../assets/recepmarriage/bride3.jpg";
 import image14 from "../assets/recepmarriage/bride4.jpg";
 import image15 from "../assets/recepmarriage/bride5.jpg";
@@ -36,7 +36,7 @@ import image21 from "../assets/birthday/birthday1.png";
 import image22 from "../assets/birthday/birthday2.png";
 import image23 from "../assets/birthday/birthday3.png";
 import image24 from "../assets/birthday/birthday4.png";
-import image25 from "../assets/anniversory/anni1.jpg";
+import image25 from "../assets/optimized/anni1-320.webp";
 import image26 from "../assets/anniversory/anni2.jpg";
 import image27 from "../assets/anniversory/anni3.jpg";
 import image28 from "../assets/devotional/dev1.jpg";
@@ -47,7 +47,7 @@ import image32 from "../assets/devotional/dev12.jpg";
 import image33 from "../assets/devotional/dev6.jpg";
 import image34 from "../assets/devotional/dev7.jpg";
 
-import image35 from "../assets/baloons/b1.jpg";
+import image35 from "../assets/optimized/b1-320.webp";
 import image36 from "../assets/baloons/b2.jpg";
 import image37 from "../assets/baloons/b3.jpg";
 import image38 from "../assets/baloons/b4.jpg";

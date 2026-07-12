@@ -39,15 +39,15 @@ import igShot1 from "../assets/flower/ff1.jpg";
 import igShot2 from "../assets/recepmarriage/bride1.jpg";
 import igShot3 from "../assets/recepmarriage/r1.jpg";
 import igShot4 from "../assets/birthday/birthday1.png";
-import igShot5 from "../assets/anniversory/anni1.jpg";
+import igShot5 from "../assets/optimized/anni1-320.webp";
 import igShot6 from "../assets/devotional/dev1.jpg";
-import image1 from "../assets/f3.png";
+import image1 from "../assets/optimized/f3-320.webp";
 import image42 from "../assets/s42.png";
-import image16 from "../assets/baloons/b1.jpg";
-import image4 from "../assets/Anniversory/anni1.jpg";
+import image16 from "../assets/optimized/b1-320.webp";
+import image4 from "../assets/optimized/anni1-320.webp";
 import image5 from "../assets/f24.png";
 import image6 from "../assets/f20.png";
-import image7 from "../assets/recepmarriage/bride2.jpg";
+import image7 from "../assets/optimized/bride2-320.webp";
 import image8 from "../assets/birthday/birthday1.png";
 import image9 from "../assets/devotional/dev1.jpg";
 import image10 from "../assets/s10.png";
@@ -56,7 +56,7 @@ import image12 from "../assets/s13.png";
 import image13 from "../assets/s14.png";
 import image26 from "../assets/recepmarriage/r10.jpg";
 import image27 from "../assets/gift.jpg";
-import hero from "../assets/hero.png";
+import hero from "../assets/optimized/hero-640.webp";
 import image28 from "../assets/f1.png";
 import imageF2 from "../assets/f2.png";
 
@@ -521,6 +521,7 @@ const Home = () => {
                     src={hero}
                     alt="Luxurious fresh flower bouquet arrangement - Premium floral delivery"
                     className="w-full h-full object-contain object-center"
+                    priority
                   />
                 </div>
                 {/* Hover glow */}
