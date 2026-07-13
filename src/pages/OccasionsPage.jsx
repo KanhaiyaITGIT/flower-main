@@ -50,8 +50,8 @@ const occasions = [
     desc: "Bridal bouquets, ceremony décor & reception centrepieces crafted to make your day unforgettable.",
     image: image1,
     gradient: "from-rose-950/80 via-rose-900/40 to-transparent",
-    accentBg: "bg-[#F4C9D1]/90",
-    accentText: "text-[#D6537A]",
+    accentBg: "bg-[var(--color-blush)]/90",
+    accentText: "text-[var(--color-accent)]",
     accentBorder: "border-#F4C9D1/60",
     products: "48 arrangements",
     size: "large",
@@ -245,7 +245,7 @@ const OccasionsPage = () => {
   ];
 
   return (
-    <div className="w-full bg-[#fafaf9] overflow-hidden relative">
+    <div className="w-full bg-[var(--color-cream)] overflow-hidden relative">
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <FloatingDecoration type="leaf" side="left" top="4%" size={26} opacity={0.1} delay={0.3} duration={13} animation="sway3" color="#d1bca8" />
         <FloatingDecoration type="petal6" side="right" top="3%" size={22} opacity={0.1} delay={1.2} duration={14} animation="sway2" color="#d1bca8" />
@@ -274,7 +274,7 @@ const OccasionsPage = () => {
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {[...Array(6)].map((_, i) => (
             <div
-              key={i}
+              key={`occ-petal-${i}`}
               className="absolute rounded-full opacity-10 blur-[1px] animate-pulse"
               style={{
                 width: `${30 + i * 15}px`,
@@ -343,8 +343,8 @@ const OccasionsPage = () => {
         <FloatingDecoration type="lotus" side="right" top="auto" bottom="10%" size={52} opacity={0.07} delay={2} duration={18} animation="drift-bloom" color="#C9A15A" />
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">Find Your Moment</span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#14301F] mt-3">Shop by Occasion</h2>
+            <span className="text-xs font-bold tracking-widest text-[var(--color-accent)] uppercase font-inter">Find Your Moment</span>
+            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[var(--color-primary)] mt-3">Shop by Occasion</h2>
           </div>
 
           <motion.div
@@ -372,7 +372,7 @@ const OccasionsPage = () => {
                 onClick={() => navigate(`/category?cat=${encodeURIComponent(occ.category)}`)}
               >
                 {/* Background image container */}
-                <div className="absolute inset-0 w-full h-full bg-[#F4C9D1]/20">
+                <div className="absolute inset-0 w-full h-full bg-[var(--color-blush)]/20">
                   <LazyImage
                     src={occ.image}
                     alt={occ.name}
@@ -423,7 +423,7 @@ const OccasionsPage = () => {
                     </span>
 
                     <span
-                      className={`flex items-center gap-1 bg-white text-[#14301F] text-[10px] font-bold tracking-wider uppercase rounded-2xl px-3 py-1.5 transition-all duration-300 shadow-soft ${
+                      className={`flex items-center gap-1 bg-white text-[var(--color-primary)] text-[10px] font-bold tracking-wider uppercase rounded-2xl px-3 py-1.5 transition-all duration-300 shadow-soft ${
                         hoveredCard === occ.id
                           ? "opacity-100 translate-x-0"
                           : "opacity-0 translate-x-3"
@@ -444,18 +444,18 @@ const OccasionsPage = () => {
       <RevealSection className="py-20 px-6 bg-white border-y border-gray-100">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">Reliable & Transparent</span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#14301F] mt-2">Delivered in 3 Simple Steps</h2>
+            <span className="text-xs font-bold tracking-widest text-[var(--color-accent)] uppercase font-inter">Reliable & Transparent</span>
+            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[var(--color-primary)] mt-2">Delivered in 3 Simple Steps</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
             {steps.map((step, i) => (
-              <div key={i} className="flex flex-col items-center text-center px-4 py-2 relative">
+              <div key={`occ-step-${i}`} className="flex flex-col items-center text-center px-4 py-2 relative">
                 {/* Step circle */}
                 <div className="w-18 h-18 rounded-full bg-gradient-to-br from-rose-50 to-pink-100/50 border border-rose-100 flex items-center justify-center text-3xl mb-4 shadow-sm relative z-10">
                   {step.icon}
                 </div>
-                <h3 className="font-serif-display text-lg font-bold text-[#14301F] mb-2">
+                <h3 className="font-serif-display text-lg font-bold text-[var(--color-primary)] mb-2">
                   {step.title}
                 </h3>
                 <p className="text-gray-400 text-xs leading-relaxed max-w-[200px] font-light">
@@ -476,10 +476,10 @@ const OccasionsPage = () => {
               { icon: Heart, text: "100% Freshness Guarantee" },
             ].map(({ icon: Icon, text }, i) => (
               <div
-                key={i}
-                className="flex items-center gap-2 bg-[#fafaf9] border border-gray-200/60 rounded-full px-5 py-2.5 shadow-sm"
+                key={`occ-promise-${i}`}
+                className="flex items-center gap-2 bg-[var(--color-cream)] border border-gray-200/60 rounded-full px-5 py-2.5 shadow-sm"
               >
-                <Icon size={12} className="text-[#D6537A]" />
+                <Icon size={12} className="text-[var(--color-accent)]" />
                 <span className="text-xs text-slate-700 font-bold tracking-wide font-inter">{text}</span>
               </div>
             ))}
@@ -488,22 +488,22 @@ const OccasionsPage = () => {
       </RevealSection>
 
       {/* ── SHOP BY RECIPIENT ── */}
-      <RevealSection className="py-24 bg-[#fafaf9]/60">
+      <RevealSection className="py-24 bg-[var(--color-cream)]/60">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">Personalized Gifting</span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#14301F] mt-2">Who Are You Gifting?</h2>
+            <span className="text-xs font-bold tracking-widest text-[var(--color-accent)] uppercase font-inter">Personalized Gifting</span>
+            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[var(--color-primary)] mt-2">Who Are You Gifting?</h2>
             <p className="text-gray-400 text-sm mt-3 font-light">Bespoke arrangements curated for all the special people in your circle</p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {recipients.map((item, index) => (
               <div
-                key={index}
+                key={`occ-recip-${index}`}
                 onClick={() => navigate(`/category?cat=${encodeURIComponent(item.category)}`)}
                 className="group relative overflow-hidden rounded-2xl bg-white shadow-soft hover:shadow-soft-lg hover:shadow-rose-500/10 hover:scale-[1.02] transition-all duration-500 cursor-pointer"
               >
-                <div className="h-52 overflow-hidden bg-[#F4C9D1]/20">
+                <div className="h-52 overflow-hidden bg-[var(--color-blush)]/20">
                   <img
                     src={item.image}
                     alt={item.label}
@@ -536,12 +536,12 @@ const OccasionsPage = () => {
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
             <div>
-              <span className="text-xs font-bold tracking-widest text-[#D6537A] uppercase font-inter">Featured Creations</span>
-              <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[#14301F] mt-2">Most-Loved Gifts</h2>
+              <span className="text-xs font-bold tracking-widest text-[var(--color-accent)] uppercase font-inter">Featured Creations</span>
+              <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[var(--color-primary)] mt-2">Most-Loved Gifts</h2>
             </div>
             <Link
               to="/category"
-              className="group flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-[#D6537A] hover:text-[#D6537A] hover:scale-[1.04] transition-all duration-300"
+              className="group flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-[var(--color-accent)] hover:text-[var(--color-accent)] hover:scale-[1.04] transition-all duration-300"
             >
               View All Products
               <ArrowRight size={14} className="icon-wiggle" />
@@ -556,7 +556,7 @@ const OccasionsPage = () => {
                 whileHover={{ y: -6, scale: 1.02 }}
                 className="group bg-white rounded-2xl border border-gray-100 overflow-hidden cursor-pointer flex flex-col"
               >
-                <div className="aspect-square overflow-hidden bg-[#F4C9D1]/20 relative">
+                <div className="aspect-square overflow-hidden bg-[var(--color-blush)]/20 relative">
                   <LazyImage
                     src={item.image}
                     alt={item.name}
@@ -568,7 +568,7 @@ const OccasionsPage = () => {
                 </div>
 
                 <div className="p-5 flex flex-col flex-1">
-                  <h3 className="font-serif-display text-sm font-bold text-[#14301F] mb-1 leading-snug line-clamp-2">
+                  <h3 className="font-serif-display text-sm font-bold text-[var(--color-primary)] mb-1 leading-snug line-clamp-2">
                     {item.name}
                   </h3>
                   <div className="flex items-center gap-1.5 mb-4">
@@ -576,7 +576,7 @@ const OccasionsPage = () => {
                     <span className="text-[10px] text-gray-500 font-bold font-inter mt-0.5">{item.rating}</span>
                   </div>
                   <div className="flex items-center justify-between mt-auto">
-                    <a href="tel:9540849659" className="font-bold text-[#D6537A] text-sm inline-flex items-center gap-1.5"><Phone size={14} className="icon-wiggle" /> Call for Price</a>
+                    <a href="tel:9540849659" className="font-bold text-[var(--color-accent)] text-sm inline-flex items-center gap-1.5"><Phone size={14} className="icon-wiggle" /> Call for Price</a>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();

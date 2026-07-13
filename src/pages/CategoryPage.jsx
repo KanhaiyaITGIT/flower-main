@@ -5,6 +5,7 @@ import { addToCart } from "../redux/cartSlice";
 import LazyImage from "../components/ui/LazyImage";
 import RevealSection from "../components/RevealSection";
 import FloatingDecoration from "../components/FloatingDecoration";
+import Badge from "../components/ui/Badge";
 import { WHATSAPP_LINK } from "../constants";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -230,14 +231,6 @@ const sortOptions = [
   { value: "newest", label: "Newest First" },
 ];
 
-const tagStyles = {
-  rose: "bg-[#F4C9D1]/90 text-[#D6537A] border-#F4C9D1/60",
-  amber: "bg-amber-50/90 text-amber-600 border-amber-100/60",
-  green: "bg-emerald-50/90 text-emerald-600 border-emerald-100/60",
-  purple: "bg-purple-50/90 text-purple-600 border-purple-100/60",
-  blue: "bg-blue-50/90 text-blue-600 border-blue-100/60",
-};
-
 const CategoryPage = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -326,7 +319,7 @@ const CategoryPage = () => {
   };
 
   return (
-    <div className="w-full bg-[#fafaf9] min-h-screen pb-12 relative">
+    <div className="w-full bg-[var(--color-cream)] min-h-screen pb-12 relative">
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <FloatingDecoration type="leaf" side="left" top="4%" size={28} opacity={0.1} delay={0.2} duration={14} animation="sway3" color="#d1bca8" />
         <FloatingDecoration type="petal6" side="right" top="3%" size={24} opacity={0.1} delay={1} duration={13} animation="sway2" color="#d1bca8" />
@@ -335,7 +328,7 @@ const CategoryPage = () => {
       </div>
       {/* ── Hero Banner ── */}
       <section className="relative bg-gradient-to-br from-rose-950 via-rose-900 to-pink-950 overflow-hidden py-20 px-6">
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-[#D6537A]/5 -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-[var(--color-accent)]/5 -translate-y-1/2 translate-x-1/3 pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-pink-500/5 translate-y-1/2 -translate-x-1/4 pointer-events-none" />
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="flex items-center gap-2 text-rose-300/50 text-[10px] font-bold tracking-widest uppercase mb-4">
@@ -360,7 +353,7 @@ const CategoryPage = () => {
                 { text: "Same-day delivery NCR wide" },
               ].map(({ text }, i) => (
                 <div
-                  key={i}
+                  key={`cat-badge-${i}`}
                   className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-5 py-2.5 backdrop-blur-sm select-none"
                 >
                   <span className="text-white/80 text-xs font-semibold tracking-wider font-inter">{text}</span>
@@ -383,8 +376,8 @@ const CategoryPage = () => {
                   key={cat}
                   onClick={() => handleCategoryChange(cat)}
                   className={`shrink-0 rounded-2xl px-5 py-2 text-xs font-bold tracking-widest uppercase transition-all duration-300 border ${isSelected
-                      ? "bg-[#14301F] text-white border-[#14301F] shadow-soft shadow-[#14301F]/20"
-                      : "bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:text-[#14301F] hover:scale-[1.04]"
+                      ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-soft shadow-[var(--color-primary)]/20"
+                      : "bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:text-[var(--color-primary)] hover:scale-[1.04]"
                     }`}
                 >
                   {cat}
@@ -403,7 +396,7 @@ const CategoryPage = () => {
                 placeholder="Search catalog..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-10 py-2.5 rounded-2xl bg-gray-50/50 border border-gray-200 text-xs text-[#14301F] placeholder-gray-400 outline-none focus:border-rose-300 focus:bg-white focus:ring-1 focus:ring-rose-300/10 transition-all duration-300 font-inter font-medium"
+                className="w-full pl-11 pr-10 py-2.5 rounded-2xl bg-gray-50/50 border border-gray-200 text-xs text-[var(--color-primary)] placeholder-gray-400 outline-none focus:border-rose-300 focus:bg-white focus:ring-1 focus:ring-rose-300/10 transition-all duration-300 font-inter font-medium"
               />
               <AnimatePresence>
                 {searchQuery && (
@@ -453,7 +446,7 @@ const CategoryPage = () => {
                             setSortBy(opt.value);
                             setShowSortDropdown(false);
                           }}
-                          className={`w-full text-left px-4 py-2.5 text-xs font-bold tracking-wider uppercase transition-colors hover:bg-rose-50 hover:text-[#D6537A] ${sortBy === opt.value ? "text-[#D6537A] bg-[#F4C9D1]/40" : "text-gray-600"
+                          className={`w-full text-left px-4 py-2.5 text-xs font-bold tracking-wider uppercase transition-colors hover:bg-rose-50 hover:text-[var(--color-accent)] ${sortBy === opt.value ? "text-[var(--color-accent)] bg-[var(--color-blush)]/40" : "text-gray-600"
                             }`}
                         >
                           {opt.label}
@@ -478,14 +471,14 @@ const CategoryPage = () => {
               className="text-center py-24 flex flex-col items-center gap-4"
             >
               <div className="text-5xl select-none">🌸</div>
-              <h3 className="font-serif-display text-2xl font-bold text-[#14301F]">No Blooms Found</h3>
+              <h3 className="font-serif-display text-2xl font-bold text-[var(--color-primary)]">No Blooms Found</h3>
               <p className="text-gray-400 text-sm max-w-xs font-light">Try adjusting your filters or search query to find the perfect flower arrangement.</p>
               <button
                 onClick={() => {
                   handleCategoryChange("All");
                   setSearchQuery("");
                 }}
-                className="mt-2 bg-[#14301F] text-white rounded-2xl px-6 py-2.5 text-xs font-bold tracking-wider uppercase hover:bg-[#1a3320] hover:shadow-soft-lg hover:shadow-[#14301F]/30 hover:scale-[1.04] transition-all duration-300"
+                className="mt-2 bg-[var(--color-primary)] text-white rounded-2xl px-6 py-2.5 text-xs font-bold tracking-wider uppercase hover:bg-[var(--color-primary)] hover:shadow-soft-lg hover:shadow-[var(--color-primary)]/30 hover:scale-[1.04] transition-all duration-300"
               >
                 Reset Filters
               </button>
@@ -507,7 +500,7 @@ const CategoryPage = () => {
                     className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-soft-lg hover:shadow-rose-500/10 cursor-pointer relative flex flex-col"
                   >
                     {/* Image Block */}
-                    <div className="relative overflow-hidden bg-[#F4C9D1]/20 aspect-[4/3] w-full tilt-card">
+                    <div className="relative overflow-hidden bg-[var(--color-blush)]/20 aspect-[4/3] w-full tilt-card">
                       <div className="tilt-card-inner">
                         <LazyImage
                           src={product.image}
@@ -516,13 +509,9 @@ const CategoryPage = () => {
                         />
                       </div>
 
-                      <div className="absolute top-3 left-3 flex items-start justify-between z-10 pointer-events-none">
-                        {product.tag ? (
-                          <span className={`text-[8px] font-black tracking-widest uppercase rounded-full px-2.5 py-1 border ${tagStyles[product.tagColor]} backdrop-blur-md`}>
-                            {product.tag}
-                          </span>
-                        ) : (
-                          <span />
+                      <div className="absolute top-3 left-3 z-10 pointer-events-none">
+                        {product.tag && (
+                          <Badge color={product.tagColor}>{product.tag}</Badge>
                         )}
                       </div>
 
@@ -533,7 +522,7 @@ const CategoryPage = () => {
                             e.stopPropagation();
                             handleAddToCart(product);
                           }}
-                          className={`w-full py-3 text-xs font-bold tracking-widest uppercase transition-all duration-300 flex items-center justify-center gap-1.5 ${addedToCart[product.id] ? "bg-emerald-500 text-white" : "bg-slate-900 text-white hover:bg-[#D6537A] hover:scale-[1.02]"
+                          className={`w-full py-3 text-xs font-bold tracking-widest uppercase transition-all duration-300 flex items-center justify-center gap-1.5 ${addedToCart[product.id] ? "bg-emerald-500 text-white" : "bg-slate-900 text-white hover:bg-[var(--color-accent)] hover:scale-[1.02]"
                             }`}
                         >
                           {addedToCart[product.id] ? "✓ Added" : "Quick Add"}
@@ -544,7 +533,7 @@ const CategoryPage = () => {
                     {/* Meta Details Block */}
                     <div className="p-5 flex flex-col flex-1">
                       <p className="text-[9px] font-bold text-rose-400 tracking-widest uppercase mb-1">{product.category}</p>
-                      <h3 className="font-serif-display text-sm font-bold text-[#14301F] leading-snug mb-1 line-clamp-2">{product.name}</h3>
+                      <h3 className="font-serif-display text-sm font-bold text-[var(--color-primary)] leading-snug mb-1 line-clamp-2">{product.name}</h3>
                       <p className="text-gray-400 text-xs mb-3 line-clamp-1 font-light">{product.desc}</p>
 
                       {/* Review row */}
@@ -552,7 +541,7 @@ const CategoryPage = () => {
                         <div className="flex">
                           {[1, 2, 3, 4, 5].map((s) => (
                             <Star
-                              key={s}
+                              key={`cat-star-${product.id}-${s}`}
                               size={10}
                               className={
                                 s <= Math.round(product.rating)
@@ -570,7 +559,7 @@ const CategoryPage = () => {
                       {/* Pricing Row */}
                       <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-50">
                         <div className="flex flex-col">
-                          <a href="tel:9540849659" className="font-bold text-[#D6537A] text-sm inline-flex items-center gap-1.5"><Phone size={14} className="icon-wiggle" /> Call for Price</a>
+                          <a href="tel:9540849659" className="font-bold text-[var(--color-accent)] text-sm inline-flex items-center gap-1.5"><Phone size={14} className="icon-wiggle" /> Call for Price</a>
                         </div>
 
                         {/* Quick Cart Button */}
@@ -581,7 +570,7 @@ const CategoryPage = () => {
                           }}
                           className={`group w-9 h-9 rounded-full flex items-center justify-center border transition-all duration-300 shadow-soft ${addedToCart[product.id]
                               ? "bg-emerald-500 border-emerald-500"
-                              : "bg-[#14301F] border-[#14301F] hover:bg-[#D6537A] hover:border-rose-500 hover:scale-105"
+                              : "bg-[var(--color-primary)] border-[#14301F] hover:bg-[var(--color-accent)] hover:border-rose-500 hover:scale-105"
                             }`}
                           aria-label="Add to cart"
                         >
@@ -597,14 +586,14 @@ const CategoryPage = () => {
               {hasMore && (
                 <div ref={loaderRef} className="flex flex-col items-center gap-4 mt-12">
                   {loadingMore ? (
-                    <div className="flex items-center gap-2 text-[#D6537A]">
+                    <div className="flex items-center gap-2 text-[var(--color-accent)]">
                       <Loader2 size={16} className="animate-spin" />
                       <span className="text-xs font-bold tracking-widest uppercase font-inter">Loading more blooms...</span>
                     </div>
                   ) : (
                     <button
                       onClick={handleShowMore}
-                      className="group inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-700 hover:text-[#D6537A] hover:border-rose-300 rounded-2xl px-8 py-3 text-xs font-bold tracking-wider uppercase transition-all duration-300 shadow-soft hover:shadow-soft-lg hover:scale-[1.03]"
+                      className="group inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-700 hover:text-[var(--color-accent)] hover:border-rose-300 rounded-2xl px-8 py-3 text-xs font-bold tracking-wider uppercase transition-all duration-300 shadow-soft hover:shadow-soft-lg hover:scale-[1.03]"
                     >
                       <span>Show More ({filtered.length - visibleCount} remaining)</span>
                       <ChevronDown size={14} className="icon-wiggle" />
@@ -621,7 +610,7 @@ const CategoryPage = () => {
       <RevealSection className="py-20 px-6 bg-gradient-to-r from-rose-50 via-pink-50/50 to-amber-50/50 border-t border-gray-100">
         <div className="max-w-3xl mx-auto text-center flex flex-col items-center gap-6">
           <p className="text-[10px] font-bold tracking-widest text-rose-400 uppercase font-inter">Custom Arrangements</p>
-          <h2 className="font-serif-display text-3xl md:text-4xl font-black text-[#14301F] leading-tight">
+          <h2 className="font-serif-display text-3xl md:text-4xl font-black text-[var(--color-primary)] leading-tight">
             Can't find exactly what you want?
           </h2>
           <p className="text-gray-500 text-sm max-w-sm leading-relaxed font-light font-inter">
@@ -631,7 +620,7 @@ const CategoryPage = () => {
             href={WHATSAPP_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 bg-[#14301F] text-white rounded-2xl px-8 py-4 text-xs font-bold tracking-widest uppercase hover:bg-[#1a3320] hover:shadow-soft-lg hover:shadow-[#14301F]/30 hover:scale-[1.04] transition-all duration-300 shadow-soft"
+            className="group inline-flex items-center gap-2 bg-[var(--color-primary)] text-white rounded-2xl px-8 py-4 text-xs font-bold tracking-widest uppercase hover:bg-[var(--color-primary)] hover:shadow-soft-lg hover:shadow-[var(--color-primary)]/30 hover:scale-[1.04] transition-all duration-300 shadow-soft"
           >
             💬 Custom Order WhatsApp
           </a>

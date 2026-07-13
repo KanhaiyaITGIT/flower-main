@@ -19,6 +19,7 @@ export default function useGoogleAuth() {
       return { name: "Guest", email: "", picture: "", isLoggedIn: false };
     }
   });
+  const [googleError, setGoogleError] = useState(false);
 
   const handleCredential = useCallback((response) => {
     const decoded = parseJWT(response.credential);
@@ -30,6 +31,7 @@ export default function useGoogleAuth() {
       isLoggedIn: true,
     };
     setUser(profile);
+    setGoogleError(false);
     try { localStorage.setItem("google_user", JSON.stringify(profile)); } catch {}
   }, []);
 
@@ -41,6 +43,35 @@ export default function useGoogleAuth() {
     }
   }, []);
 
+  const retryGoogle = useCallback(() => {
+    setGoogleError(false);
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    script.defer = true;
+    script.onload = () => {
+      try {
+        if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID === "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com") {
+          throw new Error("Invalid or missing Google Client ID");
+        }
+        window.google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: handleCredential,
+          cancel_on_tap_outside: false,
+        });
+        window.google.accounts.id.prompt();
+      } catch (err) {
+        console.warn("Google Auth init failed:", err.message);
+        setGoogleError(true);
+      }
+    };
+    script.onerror = () => {
+      console.warn("Google GSI script failed to load");
+      setGoogleError(true);
+    };
+    document.head.appendChild(script);
+  }, [handleCredential]);
+
   useEffect(() => {
     if (user.isLoggedIn) return;
     const script = document.createElement("script");
@@ -48,12 +79,24 @@ export default function useGoogleAuth() {
     script.async = true;
     script.defer = true;
     script.onload = () => {
-      window.google.accounts.id.initialize({
-        client_id: GOOGLE_CLIENT_ID,
-        callback: handleCredential,
-        cancel_on_tap_outside: false,
-      });
-      window.google.accounts.id.prompt();
+      try {
+        if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID === "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com") {
+          throw new Error("Invalid or missing Google Client ID");
+        }
+        window.google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: handleCredential,
+          cancel_on_tap_outside: false,
+        });
+        window.google.accounts.id.prompt();
+      } catch (err) {
+        console.warn("Google Auth init failed:", err.message);
+        setGoogleError(true);
+      }
+    };
+    script.onerror = () => {
+      console.warn("Google GSI script failed to load");
+      setGoogleError(true);
     };
     document.head.appendChild(script);
     return () => {
@@ -64,5 +107,5 @@ export default function useGoogleAuth() {
     };
   }, [user.isLoggedIn, handleCredential]);
 
-  return { user, logout };
+  return { user, logout, googleError, retryGoogle };
 }

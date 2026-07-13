@@ -26,11 +26,12 @@ const policyLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-b from-[#14301F] to-[#0D1F0F] text-[#FBF6EF] font-inter border-t border-white/5 relative overflow-hidden">
-      {/* Subtle top glow */}
+    <footer className="bg-gradient-to-b from-[#04120E] via-[#061A14] to-[#030E0B] text-stone-300 pt-20 pb-8 relative overflow-hidden border-t border-white/[0.04]">
+      {/* Ambient gold glow */}
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#C9A15A]/[0.03] rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-[#C9A15A]/30 to-transparent" />
       {/* Main Content */}
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12 py-16">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -41,44 +42,44 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center gold-glow">
-                <Flower2 size={18} className="text-[#C9A15A]" />
+              <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                <Flower2 size={18} className="text-[var(--color-gold)]" />
               </div>
-              <h2 className="font-serif-display font-black text-lg md:text-xl text-[#FBF6EF] tracking-tight">
-                {BUSINESS_NAME_MAIN} <span className="gold-gradient">{BUSINESS_NAME_SUB}</span>
+              <h2 className="font-serif text-white text-2xl font-light tracking-wide">
+                {BUSINESS_NAME_MAIN} <span className="text-[var(--color-gold)]">{BUSINESS_NAME_SUB}</span>
               </h2>
             </div>
-            
-            <p className="text-sm text-gray-400 leading-relaxed max-w-xs font-light">
+
+            <p className="text-stone-400 text-sm leading-relaxed font-light max-w-sm">
               Bringing fresh premium blooms, bespoke flower arrangements, and exquisite venue styling to Gurgaon and Delhi NCR. Same-day delivery available.
             </p>
-            
+
             {/* Social Icons */}
             <div className="flex items-center gap-3.5">
               <a
                 href={FACEBOOK_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-white/5 hover:bg-[#C9A15A] border border-white/10 hover:border-[#C9A15A] hover:text-[#14301F] flex items-center justify-center text-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                className="w-10 h-10 rounded-full bg-white/[0.03] border border-white/10 hover:border-[#C9A15A] hover:bg-[#C9A15A] hover:text-black flex items-center justify-center text-stone-300 transition-all duration-300 hover:-translate-y-1"
                 aria-label="Facebook"
               >
-                <FaFacebook />
+                <FaFacebook size={16} />
               </a>
               <a
                 href={INSTAGRAM_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-white/5 hover:bg-[#C9A15A] border border-white/10 hover:border-[#C9A15A] hover:text-[#14301F] flex items-center justify-center text-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                className="w-10 h-10 rounded-full bg-white/[0.03] border border-white/10 hover:border-[#C9A15A] hover:bg-[#C9A15A] hover:text-black flex items-center justify-center text-stone-300 transition-all duration-300 hover:-translate-y-1"
                 aria-label="Instagram"
               >
-                <FaInstagram />
+                <FaInstagram size={16} />
               </a>
             </div>
           </div>
 
           {/* Quick Links Column */}
           <div>
-            <h3 className="text-xs font-bold tracking-widest uppercase text-[#C9A15A] mb-6">
+            <h3 className="text-[#C9A15A] font-semibold tracking-[0.2em] text-xs uppercase mb-6">
               Information
             </h3>
             <ul className="flex flex-col gap-3 font-light text-sm">
@@ -86,7 +87,7 @@ export default function Footer() {
                 <li key={item.name}>
                   <Link
                     to={item.path}
-                    className="text-gray-400 hover:text-[#C9A15A] transition-colors duration-200 block py-1"
+                    className="text-stone-400 hover:text-white text-sm font-light transition-colors duration-200 block py-1.5 relative group"
                   >
                     {item.name}
                   </Link>
@@ -97,7 +98,7 @@ export default function Footer() {
 
           {/* Policies Column */}
           <div>
-            <h3 className="text-xs font-bold tracking-widest uppercase text-[#C9A15A] mb-6">
+            <h3 className="text-[#C9A15A] font-semibold tracking-[0.2em] text-xs uppercase mb-6">
               Policies
             </h3>
             <ul className="flex flex-col gap-3 font-light text-sm">
@@ -105,7 +106,7 @@ export default function Footer() {
                 <li key={item.name}>
                   <Link
                     to={item.path}
-                    className="text-gray-400 hover:text-[#C9A15A] transition-colors duration-200 block py-1"
+                    className="text-stone-400 hover:text-white text-sm font-light transition-colors duration-200 block py-1.5 relative group"
                   >
                     {item.name}
                   </Link>
@@ -116,19 +117,19 @@ export default function Footer() {
 
           {/* Contact Column */}
           <div>
-            <h3 className="text-xs font-bold tracking-widest uppercase text-[#C9A15A] mb-6">
+            <h3 className="text-[#C9A15A] font-semibold tracking-[0.2em] text-xs uppercase mb-6">
               Contact Us
             </h3>
             <div className="flex flex-col gap-4 font-light text-sm">
               <a
                 href={`tel:${CONTACT_PHONE_1}`}
-                className="text-gray-400 hover:text-[#C9A15A] flex items-center gap-3 transition-all duration-200 py-1 hover:translate-x-1"
+                className="flex items-center gap-3 text-sm text-stone-300 hover:text-[#C9A15A] transition-colors py-1"
               >
                 <span className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 text-base">📞</span> {CONTACT_PHONE_1}
               </a>
               <a
                 href={`tel:${CONTACT_PHONE_2}`}
-                className="text-gray-400 hover:text-[#C9A15A] flex items-center gap-3 transition-all duration-200 py-1 hover:translate-x-1"
+                className="flex items-center gap-3 text-sm text-stone-300 hover:text-[#C9A15A] transition-colors py-1"
               >
                 <span className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 text-base">📞</span> {CONTACT_PHONE_2}
               </a>
@@ -136,7 +137,7 @@ export default function Footer() {
                 href={WHATSAPP_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-[#C9A15A] flex items-center gap-3 transition-all duration-200 py-1 hover:translate-x-1"
+                className="flex items-center gap-3 text-sm text-stone-300 hover:text-[#C9A15A] transition-colors py-1"
               >
                 <span className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 text-base text-emerald-400">
                   <FaWhatsapp />
@@ -146,11 +147,12 @@ export default function Footer() {
             </div>
 
             {/* Same Day Delivery Badge */}
-            <div className="mt-6 bg-gradient-to-br from-white/5 to-white/[0.02] border border-[#C9A15A]/20 rounded-xl p-4 max-w-[220px] gold-glow">
-              <p className="text-[10px] text-[#C9A15A] font-bold tracking-widest uppercase flex items-center gap-2">
+            <div className="bg-white/[0.02] backdrop-blur-sm border border-white/10 rounded-2xl p-5 mt-6 shadow-inner relative overflow-hidden group">
+              <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-[#C9A15A] to-[#b08b49]" />
+              <p className="text-[10px] text-[var(--color-gold)] font-bold tracking-widest uppercase flex items-center gap-2 relative">
                 <span>🚚</span> Same-Day Delivery
               </p>
-              <p className="text-xs text-gray-400 mt-1 font-light leading-snug">
+              <p className="text-xs text-stone-400 mt-1 font-light leading-snug relative">
                 Gurgaon & NCR wide delivery available for orders placed before 4:00 PM.
               </p>
             </div>
@@ -164,14 +166,14 @@ export default function Footer() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.3 }}
-        className="border-t border-white/5 py-8 px-6 relative"
+        className="border-t border-white/[0.05] mt-16 pt-8 px-6 relative"
       >
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-[#C9A15A]/20 to-transparent" />
-        <div className="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center">
-          <p className="text-xs text-gray-500 font-light">
+        <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-stone-500 tracking-wider font-light">
             © {new Date().getFullYear()} {BUSINESS_NAME_MAIN} {BUSINESS_NAME_SUB}. All Rights Reserved.
           </p>
-          <p className="text-xs text-gray-500 font-light flex items-center gap-1.5 justify-center">
+          <p className="text-xs text-stone-500 tracking-wider font-light flex items-center gap-1.5 justify-center">
             Crafted with <motion.span
               className="text-rose-400 inline-block"
               animate={{ scale: [1, 1.2, 1] }}

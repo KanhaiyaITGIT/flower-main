@@ -86,54 +86,9 @@ function CheckoutModal({ isOpen, onClose, onOrderSuccess, grandTotal, items }) {
   };
 
   return (
-    <div style={{
-      position: "fixed", inset: 0, zIndex: 9999,
-      background: "rgba(13,31,15,0.7)", backdropFilter: "blur(6px)",
-      display: "flex", alignItems: "center", justifyContent: "center",
-      padding: "16px", fontFamily: "'Inter', sans-serif",
-      overflowY: "auto", WebkitOverflowScrolling: "touch",
-    }}
+    <div className="fixed inset-0 z-[9999] bg-[#0D1F0F]/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
       onClick={(e) => { if (e.target === e.currentTarget) (submitted ? onOrderSuccess : onClose)(); }}
     >
-      <style>{`
-        .modal-input {
-          width: 100%; padding: 10px 14px; border-radius: 18px;
-          border: 1.5px solid #e5e7eb; background: #fafaf9;
-          font-family: 'Inter', sans-serif; font-size: 13px; color: #0D1F0F;
-          outline: none; box-sizing: border-box; transition: border-color 0.2s;
-        }
-        .modal-input:focus { border-color: #f43f5e; background: #fff; }
-        .modal-input::placeholder { color: #9ca3af; }
-        .submit-btn {
-          width: 100%; padding: 13px; border-radius: 18px; border: none;
-          background: linear-gradient(to right, #fb7185, #e11d48);
-          color: #fff; font-family: 'Inter', sans-serif;
-          font-size: 13px; font-weight: 700; letter-spacing: 0.08em;
-          text-transform: uppercase; cursor: pointer;
-          box-shadow: 0 6px 20px rgba(244,63,94,0.35);
-          transition: transform 0.2s, opacity 0.2s;
-        }
-        .submit-btn:hover:not(:disabled) { transform: translateY(-1px) scale(1.03); box-shadow: 0 10px 28px rgba(244,63,94,0.4); }
-        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-        @media (max-width: 640px) {
-          .modal-inner {
-            flex-direction: column !important;
-            max-height: none !important;
-            overflow: visible !important;
-            width: 100% !important;
-            margin: auto 0 !important;
-          }
-          .qr-side {
-            flex: none !important;
-            padding: 28px 24px !important;
-          }
-          .form-side {
-            padding: 28px 24px !important;
-            max-height: none !important;
-            overflow-y: visible !important;
-          }
-        }
-      `}</style>
 
       <div style={{
         background: "#fff", borderRadius: "18px",
@@ -142,7 +97,7 @@ function CheckoutModal({ isOpen, onClose, onOrderSuccess, grandTotal, items }) {
         boxShadow: "0 24px 80px rgba(0,0,0,0.25)",
         display: "flex", position: "relative",
         margin: "auto 0",
-      }} className="modal-inner">
+      }} className="c-modal-inner">
 
         {/* ── Close button ── */}
         <button onClick={submitted ? onOrderSuccess : onClose} style={{
@@ -154,7 +109,7 @@ function CheckoutModal({ isOpen, onClose, onOrderSuccess, grandTotal, items }) {
         }}>✕</button>
 
         {/* ── LEFT: QR Side ── */}
-        <div className="qr-side" style={{
+        <div className="c-qr-side" style={{
           flex: "0 0 320px", background: "#0D1F0F",
           padding: "40px 32px", display: "flex", flexDirection: "column",
           alignItems: "center", justifyContent: "center", gap: "20px",
@@ -200,7 +155,7 @@ function CheckoutModal({ isOpen, onClose, onOrderSuccess, grandTotal, items }) {
         </div>
 
         {/* ── RIGHT: Form Side ── */}
-        <div className="form-side" style={{ flex: 1, padding: "40px 36px", overflowY: "auto" }}>
+        <div className="c-form-side" style={{ flex: 1, padding: "40px 36px", overflowY: "auto" }}>
 
           {submitted ? (
             /* Success State */
@@ -239,7 +194,7 @@ function CheckoutModal({ isOpen, onClose, onOrderSuccess, grandTotal, items }) {
                     Full Name *
                   </label>
                   <input
-                    className="modal-input"
+                    className="c-modal-input"
                     type="text"
                     name="name"
                     placeholder="Aapka naam"
@@ -253,7 +208,7 @@ function CheckoutModal({ isOpen, onClose, onOrderSuccess, grandTotal, items }) {
                     Email *
                   </label>
                   <input
-                    className="modal-input"
+                    className="c-modal-input"
                     type="email"
                     name="email"
                     placeholder="email@gmail.com"
@@ -267,7 +222,7 @@ function CheckoutModal({ isOpen, onClose, onOrderSuccess, grandTotal, items }) {
                     Phone Number *
                   </label>
                   <input
-                    className="modal-input"
+                    className="c-modal-input"
                     type="tel"
                     name="phone"
                     placeholder="+91 XXXXX XXXXX"
@@ -281,7 +236,7 @@ function CheckoutModal({ isOpen, onClose, onOrderSuccess, grandTotal, items }) {
                     Transaction ID *
                   </label>
                   <input
-                    className="modal-input"
+                    className="c-modal-input"
                     type="text"
                     name="transactionId"
                     placeholder="UPI transaction ID"
@@ -295,7 +250,7 @@ function CheckoutModal({ isOpen, onClose, onOrderSuccess, grandTotal, items }) {
                     Transaction Time *
                   </label>
                   <input
-                    className="modal-input"
+                    className="c-modal-input"
                     type="datetime-local"
                     name="transactionTime"
                     value={form.transactionTime}
@@ -308,7 +263,7 @@ function CheckoutModal({ isOpen, onClose, onOrderSuccess, grandTotal, items }) {
                 )}
 
                 <button
-                  className="submit-btn"
+                  className="c-submit-btn"
                   onClick={handleSubmit}
                   disabled={submitting}
                   style={{ marginTop: "6px" }}
@@ -415,8 +370,6 @@ export default function CartPage() {
           { color: "from-purple-300/6 to-transparent", size: 200, top: "35%", left: "40%", anim: "bk-float", delay: 1, duration: 28 },
         ]} />
       </div>
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-
       {/* Checkout Modal */}
       <CheckoutModal
         isOpen={showCheckout}
@@ -425,107 +378,6 @@ export default function CartPage() {
         grandTotal={grandTotal}
         items={items}
       />
-
-      <style>{`
-        .cart-row {
-          display: flex; align-items: center; gap: 16px;
-          padding: 18px 20px; background: #fff; border-radius: 18px;
-          box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-          margin-bottom: 12px; transition: all 0.2s;
-        }
-        .cart-row:hover { box-shadow: 0 4px 20px rgba(214,83,122,0.15); transform: scale(1.01); transition: all 0.2s; }
-
-        /* image + name/category/price block */
-        .cart-row-top {
-          display: flex; align-items: center; gap: 16px;
-          flex: 1; min-width: 0;
-        }
-        .cart-row-image {
-          width: 72px; height: 72px; border-radius: 18px; overflow: hidden;
-          flex-shrink: 0;
-        }
-        .cart-row-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .cart-row-info { flex: 1; min-width: 0; }
-        .cart-row-name {
-          font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 400;
-          color: #0D1F0F; margin: 0 0 4px;
-          white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        }
-        .cart-row-meta { font-size: 11px; color: #9ca3af; margin: 0; }
-
-        /* qty controls + line total + remove button */
-        .cart-row-controls {
-          display: flex; align-items: center; gap: 14px; flex-shrink: 0;
-        }
-        .qty-group { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-        .cart-row-total {
-          font-family: 'Playfair Display', serif; font-size: 1.05rem; color: #0D1F0F;
-          flex-shrink: 0; min-width: 48px; text-align: right;
-        }
-
-        .qty-btn {
-          width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid #e5e7eb;
-          background: #fff; cursor: pointer; font-size: 16px;
-          display: flex; align-items: center; justify-content: center;
-          color: #374151; transition: all 0.15s; flex-shrink: 0;
-        }
-        .qty-btn:hover { border-color: #f43f5e; color: #f43f5e; background: #fff1f2; transform: scale(1.05); }
-        .remove-btn {
-          background: none; border: none; cursor: pointer;
-          color: #d1d5db; font-size: 18px; padding: 4px; transition: color 0.15s;
-          flex-shrink: 0;
-        }
-        .remove-btn:hover { color: #f43f5e; transform: scale(1.1); }
-        .checkout-btn {
-          width: 100%; padding: 15px; border-radius: 18px; border: none;
-          background: linear-gradient(to right, #fb7185, #e11d48);
-          color: #fff; font-family: 'Inter', sans-serif;
-          font-size: 14px; font-weight: 700; letter-spacing: 0.1em;
-          text-transform: uppercase; cursor: pointer;
-          box-shadow: 0 6px 20px rgba(244,63,94,0.35);
-          transition: transform 0.2s, box-shadow 0.2s; margin-bottom: 12px;
-        }
-        .checkout-btn:hover { transform: translateY(-1px) scale(1.03); box-shadow: 0 14px 36px rgba(244,63,94,0.45); }
-        .continue-btn {
-          width: 100%; padding: 13px; border-radius: 18px;
-          border: 1.5px solid #e5e7eb; background: #fff;
-          color: #374151; font-family: 'Inter', sans-serif;
-          font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
-        }
-        .continue-btn:hover { border-color: #f43f5e; color: #f43f5e; transform: scale(1.03); }
-        @media (min-width: 768px) {
-          .cart-layout { display: grid; grid-template-columns: 1fr 360px; gap: 24px; }
-        }
-
-        /* ── Tablet ── keep horizontal row but tighten spacing */
-        @media (max-width: 900px) {
-          .cart-row { padding: 16px; gap: 14px; }
-          .cart-row-image { width: 64px; height: 64px; }
-        }
-
-        /* ── Mobile ── stack image+info on top, controls in a row below */
-        @media (max-width: 560px) {
-          .cart-row {
-            flex-direction: column;
-            align-items: stretch;
-            padding: 14px;
-            gap: 12px;
-          }
-          .cart-row-top {
-            width: 100%;
-          }
-          .cart-row-image { width: 56px; height: 56px; }
-          .cart-row-name { font-size: 0.92rem; }
-          .cart-row-meta { font-size: 10px; }
-          .cart-row-controls {
-            width: 100%;
-            justify-content: space-between;
-            padding-top: 10px;
-            border-top: 1px solid #f3f4f6;
-          }
-          .cart-row-total { font-size: 1rem; min-width: 0; }
-        }
-      `}</style>
 
       {/* Page header */}
       <div style={{ background: "#0D1F0F", padding: "48px 24px 40px", textAlign: "center", marginBottom: "32px" }}>
@@ -691,7 +543,7 @@ export default function CartPage() {
 
                 <div style={{ display: "flex", justifyContent: "center", gap: "16px", flexWrap: "wrap", marginTop: "12px" }}>
                   {["🔒 Secure", "🌿 Fresh", "🚚 Fast"].map((b) => (
-                    <span key={b} style={{ fontSize: "10px", color: "#9ca3af" }}>{b}</span>
+                    <span key={`cart-badge-${b}`} style={{ fontSize: "10px", color: "#9ca3af" }}>{b}</span>
                   ))}
                 </div>
               </div>

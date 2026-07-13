@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import {
   ArrowRight,
   Heart,
@@ -8,62 +8,13 @@ import {
   Phone,
   MessageCircle,
   Star,
-  Flower2,
   Quote,
-  ShieldCheck,
-  Truck,
-  Award,
-  Users,
 } from "lucide-react";
+import { motion } from "framer-motion";
 import FloatingDecoration from "../components/FloatingDecoration";
 import BokehLights from "../components/BokehLights";
 import { WHATSAPP_LINK } from "../constants";
-
-// ─── Animated counter on scroll ───────────────────
-const AnimatedCounter = ({ target, suffix = "", duration = 1600 }) => {
-  const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const started = useRef(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !started.current) {
-          started.current = true;
-          const isDecimal = target % 1 !== 0;
-          const steps = 55;
-          const stepTime = duration / steps;
-          let step = 0;
-          const timer = setInterval(() => {
-            step++;
-            const p = step / steps;
-            const eased = 1 - Math.pow(1 - p, 3);
-            setCount(isDecimal ? parseFloat((eased * target).toFixed(1)) : Math.floor(eased * target));
-            if (step >= steps) clearInterval(timer);
-          }, stepTime);
-        }
-      },
-      { threshold: 0.4 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [target, duration]);
-  return <span ref={ref}>{count}{suffix}</span>;
-};
-
-// ─── Scroll reveal ────────────────────────────────
-const useReveal = (threshold = 0.12) => {
-  const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
-      { threshold }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [threshold]);
-  return [ref, visible];
-};
+import AnimatedCounter from "../components/ui/AnimatedCounter";
 
 // ─── Data ─────────────────────────────────────────
 const values = [
@@ -101,204 +52,14 @@ const testimonials = [
   { text: "Our office wanted something warm and thoughtful for Diwali gifting. They handled 80 arrangements without a single complaint.", name: "Priya M.", occasion: "Corporate client", rating: 5 },
 ];
 
-const trustBadges = [
-  { icon: Truck,       label: "Same-Day Delivery" },
-  { icon: ShieldCheck, label: "Freshness Guarantee" },
-  { icon: Award,       label: "500+ 5-Star Events" },
-  { icon: Users,       label: "12,000+ Happy Customers" },
-];
-
 // ─── Component ────────────────────────────────────
 const AboutUs = () => {
-  const [heroRef, heroVisible]     = useReveal(0.05);
-  const [storyRef, storyVisible]   = useReveal();
-  const [valuesRef, valuesVisible] = useReveal();
 
   return (
     <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
+      <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
 
-        *, *::before, *::after { box-sizing: border-box; }
-        .abp * { font-family: 'DM Sans', sans-serif; }
-        .abp .dp { font-family: 'Cormorant Garamond', serif; }
-
-        @keyframes floatPetal {
-          0%,100% { transform: translateY(0) rotate(0deg); }
-          33%     { transform: translateY(-14px) rotate(4deg); }
-          66%     { transform: translateY(-6px) rotate(-3deg); }
-        }
-        @keyframes revealUp {
-          from { opacity: 0; transform: translateY(32px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes goldShimmer {
-          0%   { background-position: -200% center; }
-          100% { background-position:  200% center; }
-        }
-        @keyframes pulseDot {
-          0%,100% { transform: scale(1);   opacity: 1; }
-          50%     { transform: scale(1.6); opacity: 0.6; }
-        }
-        @keyframes rotateSlow {
-          from { transform: translate(-50%,-50%) rotate(0deg); }
-          to   { transform: translate(-50%,-50%) rotate(360deg); }
-        }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes icon-wiggle {
-          0%,100% { transform: rotate(0deg) scale(1); }
-          20%     { transform: rotate(-12deg) scale(1.2); }
-          40%     { transform: rotate(10deg) scale(1.2); }
-          60%     { transform: rotate(-6deg) scale(1.1); }
-          80%     { transform: rotate(4deg) scale(1.05); }
-        }
-
-        .float-slow { animation: floatPetal 9s ease-in-out infinite; }
-        .float-med  { animation: floatPetal 7s 1.5s ease-in-out infinite; }
-
-        .ru  { animation: revealUp 0.8s cubic-bezier(0.16,1,0.3,1) both; }
-        .ru1 { animation: revealUp 0.8s 0.10s cubic-bezier(0.16,1,0.3,1) both; }
-        .ru2 { animation: revealUp 0.8s 0.22s cubic-bezier(0.16,1,0.3,1) both; }
-        .ru3 { animation: revealUp 0.8s 0.36s cubic-bezier(0.16,1,0.3,1) both; }
-        .ru4 { animation: revealUp 0.8s 0.50s cubic-bezier(0.16,1,0.3,1) both; }
-
-        .gold-text {
-          background: linear-gradient(90deg,#c9a96e,#f0d5a0,#c9a96e,#a07840,#c9a96e);
-          background-size: 300% auto;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          animation: goldShimmer 5s linear infinite;
-        }
-
-        /* ─ value card hover ─ */
-        .val-card { transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s ease; }
-        .val-card:hover { transform: translateY(-6px) scale(1.03); box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
-
-        /* ─ team card hover ─ */
-        .tm-card { transition: transform 0.3s ease; }
-        .tm-card:hover { transform: translateY(-4px) scale(1.03); }
-        .tm-avatar { transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1); }
-        .tm-card:hover .tm-avatar { transform: scale(1.07); }
-
-        /* ─ primary cta ─ */
-        .cta-pri {
-          background: linear-gradient(135deg,#e8667a,#d4546a);
-          transition: transform 0.3s, box-shadow 0.3s;
-          display: inline-flex; align-items: center; gap: 8px;
-          color:#fff; border-radius:18px; text-decoration:none;
-          font-size:14px; font-weight:700; border:none; cursor:pointer;
-        }
-        .cta-pri:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 8px 30px rgba(232,102,122,0.35); }
-        .cta-pri:hover .btn-icon { animation: icon-wiggle 0.5s ease-in-out; }
-
-        /* ─ ghost cta ─ */
-        .cta-ghost {
-          display: inline-flex; align-items: center; gap: 8px;
-          border-radius: 18px; text-decoration:none; font-weight:700;
-          transition: transform 0.3s, background 0.3s;
-        }
-        .cta-ghost:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
-        .cta-ghost:hover .btn-icon { animation: icon-wiggle 0.5s ease-in-out; }
-
-        /* scrollbar-hide */
-        .sh::-webkit-scrollbar { display:none; }
-        .sh { -ms-overflow-style:none; scrollbar-width:none; }
-
-        /* ════════════════════════════════
-           RESPONSIVE BREAKPOINTS
-        ════════════════════════════════ */
-
-        /* Hero */
-        .hero-inner { padding: 110px 24px 90px; }
-        .hero-h1    { font-size: clamp(2.6rem, 7vw, 5rem); line-height: 1.04; }
-        .hero-sub   { font-size: clamp(0.9rem, 2.5vw, 1.08rem); }
-
-        /* Stats */
-        .stats-wrap { display: grid; grid-template-columns: repeat(4,1fr); }
-        @media (max-width: 600px) {
-          .stats-wrap { grid-template-columns: repeat(2,1fr); }
-          .stats-wrap > div:nth-child(2) { border-right: none !important; }
-          .stats-wrap > div:nth-child(3) { border-right: 1px solid rgba(255,255,255,0.06) !important; }
-          .stats-wrap > div:nth-child(1),
-          .stats-wrap > div:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,0.06); }
-        }
-
-        /* Story two-col */
-        .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
-        @media (max-width: 820px) { .story-grid { grid-template-columns: 1fr; gap: 36px; } }
-
-        /* Story headline */
-        .story-h2 { font-size: clamp(2rem, 5vw, 3.8rem); }
-
-        /* Values 2×2 */
-        .vals-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
-        @media (max-width: 640px) { .vals-grid { grid-template-columns: 1fr; } }
-
-        /* Timeline */
-        .tl-wrap { position: relative; padding-left: 44px; }
-        .tl-line { position: absolute; left: 10px; top: 8px; bottom: 8px; width: 2px;
-          background: linear-gradient(180deg,#e8667a,#c9a96e,#a78bfa,#34d399,#c9a96e); }
-        @media (max-width: 500px) {
-          .tl-wrap { padding-left: 32px; }
-          .tl-dot  { left: -29px !important; }
-        }
-
-        /* Team */
-        .team-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
-        @media (max-width: 900px) { .team-grid { grid-template-columns: repeat(2,1fr); } }
-        @media (max-width: 420px) { .team-grid { grid-template-columns: 1fr; } }
-
-        /* Mission/Vision */
-        .mv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        @media (max-width: 720px) { .mv-grid { grid-template-columns: 1fr; } }
-
-        /* Trust badges */
-        .trust-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
-        @media (max-width: 700px) { .trust-grid { grid-template-columns: repeat(2,1fr); } }
-
-        /* Testimonials */
-        .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-        @media (max-width: 820px) { .testi-grid { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 520px) { .testi-grid { grid-template-columns: 1fr; } }
-
-        /* CTA buttons */
-        .cta-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-        @media (max-width: 420px) {
-          .cta-row { flex-direction: column; align-items: stretch; }
-          .cta-row a, .cta-row button { justify-content: center; }
-        }
-
-        /* Hero CTA row */
-        .hero-cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
-        @media (max-width: 400px) {
-          .hero-cta-row { flex-direction: column; }
-          .hero-cta-row a { justify-content: center; }
-        }
-
-        /* Section padding */
-        .sp { padding: 80px 24px; }
-        @media (max-width: 600px) { .sp { padding: 56px 16px; } }
-
-        .inner { max-width: 1100px; margin: 0 auto; }
-        .inner-md { max-width: 800px; margin: 0 auto; }
-        .inner-sm { max-width: 680px; margin: 0 auto; }
-
-        /* Values heading */
-        .vals-h2 { font-size: clamp(1.8rem, 5vw, 3.2rem); }
-        /* Team heading */
-        .team-h2 { font-size: clamp(1.8rem, 5vw, 3.2rem); }
-        /* Final CTA heading */
-        .cta-h2  { font-size: clamp(2rem, 6vw, 3.5rem); }
-
-        @media (prefers-reduced-motion: reduce) {
-          .float-slow, .float-med, .gold-text, .ru, .ru1, .ru2, .ru3, .ru4 {
-            animation: none !important;
-          }
-        }
-      `}</style>
-
-      <div className="abp relative">     
+      <div className="relative">     
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           <FloatingDecoration type="leaf" side="left" top="4%" size={28} opacity={0.1} delay={0} duration={14} animation="sway3" color="#d1bca8" />
           <FloatingDecoration type="petal6" side="right" top="3%" size={24} opacity={0.1} delay={1.2} duration={13} animation="sway2" color="#d1bca8" />
@@ -330,9 +91,14 @@ const AboutUs = () => {
           <FloatingDecoration type="petal" side="left" top="auto" bottom="12%" size={42} opacity={0.12} delay={0.5} duration={11} animation="sway2" color="#e8667a" />
 
           <div className="inner hero-inner" style={{ width:"100%" }}>
-            <div ref={heroRef}>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-60px" }}
+              variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
+            >
               {/* Eyebrow */}
-              <div className={heroVisible ? "ru" : ""} style={{
+              <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }} style={{
                 display:"inline-flex",alignItems:"center",gap:"10px",marginBottom:"26px"
               }}>
                 <div style={{
@@ -345,10 +111,10 @@ const AboutUs = () => {
                 }}>
                   Shivam Florist · Est. 2022
                 </span>
-              </div>
+              </motion.div>
 
               {/* Headline */}
-              <h1 className={`dp hero-h1 ${heroVisible ? "ru1":""}`} style={{
+              <motion.h1 variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.1 } } }} className="dp hero-h1" style={{
                 fontWeight:700, color:"#fff", maxWidth:"680px",
                 marginBottom:"22px", letterSpacing:"-0.01em"
               }}>
@@ -357,18 +123,18 @@ const AboutUs = () => {
                 <em className="dp gold-text" style={{fontStyle:"italic"}}>
                   intentional as you.
                 </em>
-              </h1>
+              </motion.h1>
 
               {/* Sub */}
-              <p className={`hero-sub ${heroVisible ? "ru2":""}`} style={{
+              <motion.p variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.2 } } }} className="hero-sub" style={{
                 color:"rgba(255,255,255,0.52)", lineHeight:1.75,
                 maxWidth:"460px", marginBottom:"36px", fontWeight:300
               }}>
                 We're a design-first floral studio. Built to make flowers feel less like an afterthought and more like the whole point.
-              </p>
+              </motion.p>
 
               {/* CTAs */}
-              <div className={`hero-cta-row ${heroVisible ? "ru3":""}`}>
+              <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.3 } } }} className="hero-cta-row">
                 <a href="/decor" className="cta-pri" style={{ padding:"14px 28px" }}>
                   <Sparkles size={14} className="btn-icon"/> See Our Work
                 </a>
@@ -385,18 +151,18 @@ const AboutUs = () => {
                 >
                   <MessageCircle size={14} className="btn-icon"/> Chat with Us
                 </a>
-              </div>
+              </motion.div>
 
               {/* Stars */}
-              <div className={heroVisible ? "ru4":""} style={{
+              <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.4 } } }} style={{
                 display:"flex",alignItems:"center",gap:"10px",marginTop:"28px",flexWrap:"wrap"
               }}>
                 <div style={{display:"flex",gap:"3px"}}>
-                  {[...Array(5)].map((_,i)=><Star key={i} size={12} fill="#c9a96e" style={{color:"#c9a96e"}}/>)}
+                  {[...Array(5)].map((_,i)=><Star key={`about-star-${i}`} size={12} fill="#c9a96e" style={{color:"#c9a96e"}}/>)}
                 </div>
                 <span style={{color:"rgba(255,255,255,0.38)",fontSize:"12px"}}>4.9 · 800+ happy customers</span>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
@@ -419,7 +185,7 @@ const AboutUs = () => {
 
           <div className="inner stats-wrap" style={{ padding:"0 24px" }}>
             {stats.map(({value,suffix,label},i)=>(
-              <div key={i} style={{
+              <div key={`about-stat-${i}`} style={{
                 padding:"clamp(1.6rem,4vw,2.4rem) 12px",
                 textAlign:"center",
                 borderRight: i<3 ? "1px solid rgba(255,255,255,0.06)" : "none"
@@ -444,7 +210,7 @@ const AboutUs = () => {
           <FloatingDecoration type="rose" side="left" top="6%" size={44} opacity={0.07} delay={0} duration={16} animation="breathe" color="#e8667a" />
           <FloatingDecoration type="lotus" side="right" top="8%" size={48} opacity={0.06} delay={1.5} duration={18} animation="drift-bloom" color="#C9A15A" />
           <FloatingDecoration type="petal6" side="left" top="auto" bottom="8%" size={36} opacity={0.08} delay={3} duration={14} animation="sway3" color="#C9A15A" />
-          <div className="inner" ref={storyRef}>
+          <div className="inner">
             {/* Section label */}
             <div style={{display:"flex",alignItems:"center",gap:"14px",marginBottom:"52px"}}>
               <div style={{height:"1px",width:"36px",background:"#e8667a"}}/>
@@ -453,10 +219,21 @@ const AboutUs = () => {
               </span>
             </div>
 
-            <div className={`story-grid ${storyVisible?"":"opacity-0"}`}>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="story-grid"
+            >
               {/* Left */}
-              <div>
-                <h2 className={`dp story-h2 ${storyVisible?"ru":""}`} style={{
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+              >
+                <h2 className="dp story-h2" style={{
                   fontWeight:700,color:"#1a0f0a",lineHeight:1.06,
                   marginBottom:"28px",letterSpacing:"-0.01em"
                 }}>
@@ -480,7 +257,7 @@ const AboutUs = () => {
                 {/* Ornament */}
                 <div style={{display:"flex",gap:"6px",alignItems:"center"}}>
                   {["#e8667a","#c9a96e","#e8667a"].map((c,i)=>(
-                    <svg key={i} width="18" height="18" viewBox="0 0 100 100" style={{opacity:0.75}}>
+                    <svg key={`about-ornament-${i}`} width="18" height="18" viewBox="0 0 100 100" style={{opacity:0.75}}>
                       {[0,72,144,216,288].map(a=>(
                         <ellipse key={a} cx="50" cy="25" rx="10" ry="20" fill={c} transform={`rotate(${a} 50 50)`}/>
                       ))}
@@ -488,10 +265,16 @@ const AboutUs = () => {
                     </svg>
                   ))}
                 </div>
-              </div>
+              </motion.div>
 
               {/* Right */}
-              <div style={{paddingTop:"4px"}}>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                style={{paddingTop:"4px"}}
+              >
                 <p style={{color:"#7a5c4f",fontSize:"1rem",lineHeight:1.8,marginBottom:"18px"}}>
                   Shivam Florist was started in 2022 by SHIVAM. The idea was disarmingly simple: what if flowers actually arrived the day they were cut, arranged by someone who cared, and delivered like they mattered?
                 </p>
@@ -504,17 +287,17 @@ const AboutUs = () => {
 
                 <div style={{marginTop:"28px",display:"flex",flexWrap:"wrap",gap:"10px"}}>
                   {["Farm-to-door freshness","Design-led always","India's first farm-direct model"].map((tag,i)=>(
-                    <span key={i} style={{
+                    <span key={`about-tag-${i}`} style={{
                       background:"#fff",border:"1px solid #e8d5c0",
                       color:"#9a6b4b",borderRadius:"18px",
                       padding:"6px 16px",fontSize:"12px",fontWeight:600
                     }}>✓ {tag}</span>
                   ))}
-                </div>
-              </div>
+                  </div>
+                </motion.div>
+              </motion.div>
             </div>
-          </div>
-        </section>
+          </section>
 
         {/* ── VALUES ───────────────────────────────────── */}
         <section className="sp" style={{ background:"#fff", position:"relative", overflow:"hidden" }}>
@@ -543,9 +326,15 @@ const AboutUs = () => {
               </p>
             </div>
 
-            <div className="vals-grid" ref={valuesRef}>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
+              className="vals-grid"
+            >
               {values.map(({icon:Icon,title,desc,color,bg},i)=>(
-                <div key={i} className="val-card" style={{
+                <div key={`about-value-${i}`} className="val-card" style={{
                   background:bg,borderRadius:"18px",padding:"clamp(24px,4vw,36px) clamp(20px,3vw,32px)",
                   border:`1px solid ${color}22`
                 }}>
@@ -562,7 +351,7 @@ const AboutUs = () => {
                   <p style={{color:"#8a6e63",fontSize:"0.9rem",lineHeight:1.75}}>{desc}</p>
                 </div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -590,7 +379,7 @@ const AboutUs = () => {
 
             <div className="testi-grid">
               {testimonials.map(({text,name,occasion,rating},i)=>(
-                <div key={i} style={{
+                <div key={`about-testimonial-${i}`} style={{
                   background:"#fff",borderRadius:"18px",
                   padding:"clamp(22px,3vw,32px)",
                   border:"1px solid #f0e8e0",
@@ -599,7 +388,7 @@ const AboutUs = () => {
                   {/* Stars */}
                   <div style={{display:"flex",gap:"3px"}}>
                     {[...Array(rating)].map((_,j)=>(
-                      <Star key={j} size={13} fill="#c9a96e" style={{color:"#c9a96e"}}/>
+                      <Star key={`about-testi-star-${j}`} size={13} fill="#c9a96e" style={{color:"#c9a96e"}}/>
                     ))}
                   </div>
                   {/* Quote icon */}
@@ -645,7 +434,7 @@ const AboutUs = () => {
               <div className="tl-line"/>
               <div style={{display:"flex",flexDirection:"column",gap:"44px"}}>
                 {milestones.map(({year,title,desc,color},i)=>(
-                  <div key={i} style={{position:"relative"}}>
+                  <div key={`about-milestone-${i}`} style={{position:"relative"}}>
                     {/* Dot */}
                     <div className="tl-dot" style={{
                       position:"absolute",left:"-38px",top:"5px",
@@ -711,7 +500,7 @@ const AboutUs = () => {
 
             <div className="team-grid">
               {team.map(({name,role,detail,initials,accent},i)=>(
-                <div key={i} className="tm-card" style={{
+                <div key={`about-team-${i}`} className="tm-card" style={{
                   background:"rgba(255,255,255,0.04)",
                   border:"1px solid rgba(255,255,255,0.08)",
                   borderRadius:"18px",padding:"clamp(22px,3vw,32px) clamp(18px,2vw,24px)",
@@ -830,7 +619,7 @@ const AboutUs = () => {
             {/* Petal ornament */}
             <div style={{display:"flex",justifyContent:"center",gap:"6px",marginBottom:"24px"}}>
               {[...Array(3)].map((_,i)=>(
-                <svg key={i} width="15" height="15" viewBox="0 0 100 100" style={{opacity:0.85}}>
+                <svg key={`about-petal-${i}`} width="15" height="15" viewBox="0 0 100 100" style={{opacity:0.85}}>
                   {[0,72,144,216,288].map(a=>(
                     <ellipse key={a} cx="50" cy="24" rx="9" ry="20" fill="#c9a96e" transform={`rotate(${a} 50 50)`}/>
                   ))}

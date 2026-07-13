@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import LazyImage from "../components/ui/LazyImage";
 import {
   BUSINESS_NAME_MAIN,
@@ -117,45 +117,7 @@ const stats = [
   { value: 48, suffix: "hr", label: "Design Turnaround", icon: "⚡" },
 ];
 
-// ─── Animated Counter ──────────────────────────────
-const AnimatedCounter = ({ target, suffix, duration = 1800 }) => {
-  const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const started = useRef(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !started.current) {
-          started.current = true;
-          const isDecimal = target % 1 !== 0;
-          const steps = 60;
-          const stepTime = duration / steps;
-          let step = 0;
-          const timer = setInterval(() => {
-            step++;
-            const progress = step / steps;
-            const eased = 1 - Math.pow(1 - progress, 3);
-            const current = isDecimal
-              ? parseFloat((eased * target).toFixed(1))
-              : Math.floor(eased * target);
-            setCount(current);
-            if (step >= steps) clearInterval(timer);
-          }, stepTime);
-        }
-      },
-      { threshold: 0.5 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [target, duration]);
-
-  return (
-    <span ref={ref}>
-      {count}{suffix}
-    </span>
-  );
-};
+import AnimatedCounter from "../components/ui/AnimatedCounter";
 
 const DecorPage = () => {
   const [openFaq, setOpenFaq] = useState(null);
@@ -296,7 +258,7 @@ const DecorPage = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map(({ value, suffix, label, icon }, i) => (
               <div
-                key={i}
+                key={`decor-stat-${i}`}
                 className="flex flex-col items-center text-center p-4 relative"
               >
                 <span className="text-lg mb-1 drop-shadow-md select-none">{icon}</span>
@@ -421,7 +383,7 @@ const DecorPage = () => {
             <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6 space-y-6">
               {filteredGallery.map((item, i) => (
                 <motion.div
-                  key={i}
+                  key={`decor-gallery-${i}`}
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -470,7 +432,7 @@ const DecorPage = () => {
               const Icon = step.icon;
               return (
                 <div
-                  key={i}
+                  key={`decor-step-${i}`}
                   className="flex flex-col sm:flex-row items-center sm:items-start gap-6 relative"
                 >
                   <div className="shrink-0 flex items-center justify-center w-14 h-14 rounded-2xl bg-white border border-gray-100 shadow-soft relative z-10">
@@ -608,7 +570,7 @@ const DecorPage = () => {
               const isSelected = openFaq === i;
               return (
                 <div
-                  key={i}
+                  key={`decor-faq-${i}`}
                   className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-soft transition-all duration-300"
                 >
                   <button

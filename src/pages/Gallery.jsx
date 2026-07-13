@@ -172,235 +172,8 @@ export default function Gallery() {
 
   return (
     <div
-      style={{
-        fontFamily: "'Poppins', sans-serif",
-        background: "#0D1F0F",
-        minHeight: "100vh",
-        color: "#F7F0E8",
-        position: "relative",
-        overflowX: "hidden",
-      }}
+      className="bg-[#0D1F0F] min-h-screen text-[#F7F0E8] relative overflow-x-hidden"
     >
-      <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet"
-      />
-
-      <style>{`
-        /* ── Responsive masonry grid ── */
-        .gallery-main {
-          columns: 4;
-          column-gap: 24px;
-        }
-        @media (max-width: 1200px) {
-          .gallery-main { columns: 3 !important; column-gap: 20px !important; }
-        }
-        @media (max-width: 900px) {
-          .gallery-main { columns: 2 !important; column-gap: 16px !important; padding: 24px 24px 40px !important; }
-        }
-        @media (max-width: 560px) {
-          .gallery-main { columns: 1 !important; padding: 16px 16px 32px !important; column-gap: 0 !important; }
-        }
-
-        .flower-card {
-          break-inside: avoid;
-          margin-bottom: 24px;
-          opacity: 0;
-          animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        @media (max-width: 560px) { .flower-card { margin-bottom: 20px; } }
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card-inner {
-          position: relative;
-          border-radius: 18px;
-          overflow: hidden;
-          cursor: pointer;
-          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-          border: 1px solid rgba(200, 168, 130, 0.1);
-        }
-        
-        /* dynamic size classes for layout variance */
-        .size-small { height: 240px; }
-        .size-medium { height: 340px; }
-        .size-large { height: 440px; }
-        @media (max-width: 1200px) {
-          .size-small { height: 210px; }
-          .size-medium { height: 310px; }
-          .size-large { height: 410px; }
-        }
-        @media (max-width: 900px) {
-          .size-small { height: 200px; }
-          .size-medium { height: 280px; }
-          .size-large { height: 360px; }
-        }
-        @media (max-width: 560px) {
-          .size-small { height: 260px; }
-          .size-medium { height: 320px; }
-          .size-large { height: 380px; }
-        }
-
-        .card-inner:hover {
-          transform: translateY(-8px) scale(1.02);
-          box-shadow: 0 16px 40px rgba(201,161,90,0.25);
-          border-color: rgba(201, 161, 90, 0.4);
-        }
-
-        .card-inner img, .card-inner video {
-          width: 100%; height: 100%; object-fit: cover; display: block;
-          transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .card-inner:hover img, .card-inner:hover video { transform: scale(1.06); }
-
-        .card-accent-bar {
-          position: absolute; top: 0; left: 0; right: 0; height: 4px; z-index: 3;
-          opacity: 0.8;
-        }
-
-        /* Glass badge top-left */
-        .card-chip {
-          position: absolute; top: 16px; left: 16px; z-index: 3;
-          padding: 6px 14px; border-radius: 20px;
-          font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
-          text-transform: uppercase; color: #fff;
-          background: rgba(13, 31, 15, 0.65);
-          backdrop-filter: blur(8px);
-          border: 1px solid rgba(255, 255, 255, 0.15);
-          box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-          display: flex; align-items: center; gap: 6px;
-        }
-
-        .card-overlay {
-          position: absolute; inset: 0;
-          background: linear-gradient(to top, rgba(13,31,15,0.92) 0%, rgba(13,31,15,0.4) 50%, rgba(13,31,15,0) 100%);
-          display: flex; flex-direction: column; justify-content: flex-end; padding: 20px;
-          opacity: 0; transition: opacity 0.35s ease;
-          z-index: 2;
-        }
-        .card-inner:hover .card-overlay { opacity: 1; }
-        
-        @media (hover: none) {
-          .card-overlay { opacity: 1; background: linear-gradient(to top, rgba(13,31,15,0.85) 0%, rgba(13,31,15,0) 70%); }
-        }
-
-        .card-title {
-          font-size: 13px; font-weight: 500; color: #F7F0E8;
-          margin-bottom: 6px; line-height: 1.4;
-          transform: translateY(10px); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .card-inner:hover .card-title { transform: translateY(0); }
-
-        .card-action-text {
-          font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
-          font-weight: 700; color: #C9A15A; display: flex; align-items: center; gap: 4px;
-          transform: translateY(10px); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0.05s;
-        }
-        .card-inner:hover .card-action-text { transform: translateY(0); }
-
-        .video-play-indicator {
-          position: absolute; inset: 0; display: flex; align-items: center;
-          justify-content: center; z-index: 1; pointer-events: none;
-        }
-        .play-btn-circle {
-          width: 50px; height: 50px; border-radius: 50%;
-          background: rgba(201, 161, 90, 0.85); color: #0D1F0F;
-          display: flex; align-items: center; justify-content: center;
-          box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-          transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .card-inner:hover .play-btn-circle {
-          transform: scale(1.15);
-          background: #C9A15A;
-        }
-
-        .load-more-btn {
-          padding: 16px 48px; border-radius: 30px; border: 1px solid #C9A15A;
-          background: transparent; color: #C9A15A; cursor: pointer;
-          font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600;
-          letter-spacing: 0.15em; text-transform: uppercase;
-          transition: all 0.3s ease;
-        }
-        .load-more-btn:hover {
-          background: #C9A15A; color: #0D1F0F;
-          transform: translateY(-2px);
-          box-shadow: 0 10px 30px rgba(201,161,90,0.25);
-        }
-        @media (max-width: 480px) {
-          .load-more-btn { width: 100%; padding: 14px 20px; }
-        }
-
-        /* ── Glassmorphism Filters ── */
-        .filter-container {
-          display: inline-flex;
-          background: rgba(201, 161, 90, 0.05);
-          backdrop-filter: blur(12px);
-          border: 1px solid rgba(201, 161, 90, 0.15);
-          padding: 6px;
-          border-radius: 40px;
-          gap: 4px;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-          margin-bottom: 40px;
-        }
-        .filter-btn {
-          background: transparent; border: none;
-          color: rgba(247, 240, 232, 0.7);
-          padding: 10px 24px; border-radius: 30px;
-          font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 500;
-          cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-          display: flex; align-items: center; gap: 8px;
-        }
-        .filter-btn:hover {
-          color: #F7F0E8;
-          background: rgba(247, 240, 232, 0.05);
-        }
-        .filter-btn.active {
-          background: #C9A15A;
-          color: #0D1F0F;
-          font-weight: 600;
-          box-shadow: 0 4px 12px rgba(201, 161, 90, 0.3);
-        }
-        @media (max-width: 500px) {
-          .filter-container { width: 100%; display: flex; flex-direction: column; border-radius: 20px; }
-          .filter-btn { justify-content: center; width: 100%; }
-        }
-
-        /* Lightbox Image and Video styling */
-        .lightbox-media-container {
-          position: relative; display: flex; align-items: center;
-          justify-content: center; width: 100%; max-height: 75vh;
-          overflow: hidden; border-radius: 12px;
-          background: #000;
-        }
-        .lightbox-img, .lightbox-video {
-          max-width: 100%; max-height: 75vh; object-fit: contain;
-          display: block;
-        }
-
-        .gallery-hero { padding: 90px 40px 40px; }
-        @media (max-width: 900px) { .gallery-hero { padding: 70px 24px 30px; } }
-        @media (max-width: 560px) { .gallery-hero { padding: 50px 16px 20px; } }
-
-        /* Navigation Arrows on Lightbox */
-        .lightbox-nav-btn {
-          width: 54px; height: 54px; border-radius: 50%;
-          background: rgba(255, 255, 255, 0.08);
-          border: 1px solid rgba(255, 255, 255, 0.15);
-          color: #F7F0E8; display: flex; align-items: center;
-          justify-content: center; cursor: pointer; transition: all 0.3s;
-          backdrop-filter: blur(10px);
-        }
-        .lightbox-nav-btn:hover {
-          background: #C9A15A; color: #0D1F0F;
-          border-color: #C9A15A; transform: scale(1.1);
-        }
-        @media (max-width: 768px) {
-          .lightbox-nav-btn { width: 44px; height: 44px; }
-        }
-      `}</style>
 
       {/* Elegant Floating Leaf & Floral Decorations */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -422,13 +195,13 @@ export default function Gallery() {
       </div>
 
       {/* Premium Header/Hero */}
-      <header className="gallery-hero" style={{ textAlign: "center", borderBottom: "1px solid rgba(201,161,90,0.15)", position: "relative", zIndex: 1 }}>
+      <header className="g-hero text-center border-b border-[var(--color-gold)]/15 relative z-1">
         <p
           style={{
             fontSize: "11px",
             fontWeight: 600,
             letterSpacing: "0.3em",
-            color: "#C9A15A",
+            color: "var(--color-gold)",
             textTransform: "uppercase",
             marginBottom: "16px",
           }}
@@ -447,7 +220,7 @@ export default function Gallery() {
         >
           Every Petal,
           <br />
-          <em style={{ color: "#C9A15A", fontStyle: "italic" }}>a gorgeous story.</em>
+          <em style={{ color: "var(--color-gold)", fontStyle: "italic" }}>a gorgeous story.</em>
         </h1>
         <p
           style={{
@@ -464,22 +237,22 @@ export default function Gallery() {
         </p>
 
         {/* Tab Filters */}
-        <div className="filter-container">
+        <div className="g-filters">
           <button
-            className={`filter-btn ${activeFilter === "all" ? "active" : ""}`}
+            className={`g-f-btn ${activeFilter === "all" ? "active" : ""}`}
             onClick={() => setActiveFilter("all")}
           >
             All Works
           </button>
           <button
-            className={`filter-btn ${activeFilter === "photo" ? "active" : ""}`}
+            className={`g-f-btn ${activeFilter === "photo" ? "active" : ""}`}
             onClick={() => setActiveFilter("photo")}
           >
             <ImageIcon size={14} />
             Stills
           </button>
           <button
-            className={`filter-btn ${activeFilter === "video" ? "active" : ""}`}
+            className={`g-f-btn ${activeFilter === "video" ? "active" : ""}`}
             onClick={() => setActiveFilter("video")}
           >
             <Film size={14} />
@@ -512,7 +285,7 @@ export default function Gallery() {
               style={{ margin: 0, animationDelay: `${(index % PAGE_SIZE) * 0.05}s` }}
             >
               <div
-                className={`card-inner size-${item.size}`}
+                className={`g-card-inner g-size-${item.size}`}
                 style={{ background: item.bg }}
                 onClick={() => setLightboxIndex(globalIndexInFilter)}
                 onMouseEnter={item.type === "video" ? handleVideoHoverStart : undefined}
@@ -524,10 +297,10 @@ export default function Gallery() {
                   if (e.key === "Enter" || e.key === " ") setLightboxIndex(globalIndexInFilter);
                 }}
               >
-                <span className="card-accent-bar" style={{ background: item.accent }} />
+                <span className="g-card-accent-bar" style={{ background: item.accent }} />
                 
                 {/* Visual Type Indicator Badge */}
-                <span className="card-chip">
+                <span className="g-card-chip">
                   {item.type === "video" ? (
                     <>
                       <Film size={11} color="#C9A15A" />
@@ -551,8 +324,8 @@ export default function Gallery() {
                       playsInline
                       preload="metadata"
                     />
-                    <div className="video-play-indicator">
-                      <div className="play-btn-circle">
+                    <div className="g-video-indicator">
+                      <div className="g-play-btn">
                         <Play size={18} fill="#0D1F0F" />
                       </div>
                     </div>
@@ -567,9 +340,9 @@ export default function Gallery() {
                 )}
 
                 {/* Card Overlay on Hover */}
-                <div className="card-overlay">
-                  <h3 className="card-title">{item.alt}</h3>
-                  <span className="card-action-text">
+                <div className="g-card-overlay">
+                  <h3 className="g-card-title">{item.alt}</h3>
+                  <span className="g-card-action-text">
                     {item.type === "video" ? "Play Motion Video" : "View Full Frame"}
                     <Eye size={12} style={{ marginLeft: "4px" }} />
                   </span>
@@ -602,7 +375,7 @@ export default function Gallery() {
           Showing {visibleItems.length} of {filteredItems.length} works
         </p>
         {hasMore && (
-          <button className="load-more-btn" onClick={handleLoadMore}>
+          <button className="g-load-btn" onClick={handleLoadMore}>
             Load More
           </button>
         )}
@@ -701,7 +474,7 @@ export default function Gallery() {
             {/* Prev Button */}
             <button
               onClick={handlePrev}
-              className="lightbox-nav-btn"
+              className="g-nav-btn"
               aria-label="Previous Media"
               style={{ flexShrink: 0, zIndex: 1010 }}
             >
@@ -710,7 +483,7 @@ export default function Gallery() {
 
             {/* Media Canvas */}
             <div
-              className="lightbox-media-container"
+              className="g-lb-media"
               style={{
                 boxShadow: `0 20px 60px rgba(0,0,0,0.6), 0 0 40px ${activeLightboxItem.accent}22`,
                 border: `1px solid ${activeLightboxItem.accent}44`,
@@ -721,7 +494,7 @@ export default function Gallery() {
               {activeLightboxItem.type === "video" ? (
                 <video
                   src={activeLightboxItem.src}
-                  className="lightbox-video"
+                  className="g-lb-vid"
                   controls
                   autoPlay
                   loop
@@ -731,7 +504,7 @@ export default function Gallery() {
                 <img
                   src={activeLightboxItem.src}
                   alt={activeLightboxItem.alt}
-                  className="lightbox-img"
+                  className="g-lb-img"
                 />
               )}
             </div>
@@ -739,7 +512,7 @@ export default function Gallery() {
             {/* Next Button */}
             <button
               onClick={handleNext}
-              className="lightbox-nav-btn"
+              className="g-nav-btn"
               aria-label="Next Media"
               style={{ flexShrink: 0, zIndex: 1010 }}
             >
