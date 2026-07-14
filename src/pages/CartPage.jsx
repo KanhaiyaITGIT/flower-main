@@ -86,200 +86,145 @@ function CheckoutModal({ isOpen, onClose, onOrderSuccess, grandTotal, items }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-[#0D1F0F]/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="fixed inset-0 z-[9999] bg-[#0D1F0F]/60 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto"
       onClick={(e) => { if (e.target === e.currentTarget) (submitted ? onOrderSuccess : onClose)(); }}
     >
-
-      <div style={{
-        background: "#fff", borderRadius: "18px",
-        overflow: "hidden", width: "100%", maxWidth: "820px",
-        maxHeight: "90vh",
-        boxShadow: "0 24px 80px rgba(0,0,0,0.25)",
-        display: "flex", position: "relative",
-        margin: "auto 0",
-      }} className="c-modal-inner">
-
+      <motion.div
+        initial={{ opacity: 0, y: 30, scale: 0.96 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 30, scale: 0.96 }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        className="c-modal-inner relative w-full max-w-[820px] max-h-[90vh] rounded-2xl overflow-hidden flex bg-[rgba(255,255,255,0.92)] dark:bg-[rgba(10,28,20,0.95)] backdrop-blur-xl shadow-[0_24px_80px_rgba(0,0,0,0.2),0_8px_32px_rgba(0,0,0,0.1)] mx-auto"
+        style={{ margin: "auto 0" }}
+      >
         {/* ── Close button ── */}
-        <button onClick={submitted ? onOrderSuccess : onClose} style={{
-          position: "absolute", top: "14px", right: "16px", zIndex: 10,
-          background: "rgba(255,255,255,0.9)", border: "1px solid #e5e7eb",
-          borderRadius: "50%", width: "32px", height: "32px",
-          cursor: "pointer", fontSize: "16px", color: "#6b7280",
-          display: "flex", alignItems: "center", justifyContent: "center",
-        }}>✕</button>
+        <button
+          onClick={submitted ? onOrderSuccess : onClose}
+          className="absolute top-[14px] right-[16px] z-10 w-8 h-8 rounded-full bg-[rgba(255,255,255,0.9)] dark:bg-[rgba(255,255,255,0.08)] border border-stone-200 dark:border-white/10 flex items-center justify-center text-stone-500 dark:text-stone-400 hover:bg-white hover:border-[var(--color-gold)]/30 hover:text-stone-700 transition-all duration-200 cursor-pointer text-sm"
+        >✕</button>
 
         {/* ── LEFT: QR Side ── */}
-        <div className="c-qr-side" style={{
-          flex: "0 0 320px", background: "#0D1F0F",
-          padding: "40px 32px", display: "flex", flexDirection: "column",
-          alignItems: "center", justifyContent: "center", gap: "20px",
-        }}>
-          <p style={{ fontSize: "10px", letterSpacing: "0.3em", textTransform: "uppercase", color: "#C8A882", margin: 0 }}>
+        <div className="c-qr-side flex-[0_0_320px] bg-gradient-to-br from-[#163827] to-[#0f2a1e] p-10 lg:p-9 flex flex-col items-center justify-center gap-5 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(214,179,106,0.06)_0%,transparent_60%)] pointer-events-none" />
+          <p className="text-[10px] tracking-[0.3em] uppercase text-[#C8A882] m-0">
             Scan & Pay
           </p>
-          <h2 style={{
-            fontFamily: "'Playfair Display', serif", fontSize: "1.5rem",
-            fontWeight: 400, color: "#F7F0E8", margin: 0, textAlign: "center",
-          }}>
+          <h2 className="font-serif-display text-2xl font-normal text-[#F7F0E8] m-0 text-center">
             Payment QR Code
           </h2>
 
-          {/* QR Box */}
-          <div style={{
-            background: "#fff", borderRadius: "18px", padding: "16px",
-            boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
-          }}>
-            <img
-              src={QR_IMAGE}
-              alt="Payment QR Code"
-              style={{ width: "180px", height: "180px", display: "block" }}
-            />
+          <div className="bg-white rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
+            <img src={QR_IMAGE} alt="Payment QR Code" className="w-[180px] h-[180px] block" />
           </div>
 
-          {/* Amount */}
-          <div style={{
-            background: "rgba(200,168,130,0.15)", border: "1px solid rgba(200,168,130,0.3)",
-            borderRadius: "18px", padding: "14px 24px", textAlign: "center",
-          }}>
-            <p style={{ fontSize: "10px", color: "#C8A882", letterSpacing: "0.2em", textTransform: "uppercase", margin: "0 0 4px" }}>
+          <div className="bg-[rgba(200,168,130,0.12)] border border-[rgba(200,168,130,0.25)] rounded-2xl px-6 py-3.5 text-center backdrop-blur-sm">
+            <p className="text-[10px] text-[#C8A882] tracking-[0.2em] uppercase m-0 mb-1">
               Total Amount
             </p>
-            <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.8rem", color: "#F7F0E8", margin: 0, fontWeight: 400 }}>
+            <p className="font-serif-display text-[1.8rem] text-[#F7F0E8] m-0 font-normal">
               ₹{grandTotal.toFixed(2)}
             </p>
           </div>
 
-          <p style={{ fontSize: "11px", color: "rgba(247,240,232,0.45)", textAlign: "center", lineHeight: 1.6, margin: 0 }}>
+          <p className="text-[11px] text-[rgba(247,240,232,0.45)] text-center leading-relaxed m-0">
             UPI / Google Pay / PhonePe se<br />scan karke payment karein
           </p>
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_80%,rgba(214,179,106,0.04)_0%,transparent_50%)] pointer-events-none" />
         </div>
 
         {/* ── RIGHT: Form Side ── */}
-        <div className="c-form-side" style={{ flex: 1, padding: "40px 36px", overflowY: "auto" }}>
+        <div className="c-form-side flex-1 p-10 lg:p-9 overflow-y-auto">
 
           {submitted ? (
-            /* Success State */
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100%", gap: "16px", textAlign: "center" }}>
-              <div style={{ fontSize: "56px" }}>🌸</div>
-              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.6rem", fontWeight: 400, color: "#0D1F0F", margin: 0 }}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="flex flex-col items-center justify-center h-full gap-4 text-center py-10"
+            >
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
+                className="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 flex items-center justify-center text-4xl"
+              >🌸</motion.div>
+              <h3 className="font-serif-display text-2xl font-normal text-[#163827] m-0">
                 Order Confirmed!
               </h3>
-              <p style={{ fontSize: "14px", color: "#6b7280", lineHeight: 1.7, maxWidth: "280px" }}>
-                Aapka order receive ho gaya. Hum jaldi aapse contact karenge. 🙏
+              <p className="text-sm text-stone-500 leading-relaxed max-w-[280px]">
+                Aapka order receive ho gaya. Hum jaldi aapse contact karein 🙏
               </p>
-              <button onClick={onOrderSuccess} style={{
-                padding: "12px 32px", borderRadius: "18px", border: "1.5px solid #0D1F0F",
-                background: "transparent", color: "#0D1F0F", cursor: "pointer",
-                fontFamily: "'Inter', sans-serif", fontSize: "13px", fontWeight: 600,
-              }}>
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={onOrderSuccess}
+                className="px-8 py-3 rounded-2xl border-2 border-[#163827] bg-transparent text-[#163827] text-xs font-semibold tracking-wider uppercase cursor-pointer hover:bg-[#163827] hover:text-white transition-all duration-300"
+              >
                 Back to Cart
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
           ) : (
-            /* Form State */
             <>
-              <p style={{ fontSize: "10px", letterSpacing: "0.25em", textTransform: "uppercase", color: "#C8A882", margin: "0 0 8px" }}>
-                Step 2
-              </p>
-              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 400, color: "#0D1F0F", margin: "0 0 6px" }}>
-                Your Details
-              </h3>
-              <p style={{ fontSize: "12px", color: "#9ca3af", margin: "0 0 28px", lineHeight: 1.6 }}>
+              <p className="text-[10px] tracking-[0.25em] uppercase text-[#C8A882] m-0 mb-2">Step 2</p>
+              <h3 className="font-serif-display text-2xl font-normal text-[#163827] m-0 mb-1">Your Details</h3>
+              <p className="text-xs text-stone-400 m-0 mb-7 leading-relaxed">
                 Payment ke baad transaction details bharen
               </p>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-                <div>
-                  <label style={{ fontSize: "11px", fontWeight: 600, color: "#374151", letterSpacing: "0.05em", textTransform: "uppercase", display: "block", marginBottom: "6px" }}>
-                    Full Name *
-                  </label>
-                  <input
-                    className="c-modal-input"
-                    type="text"
-                    name="name"
-                    placeholder="Aapka naam"
-                    value={form.name}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div>
-                  <label style={{ fontSize: "11px", fontWeight: 600, color: "#374151", letterSpacing: "0.05em", textTransform: "uppercase", display: "block", marginBottom: "6px" }}>
-                    Email *
-                  </label>
-                  <input
-                    className="c-modal-input"
-                    type="email"
-                    name="email"
-                    placeholder="email@gmail.com"
-                    value={form.email}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div>
-                  <label style={{ fontSize: "11px", fontWeight: 600, color: "#374151", letterSpacing: "0.05em", textTransform: "uppercase", display: "block", marginBottom: "6px" }}>
-                    Phone Number *
-                  </label>
-                  <input
-                    className="c-modal-input"
-                    type="tel"
-                    name="phone"
-                    placeholder="+91 XXXXX XXXXX"
-                    value={form.phone}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div>
-                  <label style={{ fontSize: "11px", fontWeight: 600, color: "#374151", letterSpacing: "0.05em", textTransform: "uppercase", display: "block", marginBottom: "6px" }}>
-                    Transaction ID *
-                  </label>
-                  <input
-                    className="c-modal-input"
-                    type="text"
-                    name="transactionId"
-                    placeholder="UPI transaction ID"
-                    value={form.transactionId}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div>
-                  <label style={{ fontSize: "11px", fontWeight: 600, color: "#374151", letterSpacing: "0.05em", textTransform: "uppercase", display: "block", marginBottom: "6px" }}>
-                    Transaction Time *
-                  </label>
-                  <input
-                    className="c-modal-input"
-                    type="datetime-local"
-                    name="transactionTime"
-                    value={form.transactionTime}
-                    onChange={handleChange}
-                  />
-                </div>
+              <div className="flex flex-col gap-3.5">
+                {[
+                  { label: "Full Name *", name: "name", type: "text", placeholder: "Aapka naam" },
+                  { label: "Email *", name: "email", type: "email", placeholder: "email@gmail.com" },
+                  { label: "Phone Number *", name: "phone", type: "tel", placeholder: "+91 XXXXX XXXXX" },
+                  { label: "Transaction ID *", name: "transactionId", type: "text", placeholder: "UPI transaction ID" },
+                  { label: "Transaction Time *", name: "transactionTime", type: "datetime-local", placeholder: "" },
+                ].map((field) => (
+                  <div key={field.name}>
+                    <label className="text-[11px] font-semibold text-stone-700 dark:text-stone-300 tracking-[0.05em] uppercase block mb-1.5">
+                      {field.label}
+                    </label>
+                    <input
+                      className="c-modal-input"
+                      type={field.type}
+                      name={field.name}
+                      placeholder={field.placeholder}
+                      value={form[field.name]}
+                      onChange={handleChange}
+                    />
+                  </div>
+                ))}
 
                 {error && (
-                  <p style={{ fontSize: "12px", color: "#e11d48", margin: 0 }}>⚠ {error}</p>
+                  <motion.p
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-xs text-rose-500 m-0"
+                  >⚠ {error}</motion.p>
                 )}
 
-                <button
-                  className="c-submit-btn"
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="c-submit-btn mt-1"
                   onClick={handleSubmit}
                   disabled={submitting}
-                  style={{ marginTop: "6px" }}
                 >
                   {submitting ? "Submitting..." : "Confirm Order →"}
-                </button>
+                </motion.button>
 
-                <p style={{ fontSize: "10px", color: "#9ca3af", textAlign: "center", margin: 0 }}>
+                <p className="text-[10px] text-stone-400 text-center m-0">
                   🔒 Aapka data safe hai
                 </p>
               </div>
             </>
           )}
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -308,48 +253,38 @@ export default function CartPage() {
   // Empty cart
   if (items.length === 0) {
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        style={{
-          minHeight: "80vh", display: "flex", flexDirection: "column",
-          alignItems: "center", justifyContent: "center",
-          background: "#fafaf9", fontFamily: "'Inter', sans-serif",
-          padding: "40px 20px", textAlign: "center",
-        }}
-      >
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-[#FDFBF8] via-[#faf5ef] to-[#FDFBF8] p-10 text-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,rgba(214,179,106,0.04)_0%,transparent_60%)] pointer-events-none" />
         <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
-          style={{ fontSize: "72px", marginBottom: "20px" }}
-        >🌸</motion.div>
-        <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "2rem", fontWeight: 400, color: "#0D1F0F", margin: "0 0 12px" }}>
-          {orderSuccess ? "Your order is packed!" : "Your cart is empty"}
-        </h2>
-        <p style={{ fontSize: "14px", color: "#9ca3af", lineHeight: 1.7, maxWidth: "320px", margin: "0 0 32px" }}>
-          {orderSuccess
-            ? "Thank you for your order. We have received your payment details and will contact you shortly."
-            : "Explore our beautiful collection and add your favourite blooms."}
-        </p>
-        <motion.button
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.97 }}
-          onClick={() => navigate("/category")}
-          style={{
-            padding: "14px 36px", borderRadius: "18px", border: "none",
-            background: "linear-gradient(to right, #fb7185, #e11d48)",
-            color: "#fff", fontFamily: "'Inter', sans-serif",
-            fontSize: "13px", fontWeight: 700, letterSpacing: "0.1em",
-            textTransform: "uppercase", cursor: "pointer",
-            boxShadow: "0 4px 20px rgba(244,63,94,0.3)",
-          }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="relative bg-[rgba(255,255,255,0.6)] dark:bg-[rgba(10,28,20,0.5)] backdrop-blur-xl border border-[rgba(255,255,255,0.35)] rounded-[32px] p-12 lg:p-14 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.06),0_8px_30px_rgba(0,0,0,0.04)] max-w-[480px] w-full"
         >
-          Browse Category
-        </motion.button>
-      </motion.div>
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
+            className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-[rgba(214,179,106,0.15)] to-[rgba(22,56,39,0.05)] flex items-center justify-center text-5xl mb-6"
+          >🌸</motion.div>
+          <h2 className="font-serif-display text-3xl font-bold text-[#163827] m-0 mb-3">
+            {orderSuccess ? "Your order is packed!" : "Your cart is empty"}
+          </h2>
+          <p className="text-sm text-stone-500 leading-relaxed max-w-[300px] mx-auto m-0 mb-7">
+            {orderSuccess
+              ? "Thank you for your order. We have received your payment details and will contact you shortly."
+              : "Explore our beautiful collection and add your favourite blooms."}
+          </p>
+          <motion.button
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => navigate("/category")}
+            className="inline-flex items-center gap-2 px-9 py-3.5 rounded-full bg-gradient-to-r from-[#163827] to-[#1f4a30] text-white text-xs font-bold tracking-[0.1em] uppercase cursor-pointer shadow-[0_4px_20px_rgba(22,56,39,0.25)] hover:shadow-[0_8px_30px_rgba(22,56,39,0.35)] transition-all duration-300"
+          >
+            Browse Category
+          </motion.button>
+        </motion.div>
+      </div>
     );
   }
 
@@ -380,14 +315,16 @@ export default function CartPage() {
       />
 
       {/* Page header */}
-      <div style={{ background: "#0D1F0F", padding: "48px 24px 40px", textAlign: "center", marginBottom: "32px" }}>
-        <p style={{ fontSize: "10px", letterSpacing: "0.3em", textTransform: "uppercase", color: "#C8A882", margin: "0 0 12px" }}>
+      <div className="relative bg-gradient-to-br from-[#163827] to-[#0f2a1e] py-12 lg:py-14 px-6 text-center mb-10 overflow-hidden shadow-[inset_0_0_100px_rgba(214,179,106,0.03)]">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(214,179,106,0.06)_0%,transparent_60%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_80%,rgba(214,179,106,0.03)_0%,transparent_50%)] pointer-events-none" />
+        <p className="relative text-[10px] tracking-[0.3em] uppercase text-[#C8A882] m-0 mb-3">
           Your Selection
         </p>
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 5vw, 3rem)", fontWeight: 400, color: "#F7F0E8", margin: "0 0 8px" }}>
+        <h1 className="relative font-serif-display text-[clamp(1.8rem,5vw,3rem)] font-bold text-[#F7F0E8] m-0 mb-2">
           Shopping Cart
         </h1>
-        <p style={{ fontSize: "13px", color: "rgba(247,240,232,0.45)" }}>
+        <p className="relative text-xs text-[rgba(247,240,232,0.5)] font-light m-0">
           {count} item{count !== 1 ? "s" : ""} in your cart
         </p>
       </div>
@@ -467,71 +404,56 @@ export default function CartPage() {
 
           {/* Right: order summary */}
           <div>
-            <div style={{
-              background: "#fff", borderRadius: "18px",
-              boxShadow: "0 4px 16px rgba(0,0,0,0.06)", overflow: "hidden",
-              position: "sticky", top: "100px",
-            }}>
-              <div style={{ background: "#0D1F0F", padding: "20px 24px" }}>
-                <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 400, color: "#F7F0E8", margin: 0 }}>
-                  Order Summary
-                </h3>
+            <div className="bg-[rgba(255,255,255,0.5)] dark:bg-[rgba(10,28,20,0.5)] backdrop-blur-xl border border-[rgba(255,255,255,0.35)] rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.04),0_20px_60px_rgba(0,0,0,0.03)] overflow-hidden sticky" style={{ top: "100px" }}>
+              <div className="bg-gradient-to-r from-[#163827] to-[#1a3d28] px-6 py-5">
+                <h3 className="font-serif-display text-lg font-bold text-[#F7F0E8] m-0">Order Summary</h3>
               </div>
 
-              <div style={{ padding: "20px 24px" }}>
+              <div className="p-6">
                 {items.map((item) => (
-                  <div key={item.id} style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px", fontSize: "13px" }}>
-                    <span style={{ color: "#6b7280" }}>
-                      {item.name} <span style={{ color: "#d1d5db" }}>×{item.quantity}</span>
+                  <div key={item.id} className="flex justify-between mb-2.5 text-xs">
+                    <span className="text-stone-600 dark:text-stone-400">
+                      {item.name} <span className="text-stone-400 dark:text-stone-500">×{item.quantity}</span>
                     </span>
-                    <span style={{ color: "#0D1F0F", fontWeight: 500 }}>₹{(item.price * item.quantity).toFixed(2)}</span>
+                    <span className="text-[#163827] dark:text-stone-200 font-semibold">₹{(item.price * item.quantity).toFixed(2)}</span>
                   </div>
                 ))}
 
-                <div style={{ height: "1px", background: "#f3f4f6", margin: "16px 0" }} />
+                <div className="h-px bg-stone-200 dark:bg-white/5 my-4" />
 
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", marginBottom: "8px" }}>
-                  <span style={{ color: "#6b7280" }}>Subtotal</span>
-                  <span style={{ color: "#0D1F0F", fontWeight: 500 }}>₹{total.toFixed(2)}</span>
+                <div className="flex justify-between text-xs mb-2">
+                  <span className="text-stone-600 dark:text-stone-400">Subtotal</span>
+                  <span className="text-[#163827] dark:text-stone-200 font-semibold">₹{total.toFixed(2)}</span>
                 </div>
 
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", marginBottom: "8px" }}>
-                  <span style={{ color: "#6b7280" }}>Delivery</span>
-                  <span style={{ color: delivery === 0 ? "#16a34a" : "#0D1F0F", fontWeight: 500 }}>
+                <div className="flex justify-between text-xs mb-2">
+                  <span className="text-stone-600 dark:text-stone-400">Delivery</span>
+                  <span className={`font-semibold ${delivery === 0 ? "text-emerald-600 dark:text-emerald-400" : "text-[#163827] dark:text-stone-200"}`}>
                     {delivery === 0 ? "FREE" : `₹${delivery.toFixed(2)}`}
                   </span>
                 </div>
 
                 {delivery > 0 && (
-                  <div style={{
-                    background: "#fef9c3", border: "1px solid #fde047",
-                    borderRadius: "18px", padding: "8px 12px",
-                    fontSize: "11px", color: "#854d0e", marginBottom: "12px", lineHeight: 1.5,
-                  }}>
-                    Add ₹{(60 - total).toFixed(2)} more for FREE delivery 🚚
+                  <div className="bg-[rgba(214,179,106,0.08)] border border-[rgba(214,179,106,0.2)] rounded-2xl px-3 py-2 text-[11px] text-[#D6B36A]/80 mb-3 leading-relaxed">
+                    🚚 Add ₹{(60 - total).toFixed(2)} more for FREE delivery
                   </div>
                 )}
 
                 {delivery === 0 && (
-                  <div style={{
-                    background: "#f0fdf4", border: "1px solid #bbf7d0",
-                    borderRadius: "18px", padding: "8px 12px",
-                    fontSize: "11px", color: "#166534", marginBottom: "12px",
-                  }}>
+                  <div className="bg-[rgba(22,163,74,0.06)] border border-[rgba(22,163,74,0.15)] rounded-2xl px-3 py-2 text-[11px] text-emerald-700 dark:text-emerald-400 mb-3 leading-relaxed">
                     ✓ You qualify for free delivery!
                   </div>
                 )}
 
-                <div style={{ height: "1px", background: "#f3f4f6", margin: "12px 0 16px" }} />
+                <div className="h-px bg-stone-200 dark:bg-white/5 my-3" />
 
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
-                  <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.05rem", color: "#0D1F0F" }}>Total</span>
-                  <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.3rem", color: "#0D1F0F", fontWeight: 400 }}>
+                <div className="flex justify-between mb-5">
+                  <span className="font-serif-display text-base text-[#163827] dark:text-stone-100">Total</span>
+                  <span className="font-serif-display text-xl text-[#163827] dark:text-stone-100 font-bold">
                     ₹{grandTotal.toFixed(2)}
                   </span>
                 </div>
 
-                {/*  YE BUTTON AB MODAL OPEN KAREGA */}
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
@@ -541,9 +463,9 @@ export default function CartPage() {
                   Proceed to Checkout →
                 </motion.button>
 
-                <div style={{ display: "flex", justifyContent: "center", gap: "16px", flexWrap: "wrap", marginTop: "12px" }}>
+                <div className="flex justify-center gap-4 flex-wrap mt-3">
                   {["🔒 Secure", "🌿 Fresh", "🚚 Fast"].map((b) => (
-                    <span key={`cart-badge-${b}`} style={{ fontSize: "10px", color: "#9ca3af" }}>{b}</span>
+                    <span key={`cart-badge-${b}`} className="text-[10px] text-stone-400 dark:text-stone-500">{b}</span>
                   ))}
                 </div>
               </div>

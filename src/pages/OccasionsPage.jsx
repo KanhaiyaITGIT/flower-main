@@ -366,7 +366,8 @@ const OccasionsPage = () => {
                   visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
                 }}
                 whileHover={{ y: -4, scale: 1.02 }}
-                className={`relative rounded-2xl overflow-hidden cursor-pointer group ${gridClasses[occ.size]} shadow-soft`}
+                className={`relative rounded-2xl overflow-hidden cursor-pointer group ${gridClasses[occ.size]} shadow-xl`}
+                style={{ minHeight: "280px" }}
                 onMouseEnter={() => setHoveredCard(occ.id)}
                 onMouseLeave={() => setHoveredCard(null)}
                 onClick={() => navigate(`/category?cat=${encodeURIComponent(occ.category)}`)}
@@ -380,8 +381,8 @@ const OccasionsPage = () => {
                   />
                 </div>
 
-                {/* Base gradient overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-t ${occ.gradient} transition-opacity duration-300`} />
+                {/* Glass overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
                 {/* Content */}
                 <div className="absolute inset-0 flex flex-col justify-end p-6 z-10">
@@ -390,45 +391,25 @@ const OccasionsPage = () => {
                     {occ.name}
                   </h3>
 
-                  {/* Tagline */}
-                  <p
-                    className={`text-white/80 text-xs italic mb-2 leading-relaxed transition-all duration-300 ${
-                      hoveredCard === occ.id
-                        ? "opacity-100 translate-y-0"
-                        : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden"
-                    }`}
-                  >
+                  {/* Tagline - always visible */}
+                  <p className="text-white/80 text-xs italic mb-2 leading-relaxed">
                     "{occ.tagline}"
                   </p>
 
-                  {/* Description (visible on hover for large cards only) */}
+                  {/* Description - always visible for large cards */}
                   {occ.size === "large" && (
-                    <p
-                      className={`text-white/70 text-xs leading-relaxed mb-3 max-w-xs transition-all duration-300 delay-75 ${
-                        hoveredCard === occ.id
-                          ? "opacity-100 translate-y-0"
-                          : "opacity-0 translate-y-2 pointer-events-none h-0 overflow-hidden"
-                      }`}
-                    >
+                    <p className="text-white/60 text-xs leading-relaxed mb-3 max-w-xs">
                       {occ.desc}
                     </p>
                   )}
 
                   {/* Bottom Row */}
                   <div className="flex items-center justify-between mt-2 pt-2 border-t border-white/10">
-                    <span
-                      className={`text-[8px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border ${occ.accentBg} ${occ.accentText} ${occ.accentBorder}`}
-                    >
+                    <span className="text-[8px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-white/20 bg-white/10 backdrop-blur-md text-white/90">
                       {occ.products}
                     </span>
 
-                    <span
-                      className={`flex items-center gap-1 bg-white text-[var(--color-primary)] text-[10px] font-bold tracking-wider uppercase rounded-2xl px-3 py-1.5 transition-all duration-300 shadow-soft ${
-                        hoveredCard === occ.id
-                          ? "opacity-100 translate-x-0"
-                          : "opacity-0 translate-x-3"
-                      }`}
-                    >
+                    <span className="flex items-center gap-1 bg-white/90 backdrop-blur-md text-[var(--color-primary)] text-[10px] font-bold tracking-wider uppercase rounded-2xl px-3 py-1.5 transition-all duration-300 shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-3">
                       Shop
                       <ChevronRight size={10} />
                     </span>
@@ -441,29 +422,43 @@ const OccasionsPage = () => {
       </RevealSection>
 
       {/* ── HOW IT WORKS ── */}
-      <RevealSection className="py-20 px-6 bg-white border-y border-gray-100">
-        <div className="max-w-4xl mx-auto">
+      <RevealSection className="py-24 px-6 bg-white border-y border-[var(--color-gold)]/10 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-[var(--color-gold)]/10 to-transparent" />
+          <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-[var(--color-gold)]/10 to-transparent" />
+        </div>
+        <div className="max-w-4xl mx-auto relative z-10">
           <div className="text-center mb-16">
-            <span className="text-xs font-bold tracking-widest text-[var(--color-accent)] uppercase font-inter">Reliable & Transparent</span>
-            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[var(--color-primary)] mt-2">Delivered in 3 Simple Steps</h2>
+            <span className="text-[10px] font-bold tracking-[0.2em] text-[var(--color-gold)] uppercase font-inter">Reliable & Transparent</span>
+            <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[var(--color-primary)] mt-3">Delivered in 3 Simple Steps</h2>
+            <p className="text-gray-400 text-sm mt-3 max-w-md mx-auto font-light">From order to doorstep — a seamless journey designed for freshness.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
             {steps.map((step, i) => (
-              <div key={`occ-step-${i}`} className="flex flex-col items-center text-center px-4 py-2 relative">
-                {/* Step circle */}
-                <div className="w-18 h-18 rounded-full bg-gradient-to-br from-rose-50 to-pink-100/50 border border-rose-100 flex items-center justify-center text-3xl mb-4 shadow-sm relative z-10">
+              <div key={`occ-step-${i}`} className="flex flex-col items-center text-center px-6 py-8 relative group">
+                {/* Connector line */}
+                {i < steps.length - 1 && (
+                  <div className="hidden md:block absolute top-16 left-[65%] w-[70%] h-[2px] bg-gradient-to-r from-[var(--color-gold)]/30 to-[var(--color-gold)]/5 pointer-events-none" />
+                )}
+                {/* Step circle - gold glass */}
+                <div className="w-20 h-20 rounded-full flex items-center justify-center text-3xl mb-5 relative z-10 transition-all duration-500 group-hover:scale-110 group-hover:shadow-2xl" style={{
+                  background:"rgba(201,161,90,0.12)",
+                  backdropFilter:"blur(12px)",
+                  border:"1px solid rgba(201,161,90,0.25)",
+                  boxShadow:"0 8px 32px rgba(201,161,90,0.1)"
+                }}>
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[var(--color-gold)]/10 to-transparent opacity-50" />
                   {step.icon}
                 </div>
+                {/* Step number */}
+                <span className="text-[9px] font-bold tracking-[0.15em] text-[var(--color-gold)] uppercase mb-2">Step {i + 1}</span>
                 <h3 className="font-serif-display text-lg font-bold text-[var(--color-primary)] mb-2">
                   {step.title}
                 </h3>
-                <p className="text-gray-400 text-xs leading-relaxed max-w-[200px] font-light">
+                <p className="text-gray-400 text-xs leading-relaxed max-w-[220px] font-light">
                   {step.desc}
                 </p>
-                {i < steps.length - 1 && (
-                  <div className="hidden md:block absolute top-9 left-[65%] w-[70%] h-px bg-rose-200/40 pointer-events-none" />
-                )}
               </div>
             ))}
           </div>
@@ -477,10 +472,10 @@ const OccasionsPage = () => {
             ].map(({ icon: Icon, text }, i) => (
               <div
                 key={`occ-promise-${i}`}
-                className="flex items-center gap-2 bg-[var(--color-cream)] border border-gray-200/60 rounded-full px-5 py-2.5 shadow-sm"
+                className="flex items-center gap-2 bg-white/80 backdrop-blur-md border border-[var(--color-gold)]/20 rounded-full px-6 py-3 shadow-lg shadow-[var(--color-gold)]/5"
               >
-                <Icon size={12} className="text-[var(--color-accent)]" />
-                <span className="text-xs text-slate-700 font-bold tracking-wide font-inter">{text}</span>
+                <Icon size={12} className="text-[var(--color-gold)]" />
+                <span className="text-xs text-[var(--color-primary)] font-bold tracking-wide font-inter">{text}</span>
               </div>
             ))}
           </div>
@@ -501,7 +496,13 @@ const OccasionsPage = () => {
               <div
                 key={`occ-recip-${index}`}
                 onClick={() => navigate(`/category?cat=${encodeURIComponent(item.category)}`)}
-                className="group relative overflow-hidden rounded-2xl bg-white shadow-soft hover:shadow-soft-lg hover:shadow-rose-500/10 hover:scale-[1.02] transition-all duration-500 cursor-pointer"
+                className="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-[var(--color-gold)]/10 hover:scale-[1.03] transition-all duration-500 cursor-pointer"
+                style={{
+                  background:"rgba(255,255,255,0.58)",
+                  backdropFilter:"blur(16px) saturate(1.3)",
+                  WebkitBackdropFilter:"blur(16px) saturate(1.3)",
+                  border:"1px solid rgba(255,255,255,0.35)"
+                }}
               >
                 <div className="h-52 overflow-hidden bg-[var(--color-blush)]/20">
                   <img
@@ -514,7 +515,7 @@ const OccasionsPage = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4 z-10">
                   <h3 className="text-white font-bold text-base font-serif-display">{item.label}</h3>
-                  <div className="flex items-center gap-1 mt-1 opacity-0 group-hover:opacity-100 transition duration-300">
+                  <div className="flex items-center gap-1 mt-1 translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
                     <span className="text-white text-[10px] font-bold tracking-wider uppercase">Explore</span>
                     <ArrowRight size={10} className="text-white" />
                   </div>
@@ -554,15 +555,22 @@ const OccasionsPage = () => {
                 key={item.id}
                 onClick={() => navigate(`/category?cat=${encodeURIComponent(item.category)}`)}
                 whileHover={{ y: -6, scale: 1.02 }}
-                className="group bg-white rounded-2xl border border-gray-100 overflow-hidden cursor-pointer flex flex-col"
+                className="group rounded-2xl overflow-hidden cursor-pointer flex flex-col transition-all duration-500 shadow-lg hover:shadow-2xl"
+                style={{
+                  background:"rgba(255,255,255,0.58)",
+                  backdropFilter:"blur(16px) saturate(1.3)",
+                  WebkitBackdropFilter:"blur(16px) saturate(1.3)",
+                  border:"1px solid rgba(255,255,255,0.35)"
+                }}
               >
                 <div className="aspect-square overflow-hidden bg-[var(--color-blush)]/20 relative">
                   <LazyImage
                     src={item.image}
                     alt={item.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute top-2.5 left-2.5 bg-white/95 backdrop-blur-md text-[8px] font-black tracking-widest text-gray-700 rounded-full px-2.5 py-1 uppercase border border-gray-100 z-10">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-md text-[8px] font-black tracking-widest text-[var(--color-primary)] rounded-full px-3 py-1 uppercase border border-white/30 z-10 shadow-lg">
                     {item.occasion}
                   </div>
                 </div>
@@ -575,16 +583,16 @@ const OccasionsPage = () => {
                     <Star size={10} className="text-amber-400 fill-amber-400" />
                     <span className="text-[10px] text-gray-500 font-bold font-inter mt-0.5">{item.rating}</span>
                   </div>
-                  <div className="flex items-center justify-between mt-auto">
+                  <div className="flex items-center justify-between mt-auto pt-2 border-t border-white/30">
                     <a href="tel:9540849659" className="font-bold text-[var(--color-accent)] text-sm inline-flex items-center gap-1.5"><Phone size={14} className="icon-wiggle" /> Call for Price</a>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleCart(item.id);
                       }}
-                      className={`group w-9 h-9 rounded-full flex items-center justify-center border transition-all duration-300 shadow-soft ${
+                      className={`group w-9 h-9 rounded-full flex items-center justify-center border transition-all duration-300 shadow-lg ${
                         addedToCart[item.id]
-                          ? "bg-emerald-500 border-emerald-500"
+                          ? "bg-emerald-500 border-emerald-500 shadow-emerald-200"
                           : "bg-[#D6537A] border-rose-500 hover:bg-rose-600 hover:scale-110 shadow-rose-200"
                       }`}
                       aria-label="Add to cart"

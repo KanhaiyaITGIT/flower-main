@@ -66,10 +66,9 @@ const AboutUs = () => {
           <FloatingDecoration type="petal5" side="left" bottom="8%" size={32} opacity={0.1} delay={0.5} duration={12} animation="sway1" color="#d1bca8" />
           <FloatingDecoration type="petal" side="right" bottom="6%" size={22} opacity={0.1} delay={1.8} duration={15} animation="sway2" color="#d1bca8" />
         </div>
-        <section style={{
+        <section className="relative flex items-center overflow-hidden" style={{
           background: "linear-gradient(135deg,#0d0805 0%,#1a0f0a 40%,#120c08 100%)",
-          position: "relative", overflow: "hidden",
-          minHeight: "85vh", display: "flex", alignItems: "center"
+          minHeight: "85vh"
         }}>
           {/* Gold left bar */}
           <div style={{
@@ -98,26 +97,17 @@ const AboutUs = () => {
               variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
             >
               {/* Eyebrow */}
-              <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }} style={{
-                display:"inline-flex",alignItems:"center",gap:"10px",marginBottom:"26px"
-              }}>
-                <div style={{
-                  width:"6px",height:"6px",borderRadius:"50%",background:"#c9a96e",flexShrink:0,
+              <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }} className="inline-flex items-center gap-[10px] mb-[26px]">
+                <div className="w-[6px] h-[6px] rounded-full bg-[var(--color-gold)] flex-shrink-0" style={{
                   animation:"pulseDot 2.4s ease-in-out infinite"
                 }}/>
-                <span style={{
-                  color:"#c9a96e",fontSize:"11px",fontWeight:700,
-                  letterSpacing:"0.2em",textTransform:"uppercase"
-                }}>
+                <span className="text-[var(--color-gold)] text-[11px] font-bold tracking-[0.2em] uppercase">
                   Shivam Florist · Est. 2022
                 </span>
               </motion.div>
 
               {/* Headline */}
-              <motion.h1 variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.1 } } }} className="dp hero-h1" style={{
-                fontWeight:700, color:"#fff", maxWidth:"680px",
-                marginBottom:"22px", letterSpacing:"-0.01em"
-              }}>
+              <motion.h1 variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.1 } } }} className="dp hero-h1 text-white max-w-[680px] mb-[22px] tracking-[-0.01em]">
                 Flowers as
                 <br/>
                 <em className="dp gold-text" style={{fontStyle:"italic"}}>
@@ -126,41 +116,28 @@ const AboutUs = () => {
               </motion.h1>
 
               {/* Sub */}
-              <motion.p variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.2 } } }} className="hero-sub" style={{
-                color:"rgba(255,255,255,0.52)", lineHeight:1.75,
-                maxWidth:"460px", marginBottom:"36px", fontWeight:300
-              }}>
+              <motion.p variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.2 } } }} className="hero-sub text-white/50 leading-[1.75] max-w-[460px] mb-[36px] font-light">
                 We're a design-first floral studio. Built to make flowers feel less like an afterthought and more like the whole point.
               </motion.p>
 
               {/* CTAs */}
               <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.3 } } }} className="hero-cta-row">
-                <a href="/decor" className="cta-pri" style={{ padding:"14px 28px" }}>
+                <a href="/decor" className="cta-pri px-7 py-[14px]">
                   <Sparkles size={14} className="btn-icon"/> See Our Work
                 </a>
                 <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer"
-                  className="cta-ghost"
-                  style={{
-                    color:"#fff", padding:"13px 24px", fontSize:"14px",
-                    border:"1px solid rgba(255,255,255,0.2)",
-                    backdropFilter:"blur(8px)",
-                    background:"rgba(255,255,255,0.06)"
-                  }}
-                  onMouseEnter={e=>{e.currentTarget.style.background="rgba(255,255,255,0.12)";e.currentTarget.style.borderColor="rgba(255,255,255,0.32)";}}
-                  onMouseLeave={e=>{e.currentTarget.style.background="rgba(255,255,255,0.06)";e.currentTarget.style.borderColor="rgba(255,255,255,0.2)";}}
+                  className="cta-ghost text-white px-6 py-[13px] text-[14px] border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/30 transition-all duration-300"
                 >
                   <MessageCircle size={14} className="btn-icon"/> Chat with Us
                 </a>
               </motion.div>
 
               {/* Stars */}
-              <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.4 } } }} style={{
-                display:"flex",alignItems:"center",gap:"10px",marginTop:"28px",flexWrap:"wrap"
-              }}>
-                <div style={{display:"flex",gap:"3px"}}>
-                  {[...Array(5)].map((_,i)=><Star key={`about-star-${i}`} size={12} fill="#c9a96e" style={{color:"#c9a96e"}}/>)}
+              <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.4 } } }} className="flex items-center gap-[10px] mt-7 flex-wrap">
+                <div className="flex gap-[3px]">
+                  {[...Array(5)].map((_,i)=><Star key={`about-star-${i}`} size={12} fill="#C9A15A" className="text-[var(--color-gold)]"/>)}
                 </div>
-                <span style={{color:"rgba(255,255,255,0.38)",fontSize:"12px"}}>4.9 · 800+ happy customers</span>
+                <span className="text-white/35 text-[12px]">4.9 · 800+ happy customers</span>
               </motion.div>
             </motion.div>
           </div>
@@ -168,13 +145,12 @@ const AboutUs = () => {
 
 
         {/* ── STATS STRIP ──────────────────────────────── */}
-        <section style={{
-          background:"linear-gradient(135deg,#0f0b08,#1a1108,#0f0b08)",
-          position:"relative",overflow:"hidden"
+        <section className="relative overflow-hidden" style={{
+          background:"linear-gradient(135deg,#0f0b08,#1a1108,#0f0b08)"
         }}>
-          <div style={{ position:"absolute",top:0,left:0,right:0,height:"1px",
+          <div className="absolute top-0 left-0 right-0 h-[1px]" style={{
             background:"linear-gradient(90deg,transparent,rgba(201,169,110,0.5),rgba(232,102,122,0.35),rgba(201,169,110,0.5),transparent)"}}/>
-          <div style={{ position:"absolute",bottom:0,left:0,right:0,height:"1px",
+          <div className="absolute bottom-0 left-0 right-0 h-[1px]" style={{
             background:"linear-gradient(90deg,transparent,rgba(201,169,110,0.25),transparent)"}}/>
           {/* center glow */}
           <BokehLights spots={[
@@ -183,21 +159,13 @@ const AboutUs = () => {
             { color: "from-violet-400/6 to-transparent", size: 200, bottom: "-6%", left: "15%", anim: "bk-drift2", delay: 4, duration: 28 },
           ]} />
 
-          <div className="inner stats-wrap" style={{ padding:"0 24px" }}>
+          <div className="inner stats-wrap px-6">
             {stats.map(({value,suffix,label},i)=>(
-              <div key={`about-stat-${i}`} style={{
-                padding:"clamp(1.6rem,4vw,2.4rem) 12px",
-                textAlign:"center",
-                borderRight: i<3 ? "1px solid rgba(255,255,255,0.06)" : "none"
-              }}>
-                <div className="dp" style={{
-                  fontSize:"clamp(1.8rem,5vw,2.7rem)",fontWeight:700,lineHeight:1,marginBottom:"8px",
-                  background:"linear-gradient(135deg,#f0d5a0 0%,#c9a96e 50%,#a07840 100%)",
-                  WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text"
-                }}>
+              <div key={`about-stat-${i}`} className={`text-center p-[clamp(1.6rem,4vw,2.4rem)] px-3 ${i<3 ? "border-r border-white/5" : ""}`}>
+                <div className="dp text-[clamp(1.8rem,5vw,2.7rem)] font-bold leading-none mb-2 bg-gradient-to-b from-[#f0d5a0] via-[#C9A15A] to-[#a07840] bg-clip-text text-transparent">
                   <AnimatedCounter target={value} suffix={suffix}/>
                 </div>
-                <div style={{color:"rgba(255,255,255,0.38)",fontSize:"10px",fontWeight:700,letterSpacing:"0.16em",textTransform:"uppercase"}}>
+                <div className="text-white/35 text-[10px] font-bold tracking-[0.16em] uppercase">
                   {label}
                 </div>
               </div>
@@ -206,15 +174,15 @@ const AboutUs = () => {
         </section>
 
         {/* ── STORY ────────────────────────────────────── */}
-        <section className="sp" style={{ background:"#faf7f2", position:"relative", overflow:"hidden" }}>
+        <section className="sp relative overflow-hidden bg-[#faf7f2]">
           <FloatingDecoration type="rose" side="left" top="6%" size={44} opacity={0.07} delay={0} duration={16} animation="breathe" color="#e8667a" />
           <FloatingDecoration type="lotus" side="right" top="8%" size={48} opacity={0.06} delay={1.5} duration={18} animation="drift-bloom" color="#C9A15A" />
           <FloatingDecoration type="petal6" side="left" top="auto" bottom="8%" size={36} opacity={0.08} delay={3} duration={14} animation="sway3" color="#C9A15A" />
           <div className="inner">
             {/* Section label */}
-            <div style={{display:"flex",alignItems:"center",gap:"14px",marginBottom:"52px"}}>
-              <div style={{height:"1px",width:"36px",background:"#e8667a"}}/>
-              <span style={{color:"#e8667a",fontSize:"11px",fontWeight:700,letterSpacing:"0.2em",textTransform:"uppercase"}}>
+            <div className="flex items-center gap-[14px] mb-[52px]">
+              <div className="h-[1px] w-[36px] bg-[#e8667a]"/>
+              <span className="text-[#e8667a] text-[11px] font-bold tracking-[0.2em] uppercase">
                 Our Story
               </span>
             </div>
@@ -233,10 +201,7 @@ const AboutUs = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
               >
-                <h2 className="dp story-h2" style={{
-                  fontWeight:700,color:"#1a0f0a",lineHeight:1.06,
-                  marginBottom:"28px",letterSpacing:"-0.01em"
-                }}>
+                <h2 className="dp story-h2 font-bold text-[#1a0f0a] leading-[1.06] mb-7 tracking-[-0.01em]">
                   We started because
                   <br/>
                   <em className="dp" style={{color:"#c9a96e",fontStyle:"italic"}}>
@@ -245,17 +210,17 @@ const AboutUs = () => {
                 </h2>
 
                 {/* Pull quote */}
-                <div style={{borderLeft:"3px solid #e8667a",paddingLeft:"20px",marginBottom:"28px"}}>
-                  <p style={{color:"#6b4c3b",fontSize:"1.02rem",lineHeight:1.7,fontStyle:"italic"}}>
+                <div className="border-l-[3px] border-[#e8667a] pl-5 mb-7">
+                  <p className="text-[#6b4c3b] text-[1.02rem] leading-[1.7] italic">
                     "India's flower market wastes nearly 30% of its produce daily. We set out to fix that — and make something beautiful in the process."
                   </p>
-                  <p style={{color:"#c9a96e",fontSize:"12px",fontWeight:700,marginTop:"10px",letterSpacing:"0.08em"}}>
+                  <p className="text-[var(--color-gold)] text-[12px] font-bold mt-[10px] tracking-[0.08em]">
                     — SHIVAM, Founder
                   </p>
                 </div>
 
                 {/* Ornament */}
-                <div style={{display:"flex",gap:"6px",alignItems:"center"}}>
+                <div className="flex gap-[6px] items-center">
                   {["#e8667a","#c9a96e","#e8667a"].map((c,i)=>(
                     <svg key={`about-ornament-${i}`} width="18" height="18" viewBox="0 0 100 100" style={{opacity:0.75}}>
                       {[0,72,144,216,288].map(a=>(
@@ -273,25 +238,23 @@ const AboutUs = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                style={{paddingTop:"4px"}}
+                className="pt-1"
               >
-                <p style={{color:"#7a5c4f",fontSize:"1rem",lineHeight:1.8,marginBottom:"18px"}}>
+                <p className="text-[#7a5c4f] text-[1rem] leading-[1.8] mb-[18px]">
                   Shivam Florist was started in 2022 by SHIVAM. The idea was disarmingly simple: what if flowers actually arrived the day they were cut, arranged by someone who cared, and delivered like they mattered?
                 </p>
-                <p style={{color:"#7a5c4f",fontSize:"1rem",lineHeight:1.8,marginBottom:"18px"}}>
+                <p className="text-[#7a5c4f] text-[1rem] leading-[1.8] mb-[18px]">
                   India's floriculture system is traditionally fragmented and waste-heavy. Most shops work on next-day inventory, not today's farm output. We built the opposite — a demand-first, design-first model that sources every morning and delivers every afternoon.
                 </p>
-                <p style={{color:"#7a5c4f",fontSize:"1rem",lineHeight:1.8}}>
+                <p className="text-[#7a5c4f] text-[1rem] leading-[1.8]">
                   What started as a delivery business became a design studio. Today we do everyday gifting, event décor, corporate arrangements, and wedding floristry — all under one roof, all with the same promise: fresh, intentional, on time.
                 </p>
 
-                <div style={{marginTop:"28px",display:"flex",flexWrap:"wrap",gap:"10px"}}>
+                <div className="mt-7 flex flex-wrap gap-[10px]">
                   {["Farm-to-door freshness","Design-led always","India's first farm-direct model"].map((tag,i)=>(
-                    <span key={`about-tag-${i}`} style={{
-                      background:"#fff",border:"1px solid #e8d5c0",
-                      color:"#9a6b4b",borderRadius:"18px",
-                      padding:"6px 16px",fontSize:"12px",fontWeight:600
-                    }}>✓ {tag}</span>
+                    <span key={`about-tag-${i}`} className="bg-white border border-[#e8d5c0] text-[#9a6b4b] rounded-[18px] px-4 py-[6px] text-[12px] font-semibold">
+                      ✓ {tag}
+                    </span>
                   ))}
                   </div>
                 </motion.div>
@@ -300,28 +263,26 @@ const AboutUs = () => {
           </section>
 
         {/* ── VALUES ───────────────────────────────────── */}
-        <section className="sp" style={{ background:"#fff", position:"relative", overflow:"hidden" }}>
+        <section className="sp relative overflow-hidden bg-white">
           <FloatingDecoration type="lotus" side="left" top="5%" size={52} opacity={0.08} delay={0} duration={18} animation="drift-bloom" color="#C9A15A" />
           <FloatingDecoration type="petal6" side="left" top="28%" size={55} opacity={0.1} delay={1.5} duration={13} animation="sway2" color="#C9A15A" />
           <FloatingDecoration type="rose" side="right" top="8%" size={48} opacity={0.08} delay={0.8} duration={16} animation="bloom" color="#e8667a" />
           <FloatingDecoration type="petal5" side="right" top="35%" size={50} opacity={0.08} delay={2.5} duration={14} color="#e8667a" />
           <FloatingDecoration type="leaf" side="left" top="auto" bottom="8%" size={44} opacity={0.12} delay={1} duration={11} animation="sway3" color="#14301F" />
           <div className="inner">
-            <div style={{textAlign:"center",marginBottom:"52px"}}>
-              <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:"14px",marginBottom:"14px"}}>
-                <div style={{height:"1px",width:"28px",background:"#c9a96e"}}/>
-                <span style={{color:"#c9a96e",fontSize:"11px",fontWeight:700,letterSpacing:"0.2em",textTransform:"uppercase"}}>
+            <div className="text-center mb-[52px]">
+              <div className="flex justify-center items-center gap-[14px] mb-[14px]">
+                <div className="h-[1px] w-[28px] bg-[var(--color-gold)]"/>
+                <span className="text-[var(--color-gold)] text-[11px] font-bold tracking-[0.2em] uppercase">
                   What We Stand For
                 </span>
-                <div style={{height:"1px",width:"28px",background:"#c9a96e"}}/>
+                <div className="h-[1px] w-[28px] bg-[var(--color-gold)]"/>
               </div>
-              <h2 className="dp vals-h2" style={{
-                fontWeight:700,color:"#1a0f0a",lineHeight:1.1,marginBottom:"14px"
-              }}>
+              <h2 className="dp vals-h2 font-bold text-[#1a0f0a] leading-[1.1] mb-[14px]">
                 Four things we
-                <em className="dp" style={{color:"#e8667a",fontStyle:"italic"}}> never compromise.</em>
+                <em className="dp text-[#e8667a] italic"> never compromise.</em>
               </h2>
-              <p style={{color:"#9a7c6f",fontSize:"0.93rem",maxWidth:"380px",margin:"0 auto",lineHeight:1.7}}>
+              <p className="text-[#9a7c6f] text-[0.93rem] max-w-[380px] mx-auto leading-[1.7]">
                 These aren't marketing lines. They're the decisions we make before sunrise every morning.
               </p>
             </div>
@@ -334,21 +295,19 @@ const AboutUs = () => {
               className="vals-grid"
             >
               {values.map(({icon:Icon,title,desc,color,bg},i)=>(
-                <div key={`about-value-${i}`} className="val-card" style={{
-                  background:bg,borderRadius:"18px",padding:"clamp(24px,4vw,36px) clamp(20px,3vw,32px)",
-                  border:`1px solid ${color}22`
+                <div key={`about-value-${i}`} className="val-card rounded-[18px] p-[clamp(24px,4vw,36px)_clamp(20px,3vw,32px)] border transition-all duration-500 group hover:shadow-2xl hover:shadow-[var(--color-gold)]/5 hover:-translate-y-1" style={{
+                  background:`linear-gradient(135deg,${bg},rgba(255,255,255,0.95))`,
+                  borderColor:`${color}33`
                 }}>
-                  <div style={{
-                    width:"48px",height:"48px",borderRadius:"18px",
-                    background:"#fff",display:"flex",alignItems:"center",justifyContent:"center",
-                    marginBottom:"18px",boxShadow:`0 4px 16px ${color}22`,flexShrink:0
+                  <div className="w-[48px] h-[48px] rounded-[18px] bg-white/80 backdrop-blur-md flex items-center justify-center mb-[18px] flex-shrink-0 shadow-lg" style={{
+                    boxShadow:`0 8px 24px ${color}22`
                   }}>
                     <Icon size={22} style={{color}}/>
                   </div>
-                  <h3 className="dp" style={{fontSize:"1.45rem",fontWeight:700,color:"#1a0f0a",marginBottom:"10px"}}>
+                  <h3 className="dp text-[1.45rem] font-bold text-[#1a0f0a] mb-[10px]">
                     {title}
                   </h3>
-                  <p style={{color:"#8a6e63",fontSize:"0.9rem",lineHeight:1.75}}>{desc}</p>
+                  <p className="text-[#8a6e63] text-[0.9rem] leading-[1.75]">{desc}</p>
                 </div>
               ))}
             </motion.div>
@@ -356,49 +315,47 @@ const AboutUs = () => {
         </section>
 
         {/* ── TESTIMONIALS ─────────────────────────────── */}
-        <section className="sp" style={{ background:"#faf7f2", position:"relative", overflow:"hidden" }}>
+        <section className="sp relative overflow-hidden bg-[#faf7f2]">
           <FloatingDecoration type="lotus" side="left" top="8%" size={52} opacity={0.07} delay={0} duration={18} animation="drift-bloom" color="#C9A15A" />
           <FloatingDecoration type="rose" side="right" top="12%" size={44} opacity={0.06} delay={1.5} duration={16} animation="breathe" color="#e8667a" />
           <FloatingDecoration type="petal5" side="right" top="auto" bottom="10%" size={40} opacity={0.08} delay={3} duration={14} animation="sway3" color="#C9A15A" />
           <div className="inner">
-            <div style={{textAlign:"center",marginBottom:"48px"}}>
-              <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:"14px",marginBottom:"14px"}}>
-                <div style={{height:"1px",width:"28px",background:"#e8667a"}}/>
-                <span style={{color:"#e8667a",fontSize:"11px",fontWeight:700,letterSpacing:"0.2em",textTransform:"uppercase"}}>
+            <div className="text-center mb-[48px]">
+              <div className="flex justify-center items-center gap-[14px] mb-[14px]">
+                <div className="h-[1px] w-[28px] bg-[#e8667a]"/>
+                <span className="text-[#e8667a] text-[11px] font-bold tracking-[0.2em] uppercase">
                   What Clients Say
                 </span>
-                <div style={{height:"1px",width:"28px",background:"#e8667a"}}/>
+                <div className="h-[1px] w-[28px] bg-[#e8667a]"/>
               </div>
-              <h2 className="dp" style={{
-                fontSize:"clamp(1.8rem,5vw,3rem)",fontWeight:700,color:"#1a0f0a",lineHeight:1.1
-              }}>
+              <h2 className="dp text-[clamp(1.8rem,5vw,3rem)] font-bold text-[#1a0f0a] leading-[1.1]">
                 Words from
-                <em className="dp" style={{color:"#c9a96e",fontStyle:"italic"}}> real celebrations.</em>
+                <em className="dp text-[var(--color-gold)] italic"> real celebrations.</em>
               </h2>
             </div>
 
             <div className="testi-grid">
               {testimonials.map(({text,name,occasion,rating},i)=>(
-                <div key={`about-testimonial-${i}`} style={{
-                  background:"#fff",borderRadius:"18px",
-                  padding:"clamp(22px,3vw,32px)",
-                  border:"1px solid #f0e8e0",
-                  display:"flex",flexDirection:"column",gap:"14px"
+                <div key={`about-testimonial-${i}`} className="rounded-[18px] p-[clamp(22px,3vw,32px)] flex flex-col gap-[14px] transition-all duration-500 hover:shadow-xl hover:-translate-y-1" style={{
+                  background:"rgba(255,255,255,0.72)",
+                  backdropFilter:"blur(16px) saturate(1.3)",
+                  WebkitBackdropFilter:"blur(16px) saturate(1.3)",
+                  border:"1px solid rgba(255,255,255,0.6)"
                 }}>
                   {/* Stars */}
-                  <div style={{display:"flex",gap:"3px"}}>
+                  <div className="flex gap-[3px]">
                     {[...Array(rating)].map((_,j)=>(
-                      <Star key={`about-testi-star-${j}`} size={13} fill="#c9a96e" style={{color:"#c9a96e"}}/>
+                      <Star key={`about-testi-star-${j}`} size={13} fill="#C9A15A" className="text-[var(--color-gold)]"/>
                     ))}
                   </div>
                   {/* Quote icon */}
-                  <Quote size={22} style={{color:"#e8667a",opacity:0.4}}/>
-                  <p style={{color:"#6b4c3b",fontSize:"0.92rem",lineHeight:1.75,flex:1,fontStyle:"italic"}}>
+                  <Quote size={22} className="text-[#e8667a] opacity-40"/>
+                  <p className="text-[#6b4c3b] text-[0.92rem] leading-[1.75] flex-1 italic">
                     {text}
                   </p>
-                  <div style={{borderTop:"1px solid #f3f4f6",paddingTop:"14px"}}>
-                    <p style={{fontWeight:700,color:"#1a0f0a",fontSize:"14px"}}>{name}</p>
-                    <p style={{color:"#c9a96e",fontSize:"11px",fontWeight:600,letterSpacing:"0.06em",textTransform:"uppercase"}}>
+                  <div className="border-t border-white/60 pt-[14px]">
+                    <p className="font-bold text-[#1a0f0a] text-[14px]">{name}</p>
+                    <p className="text-[var(--color-gold)] text-[11px] font-semibold tracking-[0.06em] uppercase">
                       {occasion}
                     </p>
                   </div>
@@ -409,50 +366,44 @@ const AboutUs = () => {
         </section>
 
         {/* ── TIMELINE ─────────────────────────────────── */}
-        <section className="sp" style={{ background:"#fff", position:"relative", overflow:"hidden" }}>
+        <section className="sp relative overflow-hidden bg-gradient-to-b from-white via-[#fdfaf5] to-white">
           <FloatingDecoration type="rose" side="right" top="8%" size={48} opacity={0.06} delay={0} duration={18} animation="bloom" color="#C9A15A" />
           <FloatingDecoration type="lotus" side="left" top="auto" bottom="10%" size={44} opacity={0.05} delay={2} duration={16} animation="drift-bloom" color="#e8667a" />
           <div className="inner-md">
-            <div style={{textAlign:"center",marginBottom:"56px"}}>
-              <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:"14px",marginBottom:"14px"}}>
-                <div style={{height:"1px",width:"26px",background:"#e8667a"}}/>
-                <span style={{color:"#e8667a",fontSize:"11px",fontWeight:700,letterSpacing:"0.2em",textTransform:"uppercase"}}>
+            <div className="text-center mb-[56px]">
+              <div className="flex justify-center items-center gap-[14px] mb-[14px]">
+                <div className="h-[1px] w-[26px] bg-[var(--color-gold)]"/>
+                <span className="text-[var(--color-gold)] text-[11px] font-bold tracking-[0.2em] uppercase">
                   Our Journey
                 </span>
-                <div style={{height:"1px",width:"26px",background:"#e8667a"}}/>
+                <div className="h-[1px] w-[26px] bg-[var(--color-gold)]"/>
               </div>
-              <h2 className="dp" style={{
-                fontSize:"clamp(1.8rem,5vw,3rem)",fontWeight:700,color:"#1a0f0a",lineHeight:1.1
-              }}>
+              <h2 className="dp text-[clamp(1.8rem,5vw,3rem)] font-bold text-[#1a0f0a] leading-[1.1]">
                 Rooted in craft,
                 <br/>
-                <em className="dp" style={{color:"#c9a96e",fontStyle:"italic"}}>growing every season.</em>
+                <em className="dp text-[var(--color-gold)] italic">growing every season.</em>
               </h2>
             </div>
 
             <div className="tl-wrap">
-              <div className="tl-line"/>
-              <div style={{display:"flex",flexDirection:"column",gap:"44px"}}>
+              <div className="tl-line !bg-gradient-to-b from-[var(--color-gold)]/50 via-[var(--color-gold)]/20 to-transparent"/>
+              <div className="flex flex-col gap-11">
                 {milestones.map(({year,title,desc,color},i)=>(
-                  <div key={`about-milestone-${i}`} style={{position:"relative"}}>
+                  <div key={`about-milestone-${i}`} className="relative group">
                     {/* Dot */}
-                    <div className="tl-dot" style={{
-                      position:"absolute",left:"-38px",top:"5px",
-                      width:"14px",height:"14px",borderRadius:"50%",
-                      background:color,border:"3px solid #fff",
-                      boxShadow:`0 0 0 3px ${color}44`,
-                      zIndex:2,flexShrink:0
+                    <div className="tl-dot absolute left-[-38px] top-[5px] w-[14px] h-[14px] rounded-full z-10 flex-shrink-0 transition-all duration-300 group-hover:scale-[1.4]" style={{
+                      background:`linear-gradient(135deg,${color},${color}cc)`,
+                      border:"3px solid #fff",
+                      boxShadow:`0 0 0 3px ${color}44, 0 4px 12px ${color}33`
                     }}/>
-                    <span style={{
-                      display:"inline-block",
-                      background:color+"18",color:color,
-                      fontSize:"11px",fontWeight:700,letterSpacing:"0.1em",
-                      borderRadius:"18px",padding:"3px 12px",marginBottom:"8px"
+                    <span className="inline-block text-[11px] font-bold tracking-[0.1em] rounded-[18px] px-3 py-[3px] mb-2 transition-all duration-300 group-hover:scale-[1.05]" style={{
+                      background:`${color}18`,
+                      color:color
                     }}>{year}</span>
-                    <h3 className="dp" style={{fontSize:"1.3rem",fontWeight:700,color:"#1a0f0a",marginBottom:"6px"}}>
+                    <h3 className="dp text-[1.3rem] font-bold text-[#1a0f0a] mb-[6px] group-hover:translate-x-1 transition-transform duration-300">
                       {title}
                     </h3>
-                    <p style={{color:"#8a6e63",fontSize:"0.9rem",lineHeight:1.7,maxWidth:"500px"}}>
+                    <p className="text-[#8a6e63] text-[0.9rem] leading-[1.7] max-w-[500px]">
                       {desc}
                     </p>
                   </div>
@@ -463,7 +414,7 @@ const AboutUs = () => {
         </section>
 
         {/* ── TEAM ─────────────────────────────────────── */}
-        <section className="sp" style={{ background:"#1a0f0a",position:"relative",overflow:"hidden" }}>
+        <section className="sp relative overflow-hidden bg-[#1a0f0a]">
           <BokehLights spots={[
             { color: "from-rose-400/12 to-transparent", size: 280, top: "-6%", right: "-4%", anim: "bk-drift1", delay: 0, duration: 30 },
             { color: "from-amber-300/10 to-transparent", size: 240, bottom: "-8%", left: "8%", anim: "bk-drift4", delay: 3, duration: 32 },
@@ -479,46 +430,39 @@ const AboutUs = () => {
           <div style={{position:"absolute",bottom:"-60px",left:"-60px",width:"280px",height:"280px",borderRadius:"50%",
             background:"radial-gradient(circle,rgba(232,102,122,0.07) 0%,transparent 70%)",pointerEvents:"none"}}/>
 
-          <div className="inner" style={{position:"relative"}}>
-            <div style={{textAlign:"center",marginBottom:"52px"}}>
-              <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:"14px",marginBottom:"14px"}}>
-                <div style={{height:"1px",width:"26px",background:"#c9a96e",opacity:0.6}}/>
-                <span style={{color:"#c9a96e",fontSize:"11px",fontWeight:700,letterSpacing:"0.2em",textTransform:"uppercase"}}>
+          <div className="inner relative">
+            <div className="text-center mb-[52px]">
+              <div className="flex justify-center items-center gap-[14px] mb-[14px]">
+                <div className="h-[1px] w-[26px] bg-[var(--color-gold)] opacity-60"/>
+                <span className="text-[var(--color-gold)] text-[11px] font-bold tracking-[0.2em] uppercase">
                   The Minds Behind It
                 </span>
-                <div style={{height:"1px",width:"26px",background:"#c9a96e",opacity:0.6}}/>
+                <div className="h-[1px] w-[26px] bg-[var(--color-gold)] opacity-60"/>
               </div>
-              <h2 className="dp team-h2" style={{fontWeight:700,color:"#fff",lineHeight:1.1,marginBottom:"14px"}}>
+              <h2 className="dp team-h2 font-bold text-white leading-[1.1] mb-[14px]">
                 People who care
                 <br/>
-                <em className="dp gold-text" style={{fontStyle:"italic"}}>about every petal.</em>
+                <em className="dp gold-text italic">about every petal.</em>
               </h2>
-              <p style={{color:"rgba(255,255,255,0.42)",fontSize:"0.93rem",maxWidth:"340px",margin:"0 auto",lineHeight:1.7}}>
+              <p className="text-white/40 text-[0.93rem] max-w-[340px] mx-auto leading-[1.7]">
                 A small team with deep craft. Each person owns their domain completely.
               </p>
             </div>
 
             <div className="team-grid">
               {team.map(({name,role,detail,initials,accent},i)=>(
-                <div key={`about-team-${i}`} className="tm-card" style={{
+                <div key={`about-team-${i}`} className="tm-card rounded-[18px] p-[clamp(22px,3vw,32px)_clamp(18px,2vw,24px)] text-center transition-all duration-500 group hover:bg-white/10 hover:border-white/20 hover:-translate-y-1 hover:shadow-2xl" style={{
                   background:"rgba(255,255,255,0.04)",
-                  border:"1px solid rgba(255,255,255,0.08)",
-                  borderRadius:"18px",padding:"clamp(22px,3vw,32px) clamp(18px,2vw,24px)",
-                  textAlign:"center"
+                  border:"1px solid rgba(255,255,255,0.08)"
                 }}>
-                  <div className="tm-avatar" style={{
-                    width:"68px",height:"68px",borderRadius:"50%",
+                  <div className="tm-avatar w-[68px] h-[68px] rounded-full flex items-center justify-center mx-auto mb-[14px] text-[1.25rem] font-bold font-cormorant transition-all duration-500 group-hover:scale-[1.1] group-hover:shadow-lg" style={{
                     background:`linear-gradient(135deg,${accent}33,${accent}66)`,
                     border:`2px solid ${accent}55`,
-                    display:"flex",alignItems:"center",justifyContent:"center",
-                    margin:"0 auto 14px",
-                    fontSize:"1.25rem",fontWeight:700,color:accent,
-                    fontFamily:"'Cormorant Garamond',serif"
+                    color:accent
                   }}>{initials}</div>
-                  <h3 style={{color:"#fff",fontSize:"0.97rem",fontWeight:700,marginBottom:"4px"}}>{name}</h3>
-                  <p style={{color:accent,fontSize:"10px",fontWeight:700,letterSpacing:"0.07em",
-                    marginBottom:"12px",textTransform:"uppercase"}}>{role}</p>
-                  <p style={{color:"rgba(255,255,255,0.42)",fontSize:"0.82rem",lineHeight:1.65}}>{detail}</p>
+                  <h3 className="text-white text-[0.97rem] font-bold mb-1">{name}</h3>
+                  <p className="text-[10px] font-bold tracking-[0.07em] mb-3 uppercase" style={{color:accent}}>{role}</p>
+                  <p className="text-white/40 text-[0.82rem] leading-[1.65]">{detail}</p>
                 </div>
               ))}
             </div>
@@ -526,67 +470,51 @@ const AboutUs = () => {
         </section>
 
         {/* ── MISSION + VISION ─────────────────────────── */}
-        <section className="sp" style={{ background:"#faf7f2", position:"relative", overflow:"hidden" }}>
+        <section className="sp relative overflow-hidden bg-[#faf7f2]">
           <FloatingDecoration type="lotus" side="right" top="8%" size={52} opacity={0.06} delay={0} duration={18} animation="drift-bloom" color="#C9A15A" />
           <FloatingDecoration type="rose" side="left" top="auto" bottom="10%" size={44} opacity={0.05} delay={2} duration={16} animation="breathe" color="#e8667a" />
           <div className="inner">
             <div className="mv-grid">
               {/* Mission */}
-              <div style={{
-                background:"#1a0f0a",borderRadius:"18px",
-                padding:"clamp(32px,5vw,48px) clamp(24px,4vw,40px)",
-                position:"relative",overflow:"hidden"
-              }}>
-                <div style={{position:"absolute",top:"-24px",right:"-24px",opacity:0.07,pointerEvents:"none"}}>
+              <div className="relative overflow-hidden rounded-[18px] p-[clamp(32px,5vw,48px)_clamp(24px,4vw,40px)] bg-[#1a0f0a] shadow-xl">
+                <div className="absolute top-[-24px] right-[-24px] opacity-[0.07] pointer-events-none">
                   <svg width="150" height="150" viewBox="0 0 100 100">
                     {[0,72,144,216,288].map(a=>(
                       <ellipse key={a} cx="50" cy="20" rx="12" ry="24" fill="#e8667a" transform={`rotate(${a} 50 50)`}/>
                     ))}
                   </svg>
                 </div>
-                <div style={{
-                  display:"inline-block",background:"#e8667a22",color:"#e8667a",
-                  fontSize:"10px",fontWeight:700,letterSpacing:"0.2em",textTransform:"uppercase",
-                  borderRadius:"18px",padding:"4px 14px",marginBottom:"18px"
-                }}>Our Mission</div>
-                <h3 className="dp" style={{
-                  fontSize:"clamp(1.6rem,4vw,2rem)",fontWeight:700,color:"#fff",
-                  lineHeight:1.15,marginBottom:"16px"
-                }}>
+                <div className="inline-block bg-[#e8667a]/15 text-[#e8667a] text-[10px] font-bold tracking-[0.2em] uppercase rounded-[18px] px-[14px] py-1 mb-[18px]">
+                  Our Mission
+                </div>
+                <h3 className="dp text-[clamp(1.6rem,4vw,2rem)] font-bold text-white leading-[1.15] mb-4">
                   Freshness,
-                  <em className="dp" style={{color:"#e8667a",fontStyle:"italic"}}> by design.</em>
+                  <em className="dp text-[#e8667a] italic"> by design.</em>
                 </h3>
-                <p style={{color:"rgba(255,255,255,0.5)",fontSize:"0.93rem",lineHeight:1.75}}>
+                <p className="text-white/50 text-[0.93rem] leading-[1.75]">
                   To deliver freshness, creativity, and meaning through every bouquet. We combine nature-inspired design with expert craftsmanship to bring purposeful flowers into modern lives — with reliability, design-led aesthetics, and service that feels personal.
                 </p>
               </div>
 
               {/* Vision */}
-              <div style={{
-                background:"linear-gradient(135deg,#c9a96e,#a07840)",borderRadius:"18px",
-                padding:"clamp(32px,5vw,48px) clamp(24px,4vw,40px)",
-                position:"relative",overflow:"hidden"
+              <div className="relative overflow-hidden rounded-[18px] p-[clamp(32px,5vw,48px)_clamp(24px,4vw,40px)] shadow-xl" style={{
+                background:"linear-gradient(135deg,#c9a96e,#a07840)"
               }}>
-                <div style={{position:"absolute",top:"-24px",right:"-24px",opacity:0.15,pointerEvents:"none"}}>
+                <div className="absolute top-[-24px] right-[-24px] opacity-[0.15] pointer-events-none">
                   <svg width="150" height="150" viewBox="0 0 100 100">
                     {[0,60,120,180,240,300].map(a=>(
                       <ellipse key={a} cx="50" cy="20" rx="10" ry="22" fill="#fff" transform={`rotate(${a} 50 50)`}/>
                     ))}
                   </svg>
                 </div>
-                <div style={{
-                  display:"inline-block",background:"rgba(255,255,255,0.2)",color:"#fff",
-                  fontSize:"10px",fontWeight:700,letterSpacing:"0.2em",textTransform:"uppercase",
-                  borderRadius:"18px",padding:"4px 14px",marginBottom:"18px"
-                }}>Our Vision</div>
-                <h3 className="dp" style={{
-                  fontSize:"clamp(1.6rem,4vw,2rem)",fontWeight:700,color:"#fff",
-                  lineHeight:1.15,marginBottom:"16px"
-                }}>
+                <div className="inline-block bg-white/20 text-white text-[10px] font-bold tracking-[0.2em] uppercase rounded-[18px] px-[14px] py-1 mb-[18px]">
+                  Our Vision
+                </div>
+                <h3 className="dp text-[clamp(1.6rem,4vw,2rem)] font-bold text-white leading-[1.15] mb-4">
                   Flowers as
-                  <em className="dp" style={{fontStyle:"italic",color:"rgba(255,255,255,0.85)"}}> everyday joy.</em>
+                  <em className="dp italic text-white/85"> everyday joy.</em>
                 </h3>
-                <p style={{color:"rgba(255,255,255,0.75)",fontSize:"0.93rem",lineHeight:1.75}}>
+                <p className="text-white/75 text-[0.93rem] leading-[1.75]">
                   To make fresh flowers an everyday joy — not just a luxury for occasions. We aim to redefine how people gift, decorate, and celebrate through thoughtfully designed floral experiences that are easy to access, high in quality, and crafted with care.
                 </p>
               </div>
@@ -595,9 +523,8 @@ const AboutUs = () => {
         </section>
 
         {/* ── FINAL CTA ────────────────────────────────── */}
-        <section className="sp" style={{
-          background:"linear-gradient(135deg,#1a0f0a 0%,#2a1810 100%)",
-          position:"relative",overflow:"hidden"
+        <section className="sp relative overflow-hidden" style={{
+          background:"linear-gradient(135deg,#1a0f0a 0%,#2a1810 100%)"
         }}>
           <FloatingDecoration type="lotus" side="left" top="12%" size={68} opacity={0.08} delay={0} duration={20} animation="drift-bloom" color="#C9A15A" />
           <FloatingDecoration type="rose" side="right" top="8%" size={56} opacity={0.07} delay={1.5} duration={18} animation="breathe" color="#e8667a" />
@@ -615,9 +542,9 @@ const AboutUs = () => {
             </svg>
           </div>
 
-          <div className="inner-sm" style={{textAlign:"center",position:"relative"}}>
+          <div className="inner-sm text-center relative">
             {/* Petal ornament */}
-            <div style={{display:"flex",justifyContent:"center",gap:"6px",marginBottom:"24px"}}>
+            <div className="flex justify-center gap-[6px] mb-6">
               {[...Array(3)].map((_,i)=>(
                 <svg key={`about-petal-${i}`} width="15" height="15" viewBox="0 0 100 100" style={{opacity:0.85}}>
                   {[0,72,144,216,288].map(a=>(
@@ -628,51 +555,34 @@ const AboutUs = () => {
               ))}
             </div>
 
-            <h2 className="dp cta-h2" style={{
-              fontWeight:700,color:"#fff",lineHeight:1.06,marginBottom:"18px"
-            }}>
+            <h2 className="dp cta-h2 font-bold text-white leading-[1.06] mb-[18px]">
               Let's make something
               <br/>
               <em className="dp gold-text" style={{fontStyle:"italic"}}>
                 beautiful together.
               </em>
             </h2>
-            <p style={{
-              color:"rgba(255,255,255,0.45)",fontSize:"clamp(0.9rem,2.5vw,1rem)",
-              lineHeight:1.75,marginBottom:"36px",maxWidth:"420px",margin:"0 auto 36px"
-            }}>
+            <p className="text-white/45 text-[clamp(0.9rem,2.5vw,1rem)] leading-[1.75] max-w-[420px] mx-auto mb-9">
               Whether it's a single bouquet or a full wedding décor — we'd love to hear about your occasion.
             </p>
 
             <div className="cta-row">
-              <a href="/decor" className="cta-pri" style={{padding:"15px 28px"}}>
+              <a href="/decor" className="cta-pri px-7 py-[15px]">
                 <Sparkles size={15} className="btn-icon"/> Plan Your Décor
               </a>
               <a href="https://wa.me/919540849659" target="_blank" rel="noopener noreferrer"
-                className="cta-ghost"
-                style={{
-                  color:"#25d366",padding:"14px 26px",fontSize:"14px",
-                  border:"1px solid rgba(37,211,102,0.3)",
-                  background:"rgba(37,211,102,0.07)"
-                }}
+                className="cta-ghost text-[#25d366] px-[26px] py-[14px] text-[14px] border border-[#25d366]/30 bg-[#25d366]/5 hover:bg-[#25d366]/15 hover:border-[#25d366]/50 transition-all duration-300"
               >
                 <MessageCircle size={15} className="btn-icon"/> WhatsApp Us
               </a>
               <a href="tel:+919540849659"
-                className="cta-ghost"
-                style={{
-                  color:"rgba(255,255,255,0.6)",padding:"14px 24px",fontSize:"14px",
-                  border:"1px solid rgba(255,255,255,0.12)"
-                }}
+                className="cta-ghost text-white/60 px-6 py-[14px] text-[14px] border border-white/10 hover:border-white/25 hover:text-white/80 transition-all duration-300"
               >
                 <Phone size={14} className="btn-icon"/> Call Us
               </a>
             </div>
 
-            <p style={{
-              color:"rgba(255,255,255,0.2)",fontSize:"12px",
-              marginTop:"24px"
-            }}>
+            <p className="text-white/20 text-[12px] mt-6">
               We respond within 10 minutes · Available 9 AM – 9 PM daily
             </p>
           </div>

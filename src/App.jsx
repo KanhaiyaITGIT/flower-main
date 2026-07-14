@@ -37,14 +37,17 @@ const App = () => {
       <CursorFollower />
       <ScrollToTop />
       <PetalFall />
-      <div className="relative w-full overflow-hidden whitespace-nowrap flex items-center bg-white/40 backdrop-blur-[10px] border-b border-white/30 dark:bg-white/[0.02] dark:border-white/10 text-stone-600 dark:text-stone-300 text-[11px] font-semibold tracking-[0.05em] py-1.5 md:py-2 shadow-[0_1px_4px_rgba(0,0,0,0.03)] group">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--color-gold)]/[0.02] to-transparent pointer-events-none" />
-        <span className="w-1 h-1 rounded-full bg-[var(--color-gold)] animate-pulse shrink-0 mx-2.5 relative z-[1]" />
-        <div className="animate-announcement-marquee group-hover:[animation-play-state:paused] relative z-[1]">
-          <Flower2 size={12} className="inline text-[var(--color-gold)]/40 mr-1.5 -mt-0.5" />
+      <div className="relative w-full overflow-hidden whitespace-nowrap flex items-center bg-gradient-to-r from-[#163827]/95 via-[#1a3d28] to-[#163827]/95 text-stone-200 text-[11px] font-semibold tracking-[0.08em] py-2 md:py-2.5 group border-b border-[rgba(214,179,106,0.06)]">
+        <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)] animate-pulse shrink-0 mx-3 relative z-[1] shadow-[0_0_8px_rgba(201,161,90,0.4)]" />
+        <div className="animate-announcement-marquee group-hover:[animation-play-state:paused] relative z-[1] flex items-center gap-2">
+          <span className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[rgba(214,179,106,0.12)] border border-[rgba(214,179,106,0.15)] text-[var(--color-gold)] text-[9px] font-bold uppercase tracking-[0.12em]">
+            Same Day
+          </span>
           <span>Premium fresh delivery across Delhi · Noida · Gurgaon · Greater Noida · Ghaziabad · Faridabad</span>
-          <span className="mx-3 text-[var(--color-gold)]/25">✦</span>
-          <Flower2 size={12} className="inline text-[var(--color-gold)]/40 mr-1.5 -mt-0.5" />
+          <span className="text-[var(--color-gold)]/30">✦</span>
+          <span className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[rgba(214,179,106,0.12)] border border-[rgba(214,179,106,0.15)] text-[var(--color-gold)] text-[9px] font-bold uppercase tracking-[0.12em]">
+            Same Day
+          </span>
           <span>Premium fresh delivery across Delhi · Noida · Gurgaon · Greater Noida · Ghaziabad · Faridabad</span>
         </div>
       </div>

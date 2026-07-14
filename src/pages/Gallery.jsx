@@ -196,43 +196,15 @@ export default function Gallery() {
 
       {/* Premium Header/Hero */}
       <header className="g-hero text-center border-b border-[var(--color-gold)]/15 relative z-1">
-        <p
-          style={{
-            fontSize: "11px",
-            fontWeight: 600,
-            letterSpacing: "0.3em",
-            color: "var(--color-gold)",
-            textTransform: "uppercase",
-            marginBottom: "16px",
-          }}
-        >
+        <p className="text-[11px] font-semibold tracking-[0.3em] text-[var(--color-gold)] uppercase mb-4">
           Our Masterpieces
         </p>
-        <h1
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: "clamp(2.5rem, 6.5vw, 5.2rem)",
-            fontWeight: 400,
-            lineHeight: 1.1,
-            margin: "0 0 24px",
-            color: "#F7F0E8",
-          }}
-        >
+        <h1 className="font-serif-display text-[clamp(2.5rem,6.5vw,5.2rem)] font-normal leading-[1.1] mb-6 text-[#F7F0E8]">
           Every Petal,
           <br />
-          <em style={{ color: "var(--color-gold)", fontStyle: "italic" }}>a gorgeous story.</em>
+          <em className="text-[var(--color-gold)] italic">a gorgeous story.</em>
         </h1>
-        <p
-          style={{
-            fontSize: "clamp(14px, 2vw, 16px)",
-            fontWeight: 300,
-            color: "rgba(247,240,232,0.65)",
-            maxWidth: "500px",
-            margin: "0 auto 30px",
-            lineHeight: 1.8,
-            padding: "0 16px",
-          }}
-        >
+        <p className="text-[clamp(14px,2vw,16px)] font-light text-[rgba(247,240,232,0.65)] max-w-[500px] mx-auto mb-[30px] leading-[1.8] px-4">
           Explore a carefully curated showcase of our luxury floral design, custom event decorations, and visual stories.
         </p>
 
@@ -324,7 +296,7 @@ export default function Gallery() {
                       playsInline
                       preload="metadata"
                     />
-                    <div className="g-video-indicator">
+                    <div className="g-video-indicator opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <div className="g-play-btn">
                         <Play size={18} fill="#0D1F0F" />
                       </div>
@@ -355,27 +327,12 @@ export default function Gallery() {
       </main>
 
       {/* Pagination - Load More */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "16px",
-          padding: "20px 20px 90px",
-        }}
-      >
-        <p
-          style={{
-            fontFamily: "'Poppins', sans-serif",
-            fontSize: "13px",
-            color: "rgba(247,240,232,0.45)",
-            letterSpacing: "0.06em",
-          }}
-        >
+      <div className="flex flex-col items-center gap-4 py-5 pb-[90px]">
+        <p className="font-inter text-[13px] text-[rgba(247,240,232,0.45)] tracking-[0.06em]">
           Showing {visibleItems.length} of {filteredItems.length} works
         </p>
         {hasMore && (
-          <button className="g-load-btn" onClick={handleLoadMore}>
+          <button className="g-load-btn !border-[var(--color-gold)] !text-[var(--color-gold)] hover:!bg-gradient-to-r hover:!from-[#163827] hover:!to-[#1f4a30] hover:!text-white hover:!border-transparent hover:!shadow-xl hover:!shadow-[#163827]/30 !transition-all !duration-300 hover:!scale-[1.03]" onClick={handleLoadMore}>
             Load More
           </button>
         )}
@@ -384,45 +341,21 @@ export default function Gallery() {
       {/* Premium Lightbox Modal */}
       {activeLightboxItem && (
         <div
+          className="fixed inset-0 z-[1000] flex flex-col items-center justify-center"
           style={{
-            position: "fixed",
-            inset: 0,
             background: "rgba(10, 22, 12, 0.96)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 1000,
             backdropFilter: "blur(15px)",
+            WebkitBackdropFilter: "blur(15px)",
           }}
           onClick={() => setLightboxIndex(-1)}
         >
           {/* Lightbox Header Counter and Close */}
-          <div
-            style={{
-              position: "absolute",
-              top: "24px",
-              left: "0",
-              right: "0",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: "0 30px",
-              zIndex: 1010,
-              pointerEvents: "none",
-            }}
-          >
+          <div className="absolute top-6 left-0 right-0 flex justify-between items-center px-[30px] z-[1010] pointer-events-none">
             <span
+              className="pointer-events-auto text-[12px] font-semibold tracking-[0.08em] text-[#F7F0E8] px-[18px] py-2 rounded-[30px] backdrop-blur-md"
               style={{
                 background: "rgba(255, 255, 255, 0.08)",
                 border: "1px solid rgba(255, 255, 255, 0.15)",
-                color: "#F7F0E8",
-                padding: "8px 18px",
-                borderRadius: "30px",
-                fontSize: "12px",
-                fontWeight: 600,
-                letterSpacing: "0.08em",
-                pointerEvents: "auto",
               }}
             >
               {activeLightboxItem.type === "video" ? "MOTION" : "STILL"}{" "}
@@ -431,27 +364,10 @@ export default function Gallery() {
             <button
               onClick={() => setLightboxIndex(-1)}
               aria-label="Close Lightbox"
+              className="w-12 h-12 rounded-full flex items-center justify-center pointer-events-auto text-[#F7F0E8] transition-all duration-300 hover:bg-[var(--color-gold)] hover:text-[#0D1F0F] hover:scale-110"
               style={{
                 background: "rgba(255, 255, 255, 0.08)",
                 border: "1px solid rgba(255, 255, 255, 0.15)",
-                borderRadius: "50%",
-                width: "48px",
-                height: "48px",
-                cursor: "pointer",
-                color: "#F7F0E8",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                transition: "all 0.3s",
-                pointerEvents: "auto",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#C9A15A";
-                e.currentTarget.style.color = "#0D1F0F";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "rgba(255, 255, 255, 0.08)";
-                e.currentTarget.style.color = "#F7F0E8";
               }}
             >
               <X size={20} />
@@ -460,15 +376,7 @@ export default function Gallery() {
 
           {/* Core Content Area with side navigation */}
           <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              width: "100%",
-              maxWidth: "1400px",
-              padding: "0 24px",
-              position: "relative",
-            }}
+            className="flex items-center justify-between w-full max-w-[1400px] px-6 relative"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Prev Button */}
@@ -520,64 +428,31 @@ export default function Gallery() {
             </button>
           </div>
 
-          {/* Bottom Captions */}
+          {/* Bottom Captions - Glassmorphism */}
           <div
-            style={{
-              marginTop: "24px",
-              textAlign: "center",
-              maxWidth: "600px",
-              padding: "0 20px",
-              zIndex: 1010,
-              pointerEvents: "none",
-            }}
+            className="mt-6 text-center max-w-[600px] px-5 z-[1010]"
             onClick={(e) => e.stopPropagation()}
           >
-            <p
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(15px, 2.5vw, 19px)",
-                color: "#F7F0E8",
-                margin: "0 0 8px 0",
-                lineHeight: 1.4,
-              }}
-            >
-              {activeLightboxItem.alt}
-            </p>
-            <p
-              style={{
-                fontSize: "12px",
-                color: activeLightboxItem.accent,
-                fontWeight: 600,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-              }}
-            >
-              Exclusive Design Showcase
-            </p>
+            <div className="inline-block px-6 py-4 rounded-2xl backdrop-blur-xl" style={{
+              background:"rgba(255,255,255,0.06)",
+              border:"1px solid rgba(255,255,255,0.1)"
+            }}>
+              <p className="font-serif-display text-[clamp(15px,2.5vw,19px)] text-[#F7F0E8] mb-1 leading-[1.4]">
+                {activeLightboxItem.alt}
+              </p>
+              <p className="text-[12px] font-semibold tracking-[0.1em] uppercase" style={{color:activeLightboxItem.accent}}>
+                Exclusive Design Showcase
+              </p>
+            </div>
           </div>
         </div>
       )}
 
       {/* Premium Footer Accent */}
-      <footer
-        style={{
-          borderTop: "1px solid rgba(201,161,90,0.15)",
-          padding: "50px 40px",
-          textAlign: "center",
-          position: "relative",
-          zIndex: 1,
-          background: "#0a170c",
-        }}
-      >
-        <p
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: "1.2rem",
-            color: "rgba(247,240,232,0.35)",
-            fontStyle: "italic",
-            margin: 0,
-          }}
-        >
+      <footer className="relative z-1 text-center py-[50px] px-10 bg-[#0a170c]" style={{
+        borderTop: "1px solid rgba(201,161,90,0.15)"
+      }}>
+        <p className="font-serif-display text-[1.2rem] italic text-[rgba(247,240,232,0.35)] m-0">
           Grown with intention. Arranged with love.
         </p>
       </footer>

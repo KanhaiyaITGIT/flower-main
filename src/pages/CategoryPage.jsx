@@ -365,7 +365,7 @@ const CategoryPage = () => {
       </section>
 
       {/* ── Sticky Filter / Search Bar ── */}
-      <div className="sticky top-[80px] z-40 bg-white/85 backdrop-blur-md border-b border-gray-100 shadow-sm py-4">
+      <div className="sticky top-[80px] z-40 bg-white/70 backdrop-blur-xl border-b border-white/30 shadow-lg py-4" style={{background:"rgba(255,255,255,0.58)"}}>
         <div className="max-w-6xl mx-auto px-6 flex flex-col gap-4">
           {/* Scrollable Categories List */}
           <div className="flex gap-2.5 overflow-x-auto scrollbar-hide py-1">
@@ -376,8 +376,8 @@ const CategoryPage = () => {
                   key={cat}
                   onClick={() => handleCategoryChange(cat)}
                   className={`shrink-0 rounded-2xl px-5 py-2 text-xs font-bold tracking-widest uppercase transition-all duration-300 border ${isSelected
-                      ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-soft shadow-[var(--color-primary)]/20"
-                      : "bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:text-[var(--color-primary)] hover:scale-[1.04]"
+                      ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-lg shadow-[var(--color-primary)]/20"
+                      : "bg-white/60 backdrop-blur-sm text-gray-500 border-white/40 hover:border-[var(--color-gold)]/40 hover:text-[var(--color-gold)] hover:bg-white/80 hover:scale-[1.04]"
                     }`}
                 >
                   {cat}
@@ -497,17 +497,26 @@ const CategoryPage = () => {
                     transition={{ duration: 0.4, delay: idx * 0.04 }}
                     key={product.id}
                     whileHover={{ y: -6, scale: 1.02 }}
-                    className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-soft-lg hover:shadow-rose-500/10 cursor-pointer relative flex flex-col"
+                    className="group rounded-2xl overflow-hidden border cursor-pointer relative flex flex-col transition-all duration-500"
+                    style={{
+                      background:"rgba(255,255,255,0.58)",
+                      backdropFilter:"blur(16px) saturate(1.3)",
+                      WebkitBackdropFilter:"blur(16px) saturate(1.3)",
+                      borderColor:"rgba(255,255,255,0.35)"
+                    }}
                   >
                     {/* Image Block */}
-                    <div className="relative overflow-hidden bg-[var(--color-blush)]/20 aspect-[4/3] w-full tilt-card">
-                      <div className="tilt-card-inner">
+                    <div className="relative overflow-hidden bg-[var(--color-blush)]/30 w-full tilt-card" style={{aspectRatio:"1/1"}}>
+                      <div className="tilt-card-inner absolute inset-0">
                         <LazyImage
                           src={product.image}
                           alt={product.name}
-                          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                         />
                       </div>
+
+                      {/* Subtle gradient overlay on hover */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-[1]"/>
 
                       <div className="absolute top-3 left-3 z-10 pointer-events-none">
                         {product.tag && (
@@ -515,14 +524,14 @@ const CategoryPage = () => {
                         )}
                       </div>
 
-                      {/* Hover Slide Add Button */}
+                      {/* Hover Slide Add Button with backdrop blur */}
                       <div className="absolute bottom-0 left-0 right-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10 hidden sm:block">
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             handleAddToCart(product);
                           }}
-                          className={`w-full py-3 text-xs font-bold tracking-widest uppercase transition-all duration-300 flex items-center justify-center gap-1.5 ${addedToCart[product.id] ? "bg-emerald-500 text-white" : "bg-slate-900 text-white hover:bg-[var(--color-accent)] hover:scale-[1.02]"
+                          className={`w-full py-3 text-xs font-bold tracking-widest uppercase transition-all duration-300 flex items-center justify-center gap-1.5 backdrop-blur-md ${addedToCart[product.id] ? "bg-emerald-500/90 text-white" : "bg-black/70 text-white hover:bg-[var(--color-accent)]/90"
                             }`}
                         >
                           {addedToCart[product.id] ? "✓ Added" : "Quick Add"}
@@ -532,7 +541,7 @@ const CategoryPage = () => {
 
                     {/* Meta Details Block */}
                     <div className="p-5 flex flex-col flex-1">
-                      <p className="text-[9px] font-bold text-rose-400 tracking-widest uppercase mb-1">{product.category}</p>
+                      <p className="text-[9px] font-bold text-[var(--color-gold)] tracking-widest uppercase mb-1">{product.category}</p>
                       <h3 className="font-serif-display text-sm font-bold text-[var(--color-primary)] leading-snug mb-1 line-clamp-2">{product.name}</h3>
                       <p className="text-gray-400 text-xs mb-3 line-clamp-1 font-light">{product.desc}</p>
 
@@ -557,7 +566,7 @@ const CategoryPage = () => {
                       </div>
 
                       {/* Pricing Row */}
-                      <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-50">
+                      <div className="flex items-center justify-between mt-auto pt-2 border-t border-white/30">
                         <div className="flex flex-col">
                           <a href="tel:9540849659" className="font-bold text-[var(--color-accent)] text-sm inline-flex items-center gap-1.5"><Phone size={14} className="icon-wiggle" /> Call for Price</a>
                         </div>
@@ -607,20 +616,25 @@ const CategoryPage = () => {
       </RevealSection>
 
       {/* ── Bottom Custom Order Banner ── */}
-      <RevealSection className="py-20 px-6 bg-gradient-to-r from-rose-50 via-pink-50/50 to-amber-50/50 border-t border-gray-100">
-        <div className="max-w-3xl mx-auto text-center flex flex-col items-center gap-6">
-          <p className="text-[10px] font-bold tracking-widest text-rose-400 uppercase font-inter">Custom Arrangements</p>
-          <h2 className="font-serif-display text-3xl md:text-4xl font-black text-[var(--color-primary)] leading-tight">
-            Can't find exactly what you want?
+      <RevealSection className="py-24 px-6 relative overflow-hidden bg-gradient-to-br from-[var(--color-primary)] via-[#1f4a30] to-emerald-950 border-t border-[var(--color-gold)]/20">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[var(--color-gold)]/5 blur-3xl" />
+          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[var(--color-gold)]/30 to-transparent" />
+          <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[var(--color-gold)]/20 to-transparent" />
+        </div>
+        <div className="max-w-3xl mx-auto text-center flex flex-col items-center gap-6 relative z-10">
+          <span className="text-[10px] font-bold tracking-[0.2em] text-[var(--color-gold)] uppercase font-inter">Custom Arrangements</span>
+          <h2 className="font-serif-display text-3xl md:text-5xl font-black text-[#FBF6EF] leading-tight">
+            Can't find exactly <br/>what you want?
           </h2>
-          <p className="text-gray-500 text-sm max-w-sm leading-relaxed font-light font-inter">
+          <p className="text-white/50 text-sm max-w-md leading-relaxed font-light font-inter">
             Tell us your budget, occasion, and favorite blooms. Our master florists will craft a bespoke arrangement just for you.
           </p>
           <a
             href={WHATSAPP_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 bg-[var(--color-primary)] text-white rounded-2xl px-8 py-4 text-xs font-bold tracking-widest uppercase hover:bg-[var(--color-primary)] hover:shadow-soft-lg hover:shadow-[var(--color-primary)]/30 hover:scale-[1.04] transition-all duration-300 shadow-soft"
+            className="group inline-flex items-center gap-2 bg-[var(--color-gold)] text-[var(--color-primary)] rounded-2xl px-10 py-4 text-xs font-bold tracking-widest uppercase hover:bg-white hover:shadow-2xl hover:shadow-[var(--color-gold)]/20 hover:scale-[1.04] transition-all duration-300 shadow-xl"
           >
             💬 Custom Order WhatsApp
           </a>

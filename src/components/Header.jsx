@@ -184,26 +184,25 @@ export default function Header() {
     <>
       <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} />
 
-      <header className={`sticky top-0 z-50 w-full transition-all duration-500 ${
+      <header className={`sticky top-0 z-50 w-full header-glass-premium transition-all duration-700 ${
         scrolled
-          ? "shadow-[0_4px_24px_rgba(0,0,0,0.04)] backdrop-blur-xl bg-white/85 dark:bg-[#06120e]/90 border-b border-white/20 dark:border-white/5"
-          : "bg-white/95 dark:bg-[#06120e] border-b border-stone-100 dark:border-white/5"
+          ? "shadow-[0_1px_0_rgba(0,0,0,0.02),0_8px_32px_rgba(214,179,106,0.04)]"
+          : ""
       }`}>
-        <div className={`transition-all duration-300 ${scrolled ? "border-transparent" : ""}`}>
-          <div className="max-w-[1440px] mx-auto px-4 md:px-8">
-            <div className="flex items-center justify-between h-16 lg:h-[72px] gap-4">
-              <Link to="/" className="flex items-center gap-2.5 shrink-0 group">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-8">
+          <div className="flex items-center justify-between h-16 lg:h-[72px] gap-3 lg:gap-4">
+              <Link to="/" className="flex items-center gap-3 shrink-0 group">
                 <motion.div
-                  whileHover={{ rotate: 15, scale: 1.08 }}
-                  className="w-9 h-9 rounded-full bg-gradient-to-br from-[#14301F] to-[#1a3d28] flex items-center justify-center shadow-[0_2px_8px_rgba(20,48,31,0.15)] group-hover:shadow-[0_4px_16px_rgba(20,48,31,0.25)] transition-shadow duration-300"
+                  whileHover={{ rotate: 12, scale: 1.1 }}
+                  className="w-10 h-10 rounded-full bg-gradient-to-br from-[#14301F] to-[#1a3d28] flex items-center justify-center shadow-[0_2px_8px_rgba(20,48,31,0.12)] group-hover:shadow-[0_4px_20px_rgba(20,48,31,0.25)] transition-all duration-400"
                 >
-                  <Flower2 size={18} color="#C8A882" />
+                  <Flower2 size={19} color="#C8A882" />
                 </motion.div>
                 <span className="hidden sm:inline-block">
-                  <h1 className="font-serif-display font-black text-lg text-[#14301F] dark:text-stone-100 leading-none group-hover:text-[var(--color-gold)] transition-colors duration-300">
+                  <h1 className="font-serif-display font-black text-lg text-[#14301F] dark:text-stone-100 leading-none tracking-wide">
                     {BUSINESS_NAME_MAIN}
                   </h1>
-                  <p className="text-[9px] text-[#C9A15A] font-semibold tracking-widest uppercase leading-tight mt-0.5">
+                  <p className="text-[8px] text-[#C9A15A] font-semibold tracking-[0.2em] uppercase leading-tight mt-0.5">
                     {BUSINESS_NAME_SUB}
                   </p>
                 </span>
@@ -211,9 +210,9 @@ export default function Header() {
 
               <LocationDropdown />
 
-              <div className="hidden md:flex flex-1 max-w-[400px] lg:max-w-[480px]">
+              <div className="hidden md:flex flex-1 max-w-[480px] lg:max-w-[560px] xl:max-w-[620px]">
                 <div className="relative w-full" ref={searchRef}>
-                  <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none z-10" />
+                  <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400/70 pointer-events-none z-10 transition-colors duration-300 peer-focus-within:text-[var(--color-gold)]/60" />
                   <form onSubmit={handleFormSubmit}>
                     <input
                       type="text"
@@ -222,7 +221,7 @@ export default function Header() {
                       onFocus={() => setShowDropdown(true)}
                       onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
                       placeholder="Search flowers, cakes, plants..."
-                      className="w-full h-9 lg:h-10 pl-9 lg:pl-10 pr-4 rounded-full bg-stone-50/80 border border-stone-200/60 text-xs text-stone-700 placeholder-stone-400 outline-none focus:border-[var(--color-gold)]/40 focus:bg-white focus:shadow-[0_0_0_3px_rgba(201,161,90,0.08)] focus:ring-0 transition-all duration-300 dark:bg-white/5 dark:border-white/10 dark:text-stone-200 dark:placeholder-stone-500 dark:focus:bg-[#06120e]"
+                      className="w-full h-11 lg:h-12 pl-12 pr-5 search-premium-xl text-sm text-stone-800 placeholder:text-stone-500 placeholder:font-medium outline-none focus:ring-0 transition-all duration-400 dark:text-stone-200 dark:placeholder:text-stone-400"
                     />
                   </form>
                   {showDropdown && searchQuery.trim() && (
@@ -279,35 +278,35 @@ export default function Header() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-1 sm:gap-2">
+              <div className="flex items-center gap-2 sm:gap-2.5">
                 <button
                   onClick={toggleTheme}
-                  className="flex items-center justify-center w-9 h-9 rounded-full bg-stone-50 text-stone-600 border border-stone-200/60 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 dark:bg-white/5 dark:text-[#C9A15A] dark:border-white/10 dark:hover:bg-white/10 transition-all duration-300"
+                  className="icon-btn-xl text-stone-500 dark:text-stone-400 hover:text-[var(--color-gold)] dark:hover:text-[#C9A15A]"
                   aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
                 >
-                  {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
+                  {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
                 </button>
                 <button
                   onClick={() => navigate("/decor")}
-                  className="hidden lg:flex items-center justify-center w-9 h-9 rounded-full bg-stone-50 text-stone-500 border border-stone-200/60 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 hover:text-[var(--color-accent)] dark:bg-white/5 dark:text-stone-400 dark:border-white/10 dark:hover:text-[#C9A15A] dark:hover:bg-white/10 transition-all duration-300"
+                  className="hidden lg:flex icon-btn-xl text-stone-500 dark:text-stone-400 hover:text-[var(--color-accent)] dark:hover:text-[#C9A15A]"
                   aria-label="Corporate Gifting"
                 >
-                  <Briefcase size={15} />
+                  <Briefcase size={18} />
                 </button>
 
                 <button
                   onClick={() => navigate("/cart")}
-                  className="relative flex items-center justify-center w-9 h-9 rounded-full bg-stone-50 text-stone-500 border border-stone-200/60 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 hover:text-[var(--color-accent)] dark:bg-white/5 dark:text-stone-400 dark:border-white/10 dark:hover:text-[#C9A15A] dark:hover:bg-white/10 transition-all duration-300"
+                  className="relative icon-btn-xl text-stone-500 dark:text-stone-400 hover:text-[var(--color-accent)] dark:hover:text-[#C9A15A]"
                   aria-label="Cart"
                 >
-                  <ShoppingCart size={15} />
+                  <ShoppingCart size={18} />
                   <AnimatePresence>
                     {cartCount > 0 && (
                       <motion.span
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         exit={{ scale: 0 }}
-                        className="absolute -top-0.5 -right-0.5 bg-[var(--color-accent)] text-white text-[8px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white dark:border-[#06120e]"
+                        className="absolute -top-0.5 -right-0.5 bg-[var(--color-accent)] text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white dark:border-[#06120e]"
                       >
                         {cartCount > 9 ? "9+" : cartCount}
                       </motion.span>
@@ -318,7 +317,7 @@ export default function Header() {
                 {user.isLoggedIn ? (
                   <button
                     onClick={() => logout()}
-                    className="hidden lg:flex items-center justify-center w-9 h-9 rounded-full bg-stone-50 border border-stone-200/60 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 dark:bg-white/5 dark:border-white/10 dark:hover:bg-white/10 transition-all duration-300 overflow-hidden"
+                    className="hidden lg:flex icon-btn-xl overflow-hidden"
                     aria-label="Profile"
                   >
                     <img
@@ -330,47 +329,47 @@ export default function Header() {
                 ) : (
                   <button
                     onClick={() => setIsAuthOpen(true)}
-                    className="hidden lg:flex items-center justify-center w-9 h-9 rounded-full bg-stone-50 text-stone-500 border border-stone-200/60 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 hover:text-[var(--color-accent)] dark:bg-white/5 dark:text-stone-400 dark:border-white/10 dark:hover:text-[#C9A15A] dark:hover:bg-white/10 transition-all duration-300"
+                    className="hidden lg:flex icon-btn-xl text-stone-500 dark:text-stone-400 hover:text-[var(--color-accent)] dark:hover:text-[#C9A15A]"
                     aria-label="Sign In"
                   >
-                    <User size={15} />
+                    <User size={18} />
                   </button>
                 )}
 
                 <button
                   onClick={() => setIsOpen(true)}
-                  className="lg:hidden flex items-center justify-center w-9 h-9 rounded-full bg-stone-50 text-stone-500 border border-stone-200/60 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 dark:bg-white/5 dark:text-stone-400 dark:border-white/10 dark:hover:bg-white/10 transition-all duration-300"
+                  className="lg:hidden icon-btn-xl"
                   aria-label="Open menu"
                 >
-                  <Menu size={15} />
+                  <Menu size={18} />
                 </button>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="hidden lg:block bg-white/50 backdrop-blur-md dark:bg-[#06120e]/50 border-b border-stone-100/60 dark:border-white/5">
-          <div className="max-w-[1440px] mx-auto px-4 md:px-8">
-            <nav className="flex items-center justify-start gap-0.5 overflow-x-auto scrollbar-hide">
-              {megaNavLinks.map((link, i) => {
+        <div className="hidden lg:block cat-nav-premium">
+          <div className="max-w-[1440px] mx-auto px-8 h-full">
+            <nav className="flex items-center h-full gap-7 overflow-x-auto scrollbar-hide">
+              {megaNavLinks.map((link) => {
                 const active = location.pathname === link.path || location.search.includes(link.path.split("=")[1] || "");
                 return (
                   <Link
                     key={link.name}
                     to={link.path}
-                    className={`relative px-4 py-2.5 text-[11px] font-semibold tracking-wide whitespace-nowrap transition-all duration-300 flex items-center gap-1 group rounded-xl ${
+                    className={`cat-nav-link group ${
                       active
-                        ? "text-[var(--color-accent)] bg-[var(--color-accent)]/5"
-                        : "text-stone-500 hover:text-[var(--color-primary)] hover:bg-stone-50 dark:text-stone-300 dark:hover:text-[#C9A15A] dark:hover:bg-white/5"
+                        ? "active-nav"
+                        : "text-[#1A1A1A]/70 dark:text-stone-300/80"
                     }`}
                   >
-                    <span className="relative">
-                      {link.name}
-                      <span className={`absolute -bottom-0.5 left-0 h-[2px] bg-[var(--color-accent)] transition-all duration-300 rounded-full ${
-                        active ? "w-full" : "w-0 group-hover:w-full"
-                      }`} />
-                    </span>
-                    <ChevronDown size={9} className="text-stone-300 dark:text-stone-600" />
+                    <span className="relative z-10">{link.name}</span>
+                    <span className="nav-underline" />
+                    {active && (
+                      <span className="nav-active-indicator hidden absolute -bottom-[1px] left-1/2 -translate-x-1/2 flex-col items-center">
+                        <span className="block w-8 h-[2px] bg-gradient-to-r from-[#D6B36A] to-[#C9A15A] rounded-full" />
+                        <span className="block w-[5px] h-[5px] bg-[#D6B36A] rounded-full mt-[1px]" />
+                      </span>
+                    )}
                   </Link>
                 );
               })}
@@ -396,21 +395,21 @@ export default function Header() {
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="fixed top-0 right-0 bottom-0 w-full max-w-[320px] z-50 bg-white dark:bg-[#06120e] shadow-2xl flex flex-col overflow-y-auto"
             >
-              <div className="flex items-center justify-between p-5 bg-gradient-to-br from-[var(--color-primary)] to-[#0D1F0F]">
-                <span className="font-serif-display font-black text-lg text-[var(--color-cream)]">
-                  {BUSINESS_NAME_MAIN} <span className="text-[var(--color-gold)] font-light italic">{BUSINESS_NAME_SUB}</span>
+              <div className="flex items-center justify-between p-5 bg-gradient-to-br from-[#FDF2F5] to-[#FCE7EF] dark:from-[#0a1c14] dark:to-[#0d281d]">
+                <span className="font-serif-display font-black text-lg text-[#163827] dark:text-[#F7F0E8]">
+                  {BUSINESS_NAME_MAIN} <span className="text-[#D6B36A] font-light italic">{BUSINESS_NAME_SUB}</span>
                 </span>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={toggleTheme}
-                    className="flex items-center justify-center w-8 h-8 rounded-full bg-white/10 text-[var(--color-cream)] hover:bg-white/20 transition-all"
+                    className="flex items-center justify-center w-8 h-8 rounded-full bg-white/70 backdrop-blur-sm text-stone-600 hover:bg-white hover:text-[#D6B36A] transition-all dark:bg-white/5 dark:text-stone-400 dark:hover:bg-white/10"
                     aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
                   >
                     {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
                   </button>
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center justify-center w-8 h-8 rounded-full bg-white/10 text-[var(--color-cream)] hover:bg-white/20 transition-all"
+                    className="flex items-center justify-center w-8 h-8 rounded-full bg-white/70 backdrop-blur-sm text-stone-600 hover:bg-white hover:text-stone-800 transition-all dark:bg-white/5 dark:text-stone-400 dark:hover:bg-white/10"
                     aria-label="Close"
                   >
                     <X size={16} />
@@ -427,7 +426,7 @@ export default function Header() {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search..."
-                      className="w-full h-9 pl-9 pr-3 rounded-full bg-stone-50 border border-stone-200 text-xs outline-none focus:border-[var(--color-gold)]/40 transition-all dark:bg-white/5 dark:border-white/10 dark:text-stone-200"
+                      className="w-full h-9 pl-9 pr-3 rounded-full bg-white/70 backdrop-blur-sm border border-[rgba(214,179,106,0.1)] text-xs text-stone-800 placeholder:text-stone-500 outline-none focus:border-[#D6B36A]/30 transition-all dark:bg-white/5 dark:border-white/10 dark:text-stone-200"
                     />
                   </form>
                 </div>
@@ -549,22 +548,24 @@ function LocationDropdown() {
   const Icon = status === "loading" ? Loader2 : status === "error" ? MapPinOff : Navigation;
 
   return (
-    <div className="hidden lg:flex items-center gap-2 pr-5 relative" aria-live="polite">
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-px h-6 bg-stone-200/60 dark:bg-white/5" />
-      <Icon
-        size={16}
-        className={`shrink-0 ${
-          status === "loading"
-            ? "text-[var(--color-gold)] animate-spin"
-            : status === "error"
-            ? "text-stone-400"
-            : "text-[var(--color-accent)]"
-        }`}
-      />
-      <div className="flex items-center gap-1.5 cursor-default">
-        <span className="text-[11px] font-medium text-stone-600 dark:text-stone-300">{displayText}</span>
-        <ChevronDown size={10} className="text-stone-400 dark:text-stone-500" />
+    <div className="hidden lg:flex items-center gap-3 pr-4 relative" aria-live="polite">
+      <div className="location-pill-premium cursor-default group">
+        <Icon
+          size={14}
+          className={`shrink-0 transition-colors duration-300 ${
+            status === "loading"
+              ? "text-[var(--color-gold)] animate-spin"
+              : status === "error"
+              ? "text-stone-400"
+              : "text-[var(--color-accent)]"
+          }`}
+        />
+        <span className="text-[12px] font-medium text-stone-600 dark:text-stone-400 transition-colors duration-300 group-hover:text-stone-700 dark:group-hover:text-stone-300">
+          {displayText}
+        </span>
+        <ChevronDown size={10} className="text-stone-400/50 dark:text-stone-500/50 transition-all duration-300 group-hover:translate-y-[0.5px]" />
       </div>
+      <div className="w-px h-6 bg-gradient-to-b from-stone-200/40 via-stone-200/20 to-transparent dark:from-white/[0.03] dark:via-white/[0.02] dark:to-transparent" />
     </div>
   );
 }
