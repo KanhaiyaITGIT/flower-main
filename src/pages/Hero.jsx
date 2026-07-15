@@ -34,8 +34,8 @@ import FloatingDecoration from "../components/FloatingDecoration";
 import BokehLights from "../components/BokehLights";
 import RevealSection from "../components/RevealSection";
 import AnimatedCounter from "../components/ui/AnimatedCounter";
+import CallForPricing from "../components/ui/CallForPricing";
 import { WHATSAPP_LINK, INSTAGRAM_LINK, FACEBOOK_LINK } from "../constants";
-
 import igShot1 from "../assets/flower/ff1.jpg";
 import igShot2 from "../assets/recepmarriage/bride1.jpg";
 import igShot3 from "../assets/recepmarriage/r1.jpg";
@@ -169,15 +169,40 @@ const Home = () => {
   const pad = (n) => String(n).padStart(2, "0");
 
   const categories = [
-    { title: "Bouquets", image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", products: "120+ Products", category: "Bouquets" },
-    { title: "Floral Arrangements", image: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=600&q=80", products: "80+ Products", category: "All" },
-    { title: "Premium Balloons Decor", image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&q=80", products: "150+ Products", category: "Balloon" },
-    { title: "For Love", image: image5, products: "30+ Products", category: "Anniversary" },
-    { title: "Occasional Cakes & Gifts", image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", products: "25+ Products", category: "All" },
-    { title: "Dried Florals", image: imageF2, products: "40+ Products", category: "All" },
+    { title: "Bouquets", image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", products: "120+ Luxury Designs", category: "Bouquets" },
+    { title: "Floral Arrangements", image: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=600&q=80", products: "80+ Premium Collections", category: "All" },
+    { title: "Premium Balloons Decor", image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&q=80", products: "150+ Luxury Designs", category: "Balloon" },
+    { title: "For Love", image: image5, products: "30+ Premium Collections", category: "Anniversary" },
+    { title: "Occasional Cakes & Gifts", image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", products: "25+ Luxury Designs", category: "All" },
+    { title: "Dried Florals", image: imageF2, products: "40+ Premium Collections", category: "All" },
+    { title: "Wedding Florals", image: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600&q=80", products: "20+ Luxury Designs", category: "Wedding", placeholderFile: "category-11.jpg" },
+    { title: "Party Balloons", image: "https://images.unsplash.com/photo-1518599212517-bf1f0c137833?w=600&q=80", products: "15+ Premium Collections", category: "Balloon", placeholderFile: "category-12.jpg" },
+    { title: "Luxury Gifts", image: "https://images.unsplash.com/photo-1519378458060-57e16e3cfa83?w=600&q=80", products: "25+ Luxury Designs", category: "Luxury", placeholderFile: "category-13.jpg" },
+    { title: "Devotional Flowers", image: "https://images.unsplash.com/photo-1530092285049-1c42085fd395?w=600&q=80", products: "18+ Premium Collections", category: "Devotional", placeholderFile: "category-14.jpg" },
+    { title: "Same Day Delivery", image: "https://images.unsplash.com/photo-1490757467854-4d9434b1d2f0?w=600&q=80", products: "30+ Luxury Designs", category: "All", placeholderFile: "category-15.jpg" },
+    { title: "Premium Bouquets", image: "https://images.unsplash.com/photo-1494972308805-463bc619d34e?w=600&q=80", products: "22+ Luxury Designs", category: "Bouquets", placeholderFile: "category-16.jpg" },
+    { title: "Anniversary Gifts", image: "https://images.unsplash.com/photo-1549465220-1a8b2308cd89?w=600&q=80", products: "28+ Premium Collections", category: "Anniversary", placeholderFile: "category-17.jpg" },
+    { title: "Birthday Surprises", image: "https://images.unsplash.com/photo-1498579150354-977475b7ea0b?w=600&q=80", products: "20+ Luxury Designs", category: "Birthday", placeholderFile: "category-18.jpg" },
+    { title: "Fresh Flowers Daily", image: "https://images.unsplash.com/photo-1508615070457-399a42d32061?w=600&q=80", products: "35+ Premium Collections", category: "All", placeholderFile: "category-19.jpg" },
+    { title: "Balloon Decor", image: "https://images.unsplash.com/photo-1518599212517-bf1f0c137833?w=600&q=80", products: "40+ Luxury Designs", category: "Balloon", placeholderFile: "category-20.jpg" },
+    { title: "Corporate Gifting", image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", products: "15+ Premium Collections", category: "Candles & More", placeholderFile: "category-21.jpg" },
+    { title: "Wedding Stage Decor", image: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=600&q=80", products: "12+ Luxury Designs", category: "Wedding", placeholderFile: "category-22.jpg" },
+    { title: "Reception Flowers", image: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600&q=80", products: "18+ Premium Collections", category: "Reception", placeholderFile: "category-23.jpg" },
+    { title: "Haldi Ceremony", image: "https://images.unsplash.com/photo-1468327768560-75b778c8f20b?w=600&q=80", products: "10+ Luxury Designs", category: "Haldi", placeholderFile: "category-24.jpg" },
+    { title: "Baby Shower Decor", image: "https://images.unsplash.com/photo-1498579150354-977475b7ea0b?w=600&q=80", products: "14+ Premium Collections", category: "Baby Shower", placeholderFile: "category-25.jpg" },
+    { title: "House Party Decor", image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&q=80", products: "16+ Luxury Designs", category: "House Party", placeholderFile: "category-26.jpg" },
+    { title: "Pre-Wedding Setup", image: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600&q=80", products: "20+ Premium Collections", category: "Pre-Wedding", placeholderFile: "category-27.jpg" },
+    { title: "Mehendi Flowers", image: "https://images.unsplash.com/photo-1527330662700-1a16b10c2596?w=600&q=80", products: "12+ Luxury Designs", category: "Haldi", placeholderFile: "category-28.jpg" },
+    { title: "Engagement Decor", image: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=600&q=80", products: "15+ Premium Collections", category: "Wedding", placeholderFile: "category-29.jpg" },
+    { title: "Elegant Gift Wraps", image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", products: "35+ Luxury Designs", category: "All", placeholderFile: "category-30.jpg" },
   ];
 
-  const cardIcons = [Flower2, Star, PartyPopper, Heart, Cake, Leaf];
+  const cardIcons = [
+    Flower2, Star, PartyPopper, Heart, Cake, Leaf,
+    Gift, ShoppingBag, Award, Package, Users, Clock,
+    CheckCircle2, Mail, Percent, Truck, ShieldCheck, Quote,
+    MessageCircle, Phone, Flower2, Star, PartyPopper, Heart, Cake, Leaf
+  ];
 
   const bestSellers = [
     {
@@ -280,6 +305,226 @@ const Home = () => {
       badge: "Premium",
       category: "All",
     },
+    {
+      id: 11,
+      title: "Premium Blush Bouquet",
+      image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹1,999",
+      rating: 4.8,
+      badge: "New",
+      category: "Bouquets",
+      placeholderFile: "bestseller-11.jpg",
+    },
+    {
+      id: 12,
+      title: "Luxury Rose Ensemble",
+      image: "https://images.unsplash.com/photo-1498603993951-8a02703d0f5b?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹2,499",
+      rating: 4.7,
+      badge: "Bestseller",
+      category: "Luxury",
+      placeholderFile: "bestseller-12.jpg",
+    },
+    {
+      id: 13,
+      title: "Garden Fresh Mix",
+      image: "https://images.unsplash.com/photo-1519378458060-57e16e3cfa83?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹1,799",
+      rating: 4.6,
+      badge: "Limited",
+      category: "Bouquets",
+      placeholderFile: "bestseller-13.jpg",
+    },
+    {
+      id: 14,
+      title: "Divine Orchid Box",
+      image: "https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹3,999",
+      rating: 4.9,
+      badge: "Premium",
+      category: "Luxury",
+      placeholderFile: "bestseller-14.jpg",
+    },
+    {
+      id: 15,
+      title: "Birthday Surprise Bundle",
+      image: "https://images.unsplash.com/photo-1496062031456-07b8f6f0c2e5?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹1,499",
+      rating: 4.8,
+      badge: "Gift",
+      category: "Birthday",
+      placeholderFile: "bestseller-15.jpg",
+    },
+    {
+      id: 16,
+      title: "Anniversary Rose Box",
+      image: "https://images.unsplash.com/photo-1498603993951-8a02703d0f5b?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹2,999",
+      rating: 4.9,
+      badge: "Popular",
+      category: "Anniversary",
+      placeholderFile: "bestseller-16.jpg",
+    },
+    {
+      id: 17,
+      title: "Wildflower Meadow",
+      image: "https://images.unsplash.com/photo-1470509037660-dbebadaeb3b6?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹2,199",
+      rating: 4.7,
+      badge: "New",
+      category: "Bouquets",
+      placeholderFile: "bestseller-17.jpg",
+    },
+    {
+      id: 18,
+      title: "Classic White Elegance",
+      image: "https://images.unsplash.com/photo-1494972308805-463bc619d34e?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹2,399",
+      rating: 4.6,
+      badge: "Bestseller",
+      category: "Bouquets",
+      placeholderFile: "bestseller-18.jpg",
+    },
+    {
+      id: 19,
+      title: "Lavender Dream Bouquet",
+      image: "https://images.unsplash.com/photo-1469208283808-4de2ec1d6f5b?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹1,899",
+      rating: 4.8,
+      badge: "Limited",
+      category: "Bouquets",
+      placeholderFile: "bestseller-19.jpg",
+    },
+    {
+      id: 20,
+      title: "Sunset Coral Arrangement",
+      image: "https://images.unsplash.com/photo-1526047932273-34113c343b5a?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹3,199",
+      rating: 4.9,
+      badge: "Premium",
+      category: "Bouquets",
+      placeholderFile: "bestseller-20.jpg",
+    },
+    {
+      id: 21,
+      title: "Spring Tulip Collection",
+      image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹2,699",
+      rating: 4.7,
+      badge: "New",
+      category: "Bouquets",
+      placeholderFile: "bestseller-21.jpg",
+    },
+    {
+      id: 22,
+      title: "Rustic Farmhouse Bunch",
+      image: "https://images.unsplash.com/photo-1549465220-1a8b2308cd89?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹1,599",
+      rating: 4.6,
+      badge: "Popular",
+      category: "Bouquets",
+      placeholderFile: "bestseller-22.jpg",
+    },
+    {
+      id: 23,
+      title: "Tropical Paradise Spray",
+      image: "https://images.unsplash.com/photo-1519378458060-57e16e3cfa83?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹2,899",
+      rating: 4.8,
+      badge: "Bestseller",
+      category: "Bouquets",
+      placeholderFile: "bestseller-23.jpg",
+    },
+    {
+      id: 24,
+      title: "Vintage Rose Box",
+      image: "https://images.unsplash.com/photo-1496062031456-07b8f6f0c2e5?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹3,499",
+      rating: 4.9,
+      badge: "Premium",
+      category: "Luxury",
+      placeholderFile: "bestseller-24.jpg",
+    },
+    {
+      id: 25,
+      title: "Peony Blush Bouquet",
+      image: "https://images.unsplash.com/photo-1490757467854-4d9434b1d2f0?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹4,299",
+      rating: 5.0,
+      badge: "Limited",
+      category: "Luxury",
+      placeholderFile: "bestseller-25.jpg",
+    },
+    {
+      id: 26,
+      title: "Summer Daisy Bunch",
+      image: "https://images.unsplash.com/photo-1494972308805-463bc619d34e?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹1,299",
+      rating: 4.5,
+      badge: "Gift",
+      category: "Bouquets",
+      placeholderFile: "bestseller-26.jpg",
+    },
+    {
+      id: 27,
+      title: "Eucalyptus Greenery",
+      image: "https://images.unsplash.com/photo-1470509037660-dbebadaeb3b6?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹1,799",
+      rating: 4.7,
+      badge: "New",
+      category: "Bouquets",
+      placeholderFile: "bestseller-27.jpg",
+    },
+    {
+      id: 28,
+      title: "Bohemian Wildflowers",
+      image: "https://images.unsplash.com/photo-1498579150354-977475b7ea0b?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹2,599",
+      rating: 4.8,
+      badge: "Popular",
+      category: "Bouquets",
+      placeholderFile: "bestseller-28.jpg",
+    },
+    {
+      id: 29,
+      title: "Hydrangea Heaven",
+      image: "https://images.unsplash.com/photo-1508615070457-399a42d32061?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹3,899",
+      rating: 4.9,
+      badge: "Bestseller",
+      category: "Bouquets",
+      placeholderFile: "bestseller-29.jpg",
+    },
+    {
+      id: 30,
+      title: "Grandeur Floral Basket",
+      image: "https://images.unsplash.com/photo-1526047932273-34113c343b5a?w=600&q=80",
+      price: "acceptable",
+      originalPrice: "₹4,999",
+      rating: 5.0,
+      badge: "Premium",
+      category: "All",
+      placeholderFile: "bestseller-30.jpg",
+    },
   ];
 
   const steps = [
@@ -333,7 +578,7 @@ const Home = () => {
 
   const reviewData = [
     { text: "Absolutely stunning wedding decor — they transformed the venue into a floral paradise.", name: "Sneha Sharma", location: "Noida", initials: "SS", color: "bg-rose-400" },
-    { text: "Ordered for my anniversary and the bouquet was even more beautiful than the photos!", name: "Rahul Verma", location: "Delhi", initials: "RV", color: "bg-[#C9A15A]" },
+    { text: "Ordered for my anniversary and the bouquet was even more beautiful than the photos!", name: "Rahul Verma", location: "Delhi", initials: "RV", color: "bg-[#C89B3C]" },
     { text: "Best florist in Delhi NCR! Fresh flowers, on-time delivery, and premium packaging.", name: "Priya Singh", location: "Gurugram", initials: "PS", color: "bg-emerald-500" },
     { text: "The mandap decoration for our wedding was breathtaking. Every guest complimented it.", name: "Ananya Gupta", location: "Noida", initials: "AG", color: "bg-purple-400" },
     { text: "Regular customer for over a year — the quality and freshness never drops.", name: "Vikas Malhotra", location: "Delhi", initials: "VM", color: "bg-sky-500" },
@@ -350,7 +595,7 @@ const Home = () => {
     { text: "Prompt delivery, gorgeous blooms, and excellent customer service. Highly recommended.", name: "Shweta Pandey", location: "Noida", initials: "SP", color: "bg-rose-500" },
     { text: "Got the luxury bouquet for our anniversary — presentation was world-class.", name: "Karan Arora", location: "Gurugram", initials: "KA", color: "bg-fuchsia-500" },
     { text: "They handled our entire wedding floral decor. Mandap, entrance, stage — all stunning.", name: "Isha Saxena", location: "Delhi", initials: "IS", color: "bg-rose-400" },
-    { text: "The attention to detail in their arrangements is remarkable. Truly premium florist.", name: "Gaurav Yadav", location: "Noida", initials: "GY", color: "bg-[#C9A15A]" },
+    { text: "The attention to detail in their arrangements is remarkable. Truly premium florist.", name: "Gaurav Yadav", location: "Noida", initials: "GY", color: "bg-[#C89B3C]" },
     { text: "Ordered flowers for Mother's Day — the recipient was overjoyed with the arrangement.", name: "Nikita Patel", location: "Delhi", initials: "NP", color: "bg-pink-400" },
     { text: "Artificial flower decor for our Diwali party looked just like fresh blooms. Amazing work!", name: "Harsh Agarwal", location: "Gurugram", initials: "HA", color: "bg-purple-500" },
     { text: "The bouquet was hand-delivered with such care and elegance. Exceptional service.", name: "Megha Rajan", location: "Noida", initials: "MR", color: "bg-sky-400" },
@@ -375,24 +620,83 @@ const Home = () => {
     },
   ];
 
- const galleryImages = [
+  const galleryImages = [
   igShot1,
   igShot2,
   igShot3,
   igShot4,
   igShot5,
   igShot6,
+  "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80",
+  "https://images.unsplash.com/photo-1549465220-1a8b2308cd89?w=600&q=80", "https://images.unsplash.com/photo-1549465220-1a8b2308cd89?w=600&q=80", "https://images.unsplash.com/photo-1549465220-1a8b2308cd89?w=600&q=80", "https://images.unsplash.com/photo-1549465220-1a8b2308cd89?w=600&q=80", "https://images.unsplash.com/photo-1549465220-1a8b2308cd89?w=600&q=80",
+  "https://images.unsplash.com/photo-1519378458060-57e16e3cfa83?w=600&q=80", "https://images.unsplash.com/photo-1519378458060-57e16e3cfa83?w=600&q=80", "https://images.unsplash.com/photo-1519378458060-57e16e3cfa83?w=600&q=80", "https://images.unsplash.com/photo-1519378458060-57e16e3cfa83?w=600&q=80", "https://images.unsplash.com/photo-1519378458060-57e16e3cfa83?w=600&q=80",
+  "https://images.unsplash.com/photo-1496062031456-07b8f6f0c2e5?w=600&q=80", "https://images.unsplash.com/photo-1496062031456-07b8f6f0c2e5?w=600&q=80", "https://images.unsplash.com/photo-1496062031456-07b8f6f0c2e5?w=600&q=80", "https://images.unsplash.com/photo-1496062031456-07b8f6f0c2e5?w=600&q=80", "https://images.unsplash.com/photo-1496062031456-07b8f6f0c2e5?w=600&q=80",
 ];
 
   return (
-    <div className="w-full overflow-hidden bg-[#FAF8F5]">
+    <div className="w-full overflow-hidden bg-[#FFF9F7]">
+      {/* ═══ CATEGORY CIRCLES (Above Hero) ═══ */}
+      <div className="pt-10 pb-8 lg:pt-12 lg:pb-10 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="max-w-[1500px] mx-auto px-6 lg:px-10">
+          <div className="flex gap-6 justify-start md:justify-center">
+            {[
+              { label: "Bouquet", image: image1, link: "/category?cat=Bouquets", discount: null },
+              { label: "Anniversary", image: image4, link: "/category?cat=Anniversary", discount: null },
+              { label: "Wedding", image: image7, link: "/category?cat=Wedding", discount: null },
+              { label: "Balloons", image: image16, link: "/category?cat=Balloon", discount: "Up to 30% Off" },
+              { label: "Devotional", image: image9, link: "/category?cat=Devotional", discount: null },
+              { label: "Luxury", image: image26, link: "/category", discount: null },
+              { label: "Gifts", image: image27, link: "/category", discount: "10% Off" },
+              { label: "Flowers", image: image6, link: "/category?cat=Anniversary", discount: null },
+              { label: "Plants", image: image5, link: "/category?cat=Birthday", discount: null },
+              { label: "Birthday", image: image8, link: "/category?cat=Birthday", discount: "Flat 15%" },
+              { label: "Reception", image: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=600&q=80", link: "/category?cat=Reception", discount: null },
+              { label: "Corporate", image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&q=80", link: "/category?cat=Candles%20%26%20More", discount: null },
+            ].map((cat, i) => (
+                <Link
+                  key={`cat-circle-${i}`}
+                  to={cat.link}
+                  className="flex flex-col items-center gap-5 shrink-0 group"
+                >
+                  <div className="cat-circle-glass">
+                    <LazyImage
+                      src={cat.image}
+                      alt={cat.label}
+                      className="w-full h-full object-cover"
+                    />
+                    {cat.discount && (
+                      <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#E67A9E] to-[#C89B3C] text-white text-[8px] md:text-[9px] font-bold px-2 py-0.5 rounded-full shadow-lg shadow-[rgba(230,122,158,0.2)] whitespace-nowrap z-10">
+                        {cat.discount}
+                      </div>
+                    )}
+                  </div>
+                  <div className="px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-[rgba(198,160,75,0.2)] shadow-sm group-hover:border-[rgba(198,160,75,0.45)] group-hover:shadow-md group-hover:bg-white/95 transition-all duration-300">
+                    <span className="text-[13px] font-bold text-[#184D36] group-hover:text-[#184D36] dark:text-stone-300 dark:group-hover:text-[#C89B3C] transition-colors duration-300 whitespace-nowrap tracking-wide font-manrope">
+                      {cat.label}
+                    </span>
+                  </div>
+                </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* ═══════════════════════════════════════════════════════════════════ */}
       {/* ─── HERO: 68/32 Premium Luxury Layout ─── */}
       {/* ═══════════════════════════════════════════════════════════════════ */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#FDF8F3] via-[#FAF2EA] to-[#F5EDE4] dark:from-[#07140e] dark:via-[#0a1f15] dark:to-[#06120e] pt-4 pb-6 lg:pb-10">
+      <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#FFF9F7] via-[#FCFAF8] to-[#FFF6F8] dark:from-[#07140e] dark:via-[#0a1f15] dark:to-[#06120e] pt-8 pb-10 lg:pt-10 lg:pb-14">
         {/* Subtle background glow */}
-        <div className="absolute top-0 right-[15%] w-[700px] h-[700px] rounded-full bg-gradient-to-br from-[rgba(214,179,106,0.05)] via-[rgba(214,179,106,0.02)] to-transparent blur-[150px] pointer-events-none" />
+        <div className="absolute top-0 right-[15%] w-[700px] h-[700px] rounded-full bg-gradient-to-br from-[rgba(200,155,60,0.05)] via-[rgba(200,155,60,0.02)] to-transparent blur-[150px] pointer-events-none" />
         <div className="absolute bottom-0 left-[10%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[rgba(230,122,158,0.03)] via-transparent to-transparent blur-[120px] pointer-events-none" />
+
+        {/* Floating micro particles */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+          <motion.div animate={{ y: [0, -18, 0], opacity: [0, 0.4, 0] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0 }} className="absolute top-[20%] left-[12%] w-1.5 h-1.5 rounded-full bg-[var(--color-gold)]/20 blur-sm" />
+          <motion.div animate={{ y: [0, -24, 0], opacity: [0, 0.3, 0] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-[45%] right-[20%] w-2 h-2 rounded-full bg-[var(--color-gold)]/12 blur-sm" />
+          <motion.div animate={{ y: [0, -14, 0], opacity: [0, 0.35, 0] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 4 }} className="absolute top-[60%] left-[30%] w-1 h-1 rounded-full bg-[var(--color-gold)]/25 blur-sm" />
+          <motion.div animate={{ y: [0, -20, 0], opacity: [0, 0.25, 0] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute top-[30%] right-[35%] w-2.5 h-2.5 rounded-full bg-rose-300/10 blur-sm" />
+          <motion.div animate={{ y: [0, -16, 0], opacity: [0, 0.3, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 3 }} className="absolute top-[70%] right-[10%] w-1 h-1 rounded-full bg-[var(--color-gold)]/20 blur-sm" />
+        </div>
 
         <div className="max-w-[1500px] mx-auto px-6 lg:px-10">
           <div className="grid lg:grid-cols-[68fr_32fr] gap-5 lg:gap-6">
@@ -408,13 +712,13 @@ const Home = () => {
                 <LazyImage
                   src={hero}
                   alt="Luxury flower collection"
-                  className="w-full h-full object-cover object-center"
+                  className="w-full h-full object-cover object-[center_30%]"
                   priority
                 />
               </div>
-              {/* Soft overlay — 20% */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent z-10" />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent z-10" />
+              {/* Soft overlay — enhanced darker gradient to improve readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent z-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-transparent z-10" />
 
               {/* Floating badges — 4 glass badges */}
               <motion.div
@@ -423,7 +727,7 @@ const Home = () => {
                 transition={{ duration: 0.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute top-6 left-6 z-30 badge-glass-premium"
               >
-                <Star size={12} className="text-[#D6B36A] fill-[#D6B36A]" />
+                <Star size={12} className="text-[#C89B3C] fill-[#C89B3C]" />
                 <span className="text-white text-[10px] font-bold tracking-[0.06em]">4.9 Rating</span>
               </motion.div>
               <motion.div
@@ -432,7 +736,7 @@ const Home = () => {
                 transition={{ duration: 0.5, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute top-6 right-6 z-30 badge-glass-premium"
               >
-                <Truck size={12} className="text-[#D6B36A]" />
+                <Truck size={12} className="text-[#C89B3C]" />
                 <span className="text-white text-[10px] font-bold tracking-[0.06em]">Same Day</span>
               </motion.div>
               <motion.div
@@ -441,7 +745,7 @@ const Home = () => {
                 transition={{ duration: 0.5, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute bottom-36 left-6 z-30 badge-glass-premium"
               >
-                <Flower2 size={12} className="text-[#D6B36A]" />
+                <Flower2 size={12} className="text-[#C89B3C]" />
                 <span className="text-white text-[10px] font-bold tracking-[0.06em]">Fresh Flowers</span>
               </motion.div>
               <motion.div
@@ -450,29 +754,29 @@ const Home = () => {
                 transition={{ duration: 0.5, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute bottom-36 right-6 z-30 badge-glass-premium"
               >
-                <Gift size={12} className="text-[#D6B36A]" />
+                <Gift size={12} className="text-[#C89B3C]" />
                 <span className="text-white text-[10px] font-bold tracking-[0.06em]">Gift Wrapped</span>
               </motion.div>
 
-              {/* Content — left aligned, more whitespace */}
-              <div className="absolute bottom-0 left-0 right-0 p-10 lg:p-12 z-20">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white/90 text-[10px] font-bold tracking-[0.2em] uppercase mb-5 w-fit">
+              {/* Content — left aligned, shifted left for readability */}
+              <div className="absolute bottom-0 left-0 right-0 p-10 pb-8 lg:p-14 lg:pb-10 z-20">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white/90 text-[10px] font-bold tracking-[0.2em] uppercase mb-6 w-fit">
                   <span className="w-5 h-px bg-white/40 inline-block" />
                   Premium Florist Since 2015
                 </div>
-                <h1 className="hero-heading-premium text-white max-w-[600px]">
+                <h1 className="hero-heading-premium text-white max-w-[480px] tracking-tight">
                   Luxury Blooms<br />
-                  <span className="text-[#D6B36A]">Handcrafted for You</span>
+                  <span className="text-[#C89B3C]">Handcrafted for You</span>
                 </h1>
-                <p className="text-white/75 text-[18px] lg:text-[22px] mt-4 max-w-[540px] font-light leading-relaxed">
+                <p className="text-white/70 text-[16px] lg:text-[20px] mt-5 max-w-[420px] font-light leading-relaxed tracking-wide">
                   Handpicked fresh every morning. Artisan arrangements, premium gifts — curated for life's most beautiful moments.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 mt-7">
-                  <span className="btn-ripple inline-flex items-center gap-3 px-9 py-4 bg-gradient-to-r from-[#163827] to-[#1f4a30] text-white font-bold text-sm tracking-wider uppercase rounded-full shadow-[0_8px_32px_rgba(22,56,39,0.35)] hover:shadow-[0_12px_48px_rgba(22,56,39,0.5)] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer">
+                <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                  <span className="btn-ripple btn-shimmer inline-flex items-center gap-3 px-9 py-4 bg-gradient-to-r from-[#184D36] to-[#1f4a30] text-white font-bold text-sm tracking-wider uppercase rounded-full shadow-[0_8px_32px_rgba(24,77,54,0.35)] hover:shadow-[0_12px_48px_rgba(24,77,54,0.5)] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer">
                     <ShoppingBag size={16} />
                     Shop Collection
                   </span>
-                  <span className="btn-ripple inline-flex items-center gap-3 px-9 py-4 bg-white/20 backdrop-blur-lg border border-white/30 text-white font-bold text-sm tracking-wider uppercase rounded-full hover:bg-white/30 transition-all duration-300 cursor-pointer">
+                  <span className="btn-ripple btn-shimmer inline-flex items-center gap-3 px-9 py-4 bg-white/20 backdrop-blur-lg border border-white/30 text-white font-bold text-sm tracking-wider uppercase rounded-full hover:bg-white/30 transition-all duration-300 cursor-pointer">
                     <Flower2 size={16} />
                     Explore Occasions
                   </span>
@@ -487,7 +791,8 @@ const Home = () => {
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="promo-card-premium min-h-[300px] lg:min-h-[325px]"
+                className="promo-card-premium flex-1"
+                style={{ minHeight: 'clamp(280px, 42vh, 360px)' }}
                 onClick={() => navigate("/category?cat=Wedding")}
               >
                 <div className="promo-image">
@@ -506,7 +811,7 @@ const Home = () => {
                     Grand Weddings
                   </h3>
                   <p className="text-white/60 text-sm mt-1 font-light">Exclusive floral decor</p>
-                  <span className="inline-flex items-center gap-1.5 mt-3 px-5 py-2 bg-white/20 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold tracking-wider uppercase rounded-full hover:bg-white/30 transition-all duration-300">
+                  <span className="btn-shimmer inline-flex items-center gap-1.5 mt-3 px-5 py-2 bg-white/20 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold tracking-wider uppercase rounded-full hover:bg-white/30 transition-all duration-300">
                     Explore <ArrowRight size={11} />
                   </span>
                 </div>
@@ -517,7 +822,8 @@ const Home = () => {
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="promo-card-premium min-h-[300px] lg:min-h-[325px]"
+                className="promo-card-premium flex-1"
+                style={{ minHeight: 'clamp(280px, 42vh, 360px)' }}
                 onClick={() => navigate("/occasions")}
               >
                 <div className="promo-image">
@@ -536,51 +842,11 @@ const Home = () => {
                     Every Occasion
                   </h3>
                   <p className="text-white/60 text-sm mt-1 font-light">Thoughtful gifts delivered</p>
-                  <span className="inline-flex items-center gap-1.5 mt-3 px-5 py-2 bg-white/20 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold tracking-wider uppercase rounded-full hover:bg-white/30 transition-all duration-300">
+                  <span className="btn-shimmer inline-flex items-center gap-1.5 mt-3 px-5 py-2 bg-white/20 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold tracking-wider uppercase rounded-full hover:bg-white/30 transition-all duration-300">
                     Shop Now <ArrowRight size={11} />
                   </span>
                 </div>
               </motion.div>
-            </div>
-          </div>
-
-          {/* ═══ 2. CATEGORY CIRCLES (Below Hero) ═══ */}
-          <div className="mt-12 lg:mt-16 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <div className="flex gap-6 md:gap-8 lg:gap-10 justify-start md:justify-center">
-              {[
-                { label: "Bouquet", image: image1, link: "/category?cat=Bouquets", discount: null },
-                { label: "Anniversary", image: image4, link: "/category?cat=Anniversary", discount: null },
-                { label: "Wedding", image: image7, link: "/category?cat=Wedding", discount: null },
-                { label: "Balloons", image: image16, link: "/category?cat=Balloon", discount: "Up to 30% Off" },
-                { label: "Devotional", image: image9, link: "/category?cat=Devotional", discount: null },
-                { label: "Luxury", image: image26, link: "/category", discount: null },
-                { label: "Gifts", image: image27, link: "/category", discount: "10% Off" },
-                { label: "Flowers", image: image6, link: "/category?cat=Anniversary", discount: null },
-                { label: "Plants", image: image5, link: "/category?cat=Birthday", discount: null },
-                { label: "Birthday", image: image8, link: "/category?cat=Birthday", discount: "Flat 15%" },
-              ].map((cat, i) => (
-                  <Link
-                    key={`cat-circle-${i}`}
-                    to={cat.link}
-                    className="flex flex-col items-center gap-3 shrink-0 group"
-                  >
-                    <div className="relative w-[88px] h-[88px] md:w-[96px] md:h-[96px] rounded-full overflow-hidden bg-[rgba(255,255,255,0.6)] shadow-[0_8px_28px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,0.8)] group-hover:shadow-[0_16px_40px_-8px_rgba(214,179,106,0.25)] group-hover:border-[#D6B36A]/40 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-400 border border-[rgba(214,179,106,0.12)]">
-                      <LazyImage
-                        src={cat.image}
-                        alt={cat.label}
-                        className="w-full h-full object-cover group-hover:scale-115 transition-transform duration-500"
-                      />
-                      {cat.discount && (
-                        <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#E67A9E] to-[#D6B36A] text-white text-[8px] md:text-[9px] font-bold px-2 py-0.5 rounded-full shadow-lg shadow-[rgba(230,122,158,0.2)] whitespace-nowrap">
-                          {cat.discount}
-                        </div>
-                      )}
-                    </div>
-                    <span className="text-xs md:text-sm font-semibold text-stone-400 group-hover:text-[#163827] dark:text-stone-400 dark:group-hover:text-[#D6B36A] transition-colors duration-300 whitespace-nowrap tracking-wide">
-                      {cat.label}
-                    </span>
-                  </Link>
-              ))}
             </div>
           </div>
 
@@ -589,23 +855,23 @@ const Home = () => {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-14 lg:mt-20"
+            className="mt-16 lg:mt-24"
           >
             <div className="flex items-end justify-between mb-8">
               <div>
                 <div className="inline-flex items-center gap-2.5 mb-2">
-                  <span className="w-6 h-px bg-gradient-to-r from-transparent to-[#D6B36A]/60" />
-                  <span className="text-[10px] font-bold tracking-[0.25em] text-[#D6B36A] uppercase">Curated Picks</span>
-                  <span className="w-6 h-px bg-gradient-to-l from-transparent to-[#D6B36A]/60" />
+                  <span className="w-6 h-px bg-gradient-to-r from-transparent to-[#C89B3C]/60" />
+                  <span className="text-[10px] font-bold tracking-[0.25em] text-[#C89B3C] uppercase">Curated Picks</span>
+                  <span className="w-6 h-px bg-gradient-to-l from-transparent to-[#C89B3C]/60" />
                 </div>
-                <h2 className="font-serif-display font-black text-3xl lg:text-4xl text-[#1B1B1B] dark:text-[#f0ece6] leading-tight">
+                <h2 className="font-serif-display font-black text-3xl lg:text-4xl text-[#184D36] dark:text-[#f0ece6] leading-tight">
                   Trending Now
                 </h2>
                 <p className="text-stone-400 text-sm mt-1 font-light">Most loved arrangements this week</p>
               </div>
               <Link
                 to="/category"
-                className="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wider uppercase text-[#D6B36A] hover:text-[#c89e44] transition-colors shrink-0"
+                className="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wider uppercase text-[#C89B3C] hover:text-[#c89e44] transition-colors shrink-0"
               >
                 View All <ArrowRight size={12} />
               </Link>
@@ -617,7 +883,7 @@ const Home = () => {
                 <div
                   key={item.id}
                   onClick={() => navigate(`/category?cat=${item.category}`)}
-                  className="group rounded-[24px] overflow-hidden bg-white dark:bg-white/5 border border-stone-100 dark:border-white/5 hover:shadow-[0_16px_48px_-12px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-400 cursor-pointer"
+                  className="group rounded-[24px] overflow-hidden bg-white dark:bg-white/5 border border-stone-100 dark:border-white/5 hover:shadow-[0_16px_48px_-12px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-400 cursor-pointer card-elevate"
                 >
                   <div className="relative h-[280px] lg:h-[300px] overflow-hidden bg-stone-50 dark:bg-white/5">
                     <img
@@ -646,7 +912,7 @@ const Home = () => {
                       {item.title}
                     </h3>
                     <div className="flex items-center justify-between mt-2">
-                      <span className="text-xs font-medium text-stone-400">{item.originalPrice}</span>
+                      <CallForPricing />
                       <span className="flex items-center gap-1 text-[11px] text-amber-500 font-medium">
                         <Star size={10} className="fill-amber-500" /> {item.rating}
                       </span>
@@ -682,7 +948,7 @@ const Home = () => {
                         {item.title}
                       </h3>
                       <div className="flex items-center justify-between mt-1.5">
-                        <span className="text-[11px] text-stone-400">{item.originalPrice}</span>
+                        <CallForPricing />
                         <span className="flex items-center gap-0.5 text-[10px] text-amber-500 font-medium">
                           <Star size={9} className="fill-amber-500" /> {item.rating}
                         </span>
@@ -696,7 +962,7 @@ const Home = () => {
             <div className="flex sm:hidden justify-center mt-6">
               <Link
                 to="/category"
-                className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wider uppercase text-[#D6B36A]"
+                className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wider uppercase text-[#C89B3C]"
               >
                 View All Products <ArrowRight size={12} />
               </Link>
@@ -705,13 +971,46 @@ const Home = () => {
         </div>
       </section>
 
+      {/* ─── Premium Trust Indicators ─── */}
+      <div className="gold-divider mx-6 lg:mx-10 max-w-[1500px] lg:mx-auto" />
+      <div className="py-8 lg:py-10 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="max-w-[1500px] mx-auto px-6 lg:px-10">
+          <div className="flex items-center gap-4 lg:gap-6 justify-start lg:justify-center min-w-max">
+            <div className="trust-pill-luxury">
+              <div className="flex items-center gap-0.5">
+                {[1,2,3,4,5].map(s => (
+                  <Star key={s} size={10} className="fill-[#C89B3C] text-[#C89B3C]" />
+                ))}
+              </div>
+              <span>4.9 <span className="text-stone-400 font-normal">Rating</span></span>
+            </div>
+            <div className="trust-pill-luxury">
+              <ShieldCheck size={13} className="text-emerald-500" />
+              <span>18,000+ Happy Customers</span>
+            </div>
+            <div className="trust-pill-luxury">
+              <Truck size={13} className="text-[#C89B3C]" />
+              <span>Same Day Delivery</span>
+            </div>
+            <div className="trust-pill-luxury">
+              <Gift size={13} className="text-[#D6537A]" />
+              <span>Luxury Packaging</span>
+            </div>
+            <div className="trust-pill-luxury">
+              <Flower2 size={13} className="text-emerald-500" />
+              <span>Fresh Flowers Daily</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* ─── Trust Stats Strip ─── */}
-      <section className="relative bg-gradient-to-r from-[var(--color-primary)] via-[#1a3d28] to-[var(--color-primary)] py-8 lg:py-10 overflow-hidden">
+      <section className="relative bg-gradient-to-r from-[var(--color-primary)] via-[#1a3d28] to-[var(--color-primary)] py-10 lg:py-12 overflow-hidden">
         <BokehLights spots={[
           { color: "from-rose-400/15 to-transparent", size: 200, top: "-20%", left: "10%", anim: "bk-drift1", delay: 0, duration: 26 },
           { color: "from-amber-300/12 to-transparent", size: 180, bottom: "-20%", right: "15%", anim: "bk-drift3", delay: 2, duration: 24 },
         ]} />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(201,161,90,0.08)_0%,transparent_60%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(200,155,60,0.08)_0%,transparent_60%)] pointer-events-none" />
         <div className="max-w-[1440px] mx-auto px-6 relative grid grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-8">
           {[
             { icon: Users, value: 10000, label: "Happy Customers" },
@@ -745,7 +1044,7 @@ const Home = () => {
       </section>
 
       {/* ─── Shop By Category ─── */}
-      <RevealSection className="relative pt-12 lg:pt-16 pb-16 lg:pb-24 bg-gradient-to-b from-[#FAF8F5] via-[#f5ede4] to-[#ede3d6] overflow-hidden">
+      <RevealSection className="relative pt-16 lg:pt-20 pb-4 lg:pb-6 bg-gradient-to-b from-[#FFF9F7] via-[#FCFAF8] to-[#FFF6F8] overflow-hidden">
         <div className="absolute inset-0 opacity-[0.035] pointer-events-none mix-blend-multiply"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
@@ -783,15 +1082,15 @@ const Home = () => {
             <h2 className="text-4xl sm:text-5xl font-serif-display font-black text-[#1a0f0a] mt-2 leading-tight">
               Shop By Category
             </h2>
-            <p className="text-[#8a7a6e] text-sm mt-3 font-light max-w-lg mx-auto">
-              Find the perfect arrangements designed for your special moments
+            <p className="text-[#6b5e53] text-sm mt-3 font-light max-w-lg mx-auto">
+              Discover handpicked luxury arrangements crafted for life's most cherished moments
             </p>
           </div>
 
           <div className="relative px-0.5">
             <button
               onClick={() => scrollSlider(categorySliderRef, "left")}
-              className="absolute -left-1.5 lg:-left-2 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/80 backdrop-blur-md border border-white/60 shadow-[0_8px_24px_rgba(0,0,0,0.04)] flex items-center justify-center text-stone-400 hover:bg-white hover:text-[#1a0f0a] hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)] hover:scale-105 transition-all duration-300"
+              className="absolute -left-1.5 lg:-left-2 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/70 backdrop-blur-[8px] border border-white/50 shadow-[0_8px_28px_rgba(0,0,0,0.05)] flex items-center justify-center text-stone-400 hover:bg-white hover:text-[var(--color-gold)] hover:shadow-[0_12px_36px_rgba(200,155,60,0.12)] hover:scale-110 active:scale-95 transition-all duration-400"
               aria-label="Scroll left"
             >
               <ChevronLeft size={16} />
@@ -801,56 +1100,56 @@ const Home = () => {
               ref={categorySliderRef}
               className="flex gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6 scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pr-2 lg:pr-4"
             >
-              {categories.map((item, index) => {
+               {categories.map((item, index) => {
                 const IconComponent = cardIcons[index];
                 return (
                   <motion.div
                     key={`slide-${index}`}
                     data-slide-card
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-30px" }}
+                    transition={{ duration: 0.6, delay: index * 0.06, ease: [0.25, 0.1, 0.25, 1] }}
                     onClick={() => navigate(`/category?cat=${encodeURIComponent(item.category)}`)}
-                    whileHover={{ y: -8, scale: 1.02 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                    className="group rounded-2xl overflow-hidden bg-white/90 backdrop-blur-sm shadow-[0_8px_28px_-8px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_50px_-14px_rgba(201,161,90,0.15)] cursor-pointer shrink-0 min-w-[180px] w-[180px] sm:w-[220px] lg:w-[240px] ring-1 ring-white/80 hover:ring-[var(--color-gold)]/20 transition-all duration-400"
+                    whileHover={{ y: -10, scale: 1.025 }}
+                    className="group rounded-[18px] overflow-hidden bg-white/90 backdrop-blur-sm shadow-[0_4px_24px_-6px_rgba(0,0,0,0.07)] hover:shadow-[0_32px_64px_-16px_rgba(200,155,60,0.25)] cursor-pointer shrink-0 min-w-[180px] w-[180px] sm:w-[220px] lg:w-[240px] ring-1 ring-white/80 hover:ring-[var(--color-gold)]/40 transition-all duration-400"
                   >
                     <div className="h-[160px] sm:h-[200px] lg:h-[260px] overflow-hidden relative bg-gradient-to-br from-[#f5ede4] to-[#ece0d0]">
                       <img
                         src={item.image}
                         alt={item.title}
                         loading="lazy"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                        className="w-full h-full object-cover transition-transform duration-400 ease-out group-hover:scale-[1.08]"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a]/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
-                      <div className="absolute top-4 left-4 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                        <span className="inline-block px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-full text-[9px] font-bold tracking-widest uppercase text-[var(--color-gold)] shadow-sm border border-[var(--color-gold)]/20">
-                          Featured
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a]/80 via-[#1a0f0a]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+                      <div className="absolute top-4 left-3.5 z-10 opacity-0 group-hover:opacity-100 transition-all duration-400">
+                        <span className="inline-block px-3 py-1.5 bg-white/85 backdrop-blur-[6px] rounded-full text-[9px] font-bold tracking-[0.2em] uppercase text-[var(--color-gold)] shadow-[0_2px_12px_rgba(0,0,0,0.06)] border border-white/60">
+                          Premium
                         </span>
                       </div>
-                      <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-75">
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-white/85 backdrop-blur-sm rounded-full text-[8px] font-bold tracking-wider text-[var(--color-gold)] shadow-sm border border-[var(--color-gold)]/20">
-                          <Gift size={10} className="text-[var(--color-accent)]" />
-                          Gift Wrap
+                      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400 ease-[cubic-bezier(0.25,0.1,0.25,1)] z-10">
+                        <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-[var(--color-gold)] to-amber-600 text-white text-[10px] font-bold tracking-[0.2em] uppercase px-6 py-2.5 rounded-full shadow-lg shadow-[var(--color-gold)]/25 hover:shadow-[var(--color-gold)]/40">
+                          Explore Collection <ArrowRight size={11} />
                         </span>
                       </div>
-                      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400 ease-out z-10">
-                        <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-[var(--color-accent)] to-rose-500 text-white text-[10px] font-bold tracking-widest uppercase px-6 py-2.5 rounded-full shadow-lg shadow-rose-500/25 hover:shadow-rose-500/40">
-                          Shop Now <ArrowRight size={11} />
-                        </span>
-                      </div>
-                      <div className="absolute -bottom-[20px] left-1/2 -translate-x-1/2 z-20">
-                        <div className="w-10 h-10 lg:w-11 lg:h-11 rounded-full bg-white shadow-[0_4px_16px_rgba(0,0,0,0.06)] border-2 border-[var(--color-gold)]/20 flex items-center justify-center group-hover:border-[var(--color-gold)]/60 group-hover:shadow-[0_6px_24px_rgba(201,161,90,0.2)] transition-all duration-300">
-                          <IconComponent size={16} className="text-[var(--color-gold)] group-hover:text-[var(--color-accent)] transition-colors duration-300" />
+                      <div className="absolute -bottom-[24px] left-1/2 -translate-x-1/2 z-20">
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-white to-stone-50 shadow-[0_4px_20px_rgba(0,0,0,0.08)] border-2 border-[var(--color-gold)]/30 flex items-center justify-center group-hover:border-[var(--color-gold)] group-hover:shadow-[0_8px_32px_rgba(200,155,60,0.35)] transition-all duration-400">
+                          <IconComponent size={16} className="text-[var(--color-gold)] group-hover:text-[var(--color-gold)] transition-colors duration-400" />
                         </div>
                       </div>
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none">
+                        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[var(--color-gold)]/10 via-[var(--color-gold)]/5 to-transparent" />
+                      </div>
                     </div>
-                    <div className="pt-8 lg:pt-9 pb-5 lg:pb-6 px-5 lg:px-6 text-center">
-                      <h3 className="font-serif-display font-bold text-base lg:text-lg text-[var(--color-primary)] group-hover:text-[var(--color-accent)] transition-colors duration-300">
+                    <div className="pt-10 lg:pt-11 pb-5 lg:pb-6 px-5 lg:px-6 text-center">
+                      <h3 className="font-serif-display font-bold text-base lg:text-lg text-[#1a0f0a] group-hover:text-[var(--color-accent)] group-hover:-translate-y-1 transition-all duration-400">
                         {item.title}
                       </h3>
                       <div className="flex items-center justify-center gap-1.5 mt-2">
-                        <span className="text-[var(--color-gold)]/60 text-[10px] tracking-wider">—</span>
-                        <span className="text-[var(--color-gold)] text-[10px]">✦</span>
-                        <span className="text-[var(--color-gold)]/60 text-[10px] tracking-wider">—</span>
-                        <span className="text-stone-500 text-xs font-medium tracking-wide ml-1">{item.products}</span>
+                        <span className="text-[var(--color-gold)]/50 text-[10px] tracking-[0.15em]">—</span>
+                        <span className="text-[var(--color-gold)] text-[9px]">✦</span>
+                        <span className="text-[var(--color-gold)]/50 text-[10px] tracking-[0.15em]">—</span>
+                        <span className="text-[#6b5e53] text-xs font-medium tracking-wide ml-1">{item.products}</span>
                       </div>
                     </div>
                   </motion.div>
@@ -860,7 +1159,7 @@ const Home = () => {
 
             <button
               onClick={() => scrollSlider(categorySliderRef, "right")}
-              className="absolute -right-1.5 lg:-right-2 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/80 backdrop-blur-md border border-white/60 shadow-[0_8px_24px_rgba(0,0,0,0.04)] flex items-center justify-center text-stone-400 hover:bg-white hover:text-[#1a0f0a] hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)] hover:scale-105 transition-all duration-300"
+              className="absolute -right-1.5 lg:-right-2 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/70 backdrop-blur-[8px] border border-white/50 shadow-[0_8px_28px_rgba(0,0,0,0.05)] flex items-center justify-center text-stone-400 hover:bg-white hover:text-[var(--color-gold)] hover:shadow-[0_12px_36px_rgba(200,155,60,0.12)] hover:scale-110 active:scale-95 transition-all duration-400"
               aria-label="Scroll right"
             >
               <ArrowRight size={16} />
@@ -869,15 +1168,127 @@ const Home = () => {
         </div>
       </RevealSection>
 
+      {/* ─── Premium Luxury Storytelling Banner ─── */}
+      <section className="relative bg-gradient-to-b from-[#FFF9F7] via-[#FCFAF8] to-[#FFF9F7] overflow-hidden py-2 lg:py-3">
+        <div className="max-w-[1100px] mx-auto px-4 lg:px-6">
+          <RevealSection>
+            <div className="relative overflow-hidden rounded-[32px] bg-[#fcf8f3] shadow-[0_24px_64px_-20px_rgba(0,0,0,0.08),0_0_0_1px_rgba(200,155,60,0.12)]">
+              {/* Subtle floral texture bg */}
+              <div className="absolute inset-0 opacity-[0.025] pointer-events-none mix-blend-multiply"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
+                  backgroundSize: '180px 180px',
+                }}
+              />
+              {/* Soft gold gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-gold)]/[0.04] via-transparent to-[var(--color-gold)]/[0.02] pointer-events-none" />
+
+              {/* Left floral illustration */}
+              <div className="absolute -left-6 sm:-left-4 top-1/2 -translate-y-1/2 w-28 sm:w-36 lg:w-44 opacity-[0.10] lg:opacity-[0.13] pointer-events-none mix-blend-soft-light">
+                <img src={igShot1} alt="" className="w-full h-full object-contain" loading="lazy" />
+              </div>
+
+              {/* Right bride with bouquet */}
+              <div className="absolute -right-6 sm:-right-4 top-1/2 -translate-y-1/2 w-28 sm:w-36 lg:w-44 opacity-[0.10] lg:opacity-[0.13] pointer-events-none mix-blend-soft-light">
+                <img src={forHerImage} alt="" className="w-full h-full object-contain" loading="lazy" />
+              </div>
+
+              {/* Animated glow orbs */}
+              <div className="absolute -top-20 -right-20 w-48 h-48 rounded-full bg-[var(--color-gold)]/5 blur-3xl animate-pulse pointer-events-none" style={{ animationDuration: '4s' }} />
+              <div className="absolute -bottom-20 -left-20 w-36 h-36 rounded-full bg-rose-200/20 blur-3xl animate-pulse pointer-events-none" style={{ animationDuration: '5s' }} />
+
+              {/* Floating petals */}
+              <FloatingDecoration type="petal6" side="left" top="8%" size={32} opacity={0.07} delay={0} duration={16} animation="sway1" color="var(--color-gold)" />
+              <FloatingDecoration type="petal5" side="right" top="12%" size={28} opacity={0.06} delay={1.5} duration={14} animation="sway2" color="var(--color-accent)" />
+              <FloatingDecoration type="leaf" side="left" top="auto" bottom="10%" size={30} opacity={0.06} delay={2} duration={18} animation="sway3" color="var(--color-gold)" />
+              <FloatingDecoration type="lotus" side="right" top="auto" bottom="8%" size={24} opacity={0.05} delay={0.8} duration={15} animation="drift-bloom" color="var(--color-primary)" />
+
+              {/* Content */}
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                className="relative z-10 py-10 lg:py-14 px-6 sm:px-10 lg:px-16 text-center"
+              >
+                {/* Gold Divider */}
+                <div className="flex items-center gap-4 justify-center mb-5">
+                  <span className="h-px w-10 bg-gradient-to-r from-transparent to-[var(--color-gold)]/40" />
+                  <span className="text-[9px] font-bold tracking-[0.35em] text-[var(--color-gold)] uppercase">Curated With Love</span>
+                  <span className="h-px w-10 bg-gradient-to-l from-transparent to-[var(--color-gold)]/40" />
+                </div>
+
+                {/* Main Heading */}
+                <h2 className="text-[28px] sm:text-4xl lg:text-[44px] font-serif-display font-black text-[#1a3c2e] leading-[1.15] tracking-tight">
+                  Crafting Beautiful Memories<br />
+                  <span className="text-[var(--color-gold)]">With Every Bloom</span>
+                </h2>
+
+                {/* Subtitle */}
+                <p className="text-stone-500 text-sm sm:text-base mt-4 font-light max-w-[700px] mx-auto leading-relaxed">
+                  Every bouquet and floral arrangement is handcrafted using premium fresh flowers, carefully designed to create unforgettable celebrations across Delhi NCR.
+                </p>
+
+                {/* Luxury Features Row */}
+                <div className="flex flex-wrap items-center justify-center gap-3 mt-7">
+                  {[
+                    { icon: "🌸", label: "Fresh Flowers Daily" },
+                    { icon: "🚚", label: "Same Day Delivery" },
+                    { icon: "💍", label: "Wedding Specialists" },
+                    { icon: "🎁", label: "Premium Gift Packaging" },
+                  ].map((feat, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 12 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: i * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
+                      className="group inline-flex items-center gap-2 px-4 py-2 bg-white/70 backdrop-blur-sm rounded-full border border-[var(--color-gold)]/20 shadow-sm hover:bg-white hover:border-[var(--color-gold)]/40 hover:shadow-[0_4px_16px_rgba(200,155,60,0.12)] hover:-translate-y-0.5 transition-all duration-400"
+                    >
+                      <span className="text-sm">{feat.icon}</span>
+                      <span className="text-[11px] font-semibold text-[#1a3c2e]">{feat.label}</span>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* CTA */}
+                <div className="mt-8">
+                  <Link
+                    to="/category"
+                    className="group inline-flex items-center gap-2.5 bg-[#1a3c2e] text-white text-[11px] font-bold tracking-[0.2em] uppercase px-8 py-3.5 rounded-full shadow-lg shadow-[#1a3c2e]/20 hover:bg-[var(--color-gold)] hover:text-[#1a3c2e] hover:shadow-[0_12px_32px_rgba(200,155,60,0.25)] hover:-translate-y-0.5 transition-all duration-400"
+                  >
+                    Explore Luxury Collection
+                    <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform duration-300" />
+                  </Link>
+                </div>
+
+                {/* Rating */}
+                <div className="flex items-center justify-center gap-2 mt-5">
+                  <div className="flex gap-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={13} className="text-[var(--color-gold)] fill-[var(--color-gold)]" strokeWidth={1.5} />
+                    ))}
+                  </div>
+                  <span className="text-[12px] font-bold text-[#1a3c2e]">4.9</span>
+                  <span className="text-[11px] text-stone-400 font-medium">Average Customer Rating</span>
+                  <span className="w-1 h-1 rounded-full bg-stone-300" />
+                  <span className="text-[11px] text-stone-500 font-medium">Trusted by Thousands of Happy Customers</span>
+                </div>
+              </motion.div>
+            </div>
+          </RevealSection>
+        </div>
+      </section>
+
       {/* ─── Best Sellers ─── */}
-      <RevealSection className="py-16 lg:py-20 bg-gradient-to-b from-[#FAF8F5] via-[#faf3ec] to-[#FAF8F5]">
+      <RevealSection className="py-6 lg:py-8 bg-gradient-to-b from-[#FFF9F7] via-[#FCFAF8] to-[#FFF9F7]">
         <div className="max-w-[1440px] mx-auto px-6">
-          <div className="flex justify-between items-end mb-10 lg:mb-12 flex-wrap gap-4">
+          <div className="flex justify-between items-end mb-6 lg:mb-8 flex-wrap gap-4">
             <div>
               <span className="text-[10px] font-semibold tracking-[0.25em] text-[var(--color-gold)] uppercase">
                 Customer Favorites
               </span>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif-display font-black text-[var(--color-primary)] mt-1.5 leading-[1.08]">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif-display font-black text-[#1a0f0a] mt-1.5 leading-[1.08]">
                 Bestselling Bouquets
               </h2>
             </div>
@@ -947,18 +1358,11 @@ const Home = () => {
                       </span>
                     </div>
                     <div className="flex items-center mt-0.5">
-                      {item.price === "acceptable" ? (
-                        <a href="tel:9540849659" className="inline-flex items-center gap-1.5 text-[var(--color-accent)]/80 hover:text-[var(--color-gold)] font-semibold text-xs transition-colors duration-300 group/price">
-                          <Phone size={11} className="transition-transform duration-300 group-hover/price:-rotate-6" />
-                          <span>Custom Pricing</span>
-                        </a>
-                      ) : (
-                        <p className="text-[var(--color-accent)] font-black text-base">{item.price}</p>
-                      )}
+                      <CallForPricing />
                     </div>
                     <Link
                       to={`/category?cat=${encodeURIComponent(item.category)}`}
-                      className="group/btn mt-auto w-full bg-gradient-to-r from-[var(--color-primary)] to-[#1f4a30] text-white py-2.5 rounded-xl font-bold text-[10px] tracking-[0.12em] uppercase hover:shadow-[0_6px_20px_rgba(20,48,31,0.2)] hover:scale-[1.01] active:scale-[0.97] transition-all duration-300 text-center relative overflow-hidden"
+                      className="group/btn mt-auto w-full bg-gradient-to-r from-[var(--color-primary)] to-[#1f4a30] text-white py-2.5 rounded-xl font-bold text-[10px] tracking-[0.12em] uppercase hover:shadow-[0_6px_20px_rgba(24,77,54,0.2)] hover:scale-[1.01] active:scale-[0.97] transition-all duration-300 text-center relative overflow-hidden"
                     >
                       <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700" />
                       <span className="relative z-10 inline-flex items-center gap-1.5">
@@ -983,8 +1387,8 @@ const Home = () => {
       </RevealSection>
 
       {/* ─── Masterpiece of the Week ─── */}
-      <RevealSection className="py-16 lg:py-24 bg-gradient-to-br from-[#051410] via-[#0b241d] to-[#04120e] relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_45%,rgba(201,161,90,0.15)_0%,rgba(201,161,90,0.05)_30%,transparent_60%)] pointer-events-none" />
+      <RevealSection className="py-20 lg:py-28 bg-gradient-to-br from-[#051410] via-[#0b241d] to-[#04120e] relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_45%,rgba(200,155,60,0.15)_0%,rgba(200,155,60,0.05)_30%,transparent_60%)] pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_55%,rgba(214,83,122,0.06)_0%,transparent_50%)] pointer-events-none" />
         <div className="absolute inset-0 opacity-[0.015] pointer-events-none"
           style={{
@@ -1016,7 +1420,7 @@ const Home = () => {
                 <motion.div
                   whileHover={{ scale: 1.015 }}
                   transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                  className="rounded-[48px_16px_48px_16px] overflow-hidden border border-white/8 shadow-[0_24px_80px_rgba(0,0,0,0.5),0_0_0_1px_rgba(201,161,90,0.06)]"
+                  className="rounded-[48px_16px_48px_16px] overflow-hidden border border-white/8 shadow-[0_24px_80px_rgba(0,0,0,0.5),0_0_0_1px_rgba(200,155,60,0.06)]"
                 >
                   <LazyImage
                     src={image28}
@@ -1111,7 +1515,7 @@ const Home = () => {
                 href={WHATSAPP_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[var(--color-gold)] to-[#b08b49] hover:from-[#b08b49] hover:to-[var(--color-gold)] text-[#0a1a12] font-bold tracking-widest text-xs uppercase px-9 py-4 rounded-full shadow-[0_8px_28px_rgba(201,161,90,0.15)] hover:shadow-[0_16px_40px_rgba(201,161,90,0.35)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] transition-all duration-300 relative overflow-hidden"
+                className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[var(--color-gold)] to-[#a07d30] hover:from-[#a07d30] hover:to-[var(--color-gold)] text-[#0a1a12] font-bold tracking-widest text-xs uppercase px-9 py-4 rounded-full shadow-[0_8px_28px_rgba(200,155,60,0.15)] hover:shadow-[0_16px_40px_rgba(200,155,60,0.35)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] transition-all duration-300 relative overflow-hidden"
               >
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                 <span className="relative z-10 flex items-center gap-2.5">
@@ -1136,8 +1540,8 @@ const Home = () => {
       </RevealSection>
 
       {/* ─── Celebrate Every Beautiful Moment ─── */}
-      <RevealSection className="relative bg-gradient-to-b from-[#FAF8F5] via-[#fdfbf7] to-[#FAF8F5] dark:from-[#05120e] dark:via-[#091f1a] dark:to-[#05120e] py-20 lg:py-28 transition-colors duration-500 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(201,161,90,0.08)_0%,transparent_60%)] pointer-events-none" />
+      <RevealSection className="relative bg-gradient-to-b from-[#FFF9F7] via-[#FCFAF8] to-[#FFF9F7] dark:from-[#05120e] dark:via-[#091f1a] dark:to-[#05120e] py-20 lg:py-28 transition-colors duration-500 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(200,155,60,0.08)_0%,transparent_60%)] pointer-events-none" />
         <div className="absolute inset-0 opacity-[0.02] pointer-events-none mix-blend-multiply"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
@@ -1177,7 +1581,7 @@ const Home = () => {
           <div className="text-center mb-12 lg:mb-16">
             <div className="inline-flex items-center gap-3 mb-4">
               <span className="w-8 h-px bg-gradient-to-r from-transparent to-[var(--color-gold)]/60" />
-              <span className="text-[#C9A15A] tracking-[0.25em] font-bold text-[11px] uppercase">
+              <span className="text-[#C89B3C] tracking-[0.25em] font-bold text-[11px] uppercase">
                 Curated Occasions
               </span>
               <span className="w-8 h-px bg-gradient-to-l from-transparent to-[var(--color-gold)]/60" />
@@ -1224,7 +1628,7 @@ const Home = () => {
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.7, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -6 }}
-                className="group relative rounded-[24px] overflow-hidden cursor-pointer shadow-[0_4px_40px_-16px_rgba(0,0,0,0.06)] hover:shadow-[0_30px_60px_-16px_rgba(201,161,90,0.15)] ring-1 ring-white/20 hover:ring-[var(--color-gold)]/30 transition-all duration-700 ease-out"
+                className="group relative rounded-[24px] overflow-hidden cursor-pointer shadow-[0_4px_40px_-16px_rgba(0,0,0,0.06)] hover:shadow-[0_30px_60px_-16px_rgba(200,155,60,0.15)] ring-1 ring-white/20 hover:ring-[var(--color-gold)]/30 transition-all duration-700 ease-out card-elevate"
                 onClick={() => navigate(item.route)}
               >
                 <div className="relative overflow-hidden" style={{ aspectRatio: '4 / 5.2' }}>
@@ -1297,11 +1701,11 @@ const Home = () => {
       </RevealSection>
 
       {/* ─── How It Works ─── */}
-      <RevealSection className="relative py-14 lg:py-16 bg-gradient-to-b from-[#FDFBF8] via-[#FDFBF8] to-[#FDFBF8] overflow-hidden">
+      <RevealSection className="relative py-14 lg:py-16 bg-gradient-to-b from-[#FFF9F7] via-[#FCFAF8] to-[#FFF9F7] overflow-hidden">
         {/* Premium background layers */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(214,179,106,0.05)_0%,transparent_60%)] pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_80%,rgba(214,179,106,0.03)_0%,transparent_50%)] pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_20%,rgba(214,179,106,0.02)_0%,transparent_50%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(200,155,60,0.05)_0%,transparent_60%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_80%,rgba(200,155,60,0.03)_0%,transparent_50%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_20%,rgba(200,155,60,0.02)_0%,transparent_50%)] pointer-events-none" />
         <div className="absolute inset-0 opacity-[0.01] pointer-events-none mix-blend-multiply"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
@@ -1311,27 +1715,27 @@ const Home = () => {
         <div className="absolute inset-0 shadow-[inset_0_0_200px_rgba(0,0,0,0.015)] pointer-events-none" />
 
         {/* Ambient glow blobs */}
-        <div className="absolute top-[-5%] left-[-2%] w-[500px] h-[500px] bg-[rgba(214,179,106,0.04)] rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-[-5%] right-[-2%] w-[400px] h-[400px] bg-[rgba(214,179,106,0.03)] rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-[-5%] left-[-2%] w-[500px] h-[500px] bg-[rgba(200,155,60,0.04)] rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[-5%] right-[-2%] w-[400px] h-[400px] bg-[rgba(200,155,60,0.03)] rounded-full blur-[100px] pointer-events-none" />
 
         {/* Floating particles */}
-        <motion.div animate={{ y: [0, -16, 0], opacity: [0.1, 0.3, 0.1] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} className="absolute top-[10%] right-[8%] w-2 h-2 rounded-full bg-[rgba(214,179,106,0.25)] blur-[1px] pointer-events-none" />
-        <motion.div animate={{ y: [0, -20, 0], opacity: [0.08, 0.25, 0.08] }} transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-[30%] left-[5%] w-1.5 h-1.5 rounded-full bg-[rgba(214,179,106,0.2)] blur-[2px] pointer-events-none" />
-        <motion.div animate={{ y: [0, -12, 0], opacity: [0.1, 0.2, 0.1] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 4 }} className="absolute bottom-[15%] right-[12%] w-1 h-1 rounded-full bg-[rgba(214,179,106,0.3)] blur-[1px] pointer-events-none" />
+        <motion.div animate={{ y: [0, -16, 0], opacity: [0.1, 0.3, 0.1] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} className="absolute top-[10%] right-[8%] w-2 h-2 rounded-full bg-[rgba(200,155,60,0.25)] blur-[1px] pointer-events-none" />
+        <motion.div animate={{ y: [0, -20, 0], opacity: [0.08, 0.25, 0.08] }} transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-[30%] left-[5%] w-1.5 h-1.5 rounded-full bg-[rgba(200,155,60,0.2)] blur-[2px] pointer-events-none" />
+        <motion.div animate={{ y: [0, -12, 0], opacity: [0.1, 0.2, 0.1] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 4 }} className="absolute bottom-[15%] right-[12%] w-1 h-1 rounded-full bg-[rgba(200,155,60,0.3)] blur-[1px] pointer-events-none" />
 
         <div className="max-w-[1440px] mx-auto px-6">
           {/* ─── Heading Area ─── */}
           <div className="text-center mb-10 lg:mb-12 relative">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[200px] bg-[rgba(214,179,106,0.04)] rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[200px] bg-[rgba(200,155,60,0.04)] rounded-full blur-[100px] pointer-events-none" />
 
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[rgba(214,179,106,0.1)] backdrop-blur-sm border border-[rgba(214,179,106,0.2)] text-[#D6B36A] text-[10px] font-bold tracking-[0.2em] uppercase"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[rgba(200,155,60,0.1)] backdrop-blur-sm border border-[rgba(200,155,60,0.2)] text-[#C89B3C] text-[10px] font-bold tracking-[0.2em] uppercase"
             >
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" className="text-[#D6B36A]">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" className="text-[#C89B3C]">
                 <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="currentColor" />
               </svg>
               Simple Process
@@ -1342,7 +1746,7 @@ const Home = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-serif-display font-black text-[#163827] leading-[1.06] mt-4"
+              className="text-4xl sm:text-5xl lg:text-6xl font-serif-display font-black text-[#184D36] leading-[1.06] mt-4"
             >
               How It Works
             </motion.h2>
@@ -1371,7 +1775,7 @@ const Home = () => {
                       <svg width="28" height="6" viewBox="0 0 28 6" className="overflow-visible">
                         <motion.line
                           x1="0" y1="3" x2="28" y2="3"
-                          stroke="rgba(214,179,106,0.3)"
+                          stroke="rgba(200,155,60,0.3)"
                           strokeWidth="2"
                           strokeDasharray="2 4"
                           initial={{ pathLength: 0 }}
@@ -1381,7 +1785,7 @@ const Home = () => {
                         />
                         <motion.circle
                           cx="28" cy="3" r="2.5"
-                          fill="#D6B36A"
+                          fill="#C89B3C"
                           initial={{ opacity: 0, scale: 0 }}
                           whileInView={{ opacity: 1, scale: 1 }}
                           viewport={{ once: true }}
@@ -1415,7 +1819,7 @@ const Home = () => {
                       setTiltIndex(null);
                       setTiltAngles({ rotateX: 0, rotateY: 0 });
                     }}
-                    className="group relative bg-[rgba(255,255,255,0.58)] backdrop-blur-xl border border-[rgba(255,255,255,0.42)] rounded-[28px] p-8 lg:p-10 shadow-[0_8px_24px_rgba(0,0,0,0.05),0_20px_60px_rgba(0,0,0,0.06)] hover:shadow-[0_25px_60px_rgba(214,179,106,0.12),0_12px_30px_rgba(0,0,0,0.06)] hover:border-[#D6B36A]/25 transition-shadow duration-400 text-center cursor-default overflow-hidden"
+                    className="group relative bg-[rgba(255,255,255,0.58)] backdrop-blur-xl border border-[rgba(255,255,255,0.42)] rounded-[28px] p-8 lg:p-10 shadow-[0_8px_24px_rgba(0,0,0,0.05),0_20px_60px_rgba(0,0,0,0.06)] hover:shadow-[0_25px_60px_rgba(200,155,60,0.12),0_12px_30px_rgba(0,0,0,0.06)] hover:border-[#C89B3C]/25 transition-shadow duration-400 text-center cursor-default overflow-hidden"
                   >
                     {/* Inner glow */}
                     <div className="absolute inset-0 bg-gradient-to-b from-white/30 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
@@ -1424,7 +1828,7 @@ const Home = () => {
                     <span
                       className="absolute -top-2 -right-2 text-[130px] lg:text-[160px] font-serif font-black leading-none pointer-events-none select-none"
                       style={{
-                        background: 'linear-gradient(135deg, rgba(214,179,106,0.08), rgba(214,179,106,0.02))',
+                        background: 'linear-gradient(135deg, rgba(200,155,60,0.08), rgba(200,155,60,0.02))',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                       }}
@@ -1433,8 +1837,8 @@ const Home = () => {
                     </span>
 
                     {/* Glass icon container */}
-                    <div className="w-[88px] h-[88px] mx-auto rounded-full bg-gradient-to-br from-[rgba(214,179,106,0.2)] to-[rgba(22,56,39,0.05)] backdrop-blur-sm border border-white/30 flex items-center justify-center shadow-inner group-hover:shadow-[0_0_45px_rgba(214,179,106,0.15)] group-hover:scale-110 transition-all duration-500 relative z-[1]">
-                      <Icon size={32} className="text-[#163827] group-hover:text-[#D6B36A] transition-colors duration-500" />
+                    <div className="w-[88px] h-[88px] mx-auto rounded-full bg-gradient-to-br from-[rgba(200,155,60,0.2)] to-[rgba(24,77,54,0.05)] backdrop-blur-sm border border-white/30 flex items-center justify-center shadow-inner group-hover:shadow-[0_0_45px_rgba(200,155,60,0.15)] group-hover:scale-110 transition-all duration-500 relative z-[1]">
+                      <Icon size={32} className="text-[#184D36] group-hover:text-[#C89B3C] transition-colors duration-500" />
                     </div>
 
                     {/* Content */}
@@ -1459,20 +1863,20 @@ const Home = () => {
             className="mt-10 lg:mt-12 text-center"
           >
             <div className="inline-flex flex-col items-center gap-2">
-              <p className="text-[#163827] font-serif-display font-bold text-lg lg:text-xl leading-snug">
+              <p className="text-[#184D36] font-serif-display font-bold text-lg lg:text-xl leading-snug">
                 Fresh Flowers Delivered Within Hours
               </p>
               <div className="flex items-center justify-center gap-4 mt-3 flex-wrap">
                 <Link
                   to="/occasions"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#163827] to-[#1f4a30] text-white text-[11px] font-bold tracking-[0.1em] uppercase hover:scale-[1.04] active:scale-[0.97] transition-all duration-300 shadow-[0_4px_20px_rgba(22,56,39,0.2)] hover:shadow-[0_8px_30px_rgba(22,56,39,0.3)] group"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#184D36] to-[#1f4a30] text-white text-[11px] font-bold tracking-[0.1em] uppercase hover:scale-[1.04] active:scale-[0.97] transition-all duration-300 shadow-[0_4px_20px_rgba(24,77,54,0.2)] hover:shadow-[0_8px_30px_rgba(24,77,54,0.3)] group"
                 >
                   Explore Collection
                   <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform duration-300" />
                 </Link>
                 <Link
                   to="/"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[rgba(255,255,255,0.5)] backdrop-blur-md border border-[rgba(214,179,106,0.3)] text-[#D6B36A] text-[11px] font-bold tracking-[0.1em] uppercase hover:bg-[rgba(214,179,106,0.06)] hover:scale-[1.04] active:scale-[0.97] transition-all duration-300 group"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[rgba(255,255,255,0.5)] backdrop-blur-md border border-[rgba(200,155,60,0.3)] text-[#C89B3C] text-[11px] font-bold tracking-[0.1em] uppercase hover:bg-[rgba(200,155,60,0.06)] hover:scale-[1.04] active:scale-[0.97] transition-all duration-300 group"
                 >
                   How Delivery Works
                   <ArrowRight size={13} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
@@ -1490,9 +1894,9 @@ const Home = () => {
         <FloatingDecoration type="petal6" side="left" top="auto" bottom="12%" size={42} opacity={0.1} delay={2.5} duration={13} animation="sway3" color="var(--color-gold)" />
 
         {/* Premium background layers */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(214,179,106,0.06)_0%,transparent_60%)] pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_80%,rgba(214,179,106,0.03)_0%,transparent_50%)] pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_20%,rgba(214,179,106,0.02)_0%,transparent_50%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(200,155,60,0.06)_0%,transparent_60%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_80%,rgba(200,155,60,0.03)_0%,transparent_50%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_20%,rgba(200,155,60,0.02)_0%,transparent_50%)] pointer-events-none" />
         <div className="absolute inset-0 opacity-[0.012] pointer-events-none mix-blend-multiply"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
@@ -1503,27 +1907,27 @@ const Home = () => {
         <div className="absolute inset-0 shadow-[inset_0_0_200px_rgba(0,0,0,0.02)] pointer-events-none" />
 
         {/* Ambient glow blobs */}
-        <div className="absolute top-[-8%] left-[-3%] w-[600px] h-[600px] bg-[rgba(214,179,106,0.04)] rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-[-8%] right-[-3%] w-[500px] h-[500px] bg-[rgba(214,179,106,0.03)] rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-[-8%] left-[-3%] w-[600px] h-[600px] bg-[rgba(200,155,60,0.04)] rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-[-8%] right-[-3%] w-[500px] h-[500px] bg-[rgba(200,155,60,0.03)] rounded-full blur-[120px] pointer-events-none" />
 
         {/* Floating animated particles */}
-        <motion.div animate={{ y: [0, -18, 0], opacity: [0.15, 0.35, 0.15] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }} className="absolute top-[12%] right-[6%] w-2 h-2 rounded-full bg-[rgba(214,179,106,0.3)] blur-[1px] pointer-events-none" />
-        <motion.div animate={{ y: [0, -24, 0], opacity: [0.1, 0.3, 0.1] }} transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-[35%] left-[4%] w-1.5 h-1.5 rounded-full bg-[rgba(214,179,106,0.25)] blur-[2px] pointer-events-none" />
-        <motion.div animate={{ y: [0, -14, 0], opacity: [0.12, 0.25, 0.12] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 4 }} className="absolute bottom-[20%] right-[15%] w-1 h-1 rounded-full bg-[rgba(214,179,106,0.35)] blur-[1px] pointer-events-none" />
+        <motion.div animate={{ y: [0, -18, 0], opacity: [0.15, 0.35, 0.15] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }} className="absolute top-[12%] right-[6%] w-2 h-2 rounded-full bg-[rgba(200,155,60,0.3)] blur-[1px] pointer-events-none" />
+        <motion.div animate={{ y: [0, -24, 0], opacity: [0.1, 0.3, 0.1] }} transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-[35%] left-[4%] w-1.5 h-1.5 rounded-full bg-[rgba(200,155,60,0.25)] blur-[2px] pointer-events-none" />
+        <motion.div animate={{ y: [0, -14, 0], opacity: [0.12, 0.25, 0.12] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 4 }} className="absolute bottom-[20%] right-[15%] w-1 h-1 rounded-full bg-[rgba(200,155,60,0.35)] blur-[1px] pointer-events-none" />
 
         <div className="max-w-[1440px] mx-auto px-6">
           {/* ─── Heading Area ─── */}
           <div className="text-center mb-8 lg:mb-10 relative">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[220px] bg-[rgba(214,179,106,0.04)] rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[220px] bg-[rgba(200,155,60,0.04)] rounded-full blur-[100px] pointer-events-none" />
 
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[rgba(214,179,106,0.1)] border border-[rgba(214,179,106,0.2)] text-[#D6B36A] text-[10px] font-bold tracking-[0.2em] uppercase mb-4"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[rgba(200,155,60,0.1)] border border-[rgba(200,155,60,0.2)] text-[#C89B3C] text-[10px] font-bold tracking-[0.2em] uppercase mb-4"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D6B36A] animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C89B3C] animate-pulse" />
               Trusted by Thousands
             </motion.div>
 
@@ -1532,7 +1936,7 @@ const Home = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-serif-display font-black text-[#163827] leading-[1.06]"
+              className="text-4xl sm:text-5xl lg:text-6xl font-serif-display font-black text-[#184D36] leading-[1.06]"
             >
               Why Choose Us
             </motion.h2>
@@ -1544,9 +1948,9 @@ const Home = () => {
               transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="flex items-center justify-center gap-3 mt-4 mb-3"
             >
-              <div className="w-12 h-px bg-gradient-to-r from-transparent via-[rgba(214,179,106,0.4)] to-transparent" />
-              <div className="w-2 h-2 rounded-full bg-[#D6B36A] shadow-[0_0_8px_rgba(214,179,106,0.3)]" />
-              <div className="w-12 h-px bg-gradient-to-r from-transparent via-[rgba(214,179,106,0.4)] to-transparent" />
+              <div className="w-12 h-px bg-gradient-to-r from-transparent via-[rgba(200,155,60,0.4)] to-transparent" />
+              <div className="w-2 h-2 rounded-full bg-[#C89B3C] shadow-[0_0_8px_rgba(200,155,60,0.3)]" />
+              <div className="w-12 h-px bg-gradient-to-r from-transparent via-[rgba(200,155,60,0.4)] to-transparent" />
             </motion.div>
 
             <motion.p
@@ -1578,16 +1982,16 @@ const Home = () => {
               return (
                 <div
                   key={`trust-num-${i}`}
-                  className="relative flex flex-col items-center justify-center gap-2 px-3 py-5 rounded-2xl bg-[rgba(255,255,255,0.6)] backdrop-blur-xl border border-[rgba(255,255,255,0.45)] shadow-[0_8px_25px_rgba(0,0,0,0.05),0_1px_3px_rgba(0,0,0,0.02)] group hover:border-[#D6B36A]/25 hover:shadow-[0_12px_35px_rgba(214,179,106,0.08)] transition-all duration-400"
+                  className="relative flex flex-col items-center justify-center gap-2 px-3 py-5 rounded-2xl bg-[rgba(255,255,255,0.6)] backdrop-blur-xl border border-[rgba(255,255,255,0.45)] shadow-[0_8px_25px_rgba(0,0,0,0.05),0_1px_3px_rgba(0,0,0,0.02)] group hover:border-[#C89B3C]/25 hover:shadow-[0_12px_35px_rgba(200,155,60,0.08)] transition-all duration-400"
                 >
-                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[rgba(214,179,106,0.15)] to-[rgba(22,56,39,0.05)] backdrop-blur-sm border border-white/30 flex items-center justify-center group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(214,179,106,0.15)] transition-all duration-500">
-                    <StatIcon size={16} className="text-[#D6B36A]" />
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[rgba(200,155,60,0.15)] to-[rgba(24,77,54,0.05)] backdrop-blur-sm border border-white/30 flex items-center justify-center group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(200,155,60,0.15)] transition-all duration-500">
+                    <StatIcon size={16} className="text-[#C89B3C]" />
                   </div>
                   <div className="flex items-baseline gap-0.5">
                     {stat.custom ? (
-                      <span className="text-xl font-bold text-[#163827]">{stat.custom}</span>
+                      <span className="text-xl font-bold text-[#184D36]">{stat.custom}</span>
                     ) : (
-                      <span className="text-xl font-bold text-[#163827]">
+                      <span className="text-xl font-bold text-[#184D36]">
                         <AnimatedCounter target={stat.target} suffix={stat.suffix} />
                       </span>
                     )}
@@ -1610,20 +2014,20 @@ const Home = () => {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
                   whileHover={{ y: -10, scale: 1.03 }}
-                  className="group relative bg-[rgba(255,255,255,0.55)] backdrop-blur-xl rounded-[24px] border border-[rgba(255,255,255,0.4)] shadow-[0_8px_25px_rgba(0,0,0,0.05),0_20px_60px_rgba(0,0,0,0.04)] hover:shadow-[0_25px_60px_rgba(214,179,106,0.12),0_10px_30px_rgba(0,0,0,0.06)] hover:border-[#D6B36A]/25 transition-all duration-400 text-center overflow-hidden"
+                  className="group relative bg-[rgba(255,255,255,0.55)] backdrop-blur-xl rounded-[24px] border border-[rgba(255,255,255,0.4)] shadow-[0_8px_25px_rgba(0,0,0,0.05),0_20px_60px_rgba(0,0,0,0.04)] hover:shadow-[0_25px_60px_rgba(200,155,60,0.12),0_10px_30px_rgba(0,0,0,0.06)] hover:border-[#C89B3C]/25 transition-all duration-400 text-center overflow-hidden"
                 >
                   {/* Gold top line */}
-                  <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#D6B36A]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+                  <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#C89B3C]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
 
                   {/* Inner glow */}
                   <div className="absolute inset-0 bg-gradient-to-b from-white/40 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
 
                   <div className="p-6 lg:p-7 relative z-[1]">
                     {/* Icon container */}
-                    <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-[rgba(214,179,106,0.2)] to-[rgba(22,56,39,0.05)] backdrop-blur-sm border border-white/30 flex items-center justify-center shadow-inner group-hover:shadow-[0_0_40px_rgba(214,179,106,0.15)] group-hover:scale-110 transition-all duration-500">
-                      <Icon size={30} className="text-[#163827] group-hover:text-[#D6B36A] transition-colors duration-500" />
+                    <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-[rgba(200,155,60,0.2)] to-[rgba(24,77,54,0.05)] backdrop-blur-sm border border-white/30 flex items-center justify-center shadow-inner group-hover:shadow-[0_0_40px_rgba(200,155,60,0.15)] group-hover:scale-110 transition-all duration-500">
+                      <Icon size={30} className="text-[#184D36] group-hover:text-[#C89B3C] transition-colors duration-500" />
                     </div>
-                    <h3 className="font-serif-display font-bold text-lg text-[#163827] mt-5">
+                    <h3 className="font-serif-display font-bold text-lg text-[#184D36] mt-5">
                       {item.title}
                     </h3>
                     <p className="text-[#6D6D6D] text-sm mt-2 font-light leading-relaxed mx-auto" style={{ maxWidth: '85%' }}>{item.desc}</p>
@@ -1652,22 +2056,22 @@ const Home = () => {
                 const StatIcon = stat.icon;
                 return (
                   <div key={`stat-${i}`} className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[rgba(214,179,106,0.15)] to-[rgba(22,56,39,0.05)] backdrop-blur-sm border border-white/30 flex items-center justify-center shrink-0">
-                      <StatIcon size={13} className="text-[#D6B36A]" />
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[rgba(200,155,60,0.15)] to-[rgba(24,77,54,0.05)] backdrop-blur-sm border border-white/30 flex items-center justify-center shrink-0">
+                      <StatIcon size={13} className="text-[#C89B3C]" />
                     </div>
                     <div>
                       <div className="flex items-baseline gap-0.5">
                         {stat.value ? (
-                          <span className="text-sm font-bold text-[#163827]">{stat.value}</span>
+                          <span className="text-sm font-bold text-[#184D36]">{stat.value}</span>
                         ) : (
-                          <span className="text-sm font-bold text-[#163827]">
+                          <span className="text-sm font-bold text-[#184D36]">
                             <AnimatedCounter target={stat.target} suffix={stat.suffix} />
                           </span>
                         )}
                       </div>
                       <p className="text-[9px] text-[#6D6D6D] font-medium">{stat.label}</p>
                     </div>
-                    {i < 4 && <div className="hidden lg:block w-px h-7 bg-gradient-to-b from-[rgba(214,179,106,0.2)] via-[rgba(214,179,106,0.1)] to-transparent ml-1" />}
+                    {i < 4 && <div className="hidden lg:block w-px h-7 bg-gradient-to-b from-[rgba(200,155,60,0.2)] via-[rgba(200,155,60,0.1)] to-transparent ml-1" />}
                   </div>
                 );
               })}
@@ -1686,9 +2090,9 @@ const Home = () => {
               {["Handcrafted Daily", "Fresh From Farms", "Luxury Packaging", "Same Day Delivery", "Secure Payments", "Expert Florists"].map((badge) => (
                 <span
                   key={badge}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[rgba(255,255,255,0.4)] backdrop-blur-sm border border-[rgba(255,255,255,0.3)] text-[#6D6D6D] text-[9px] font-semibold uppercase tracking-[0.08em] hover:border-[#D6B36A]/25 hover:bg-[rgba(214,179,106,0.04)] hover:text-[#18322A] transition-all duration-300"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[rgba(255,255,255,0.4)] backdrop-blur-sm border border-[rgba(255,255,255,0.3)] text-[#6D6D6D] text-[9px] font-semibold uppercase tracking-[0.08em] hover:border-[#C89B3C]/25 hover:bg-[rgba(200,155,60,0.04)] hover:text-[#18322A] transition-all duration-300"
                 >
-                  <CheckCircle2 size={10} className="text-[#D6B36A] shrink-0" />
+                  <CheckCircle2 size={10} className="text-[#C89B3C] shrink-0" />
                   {badge}
                 </span>
               ))}
@@ -1703,18 +2107,18 @@ const Home = () => {
             transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="mt-7 lg:mt-8"
           >
-            <div className="relative max-w-3xl mx-auto rounded-3xl p-[1px] bg-gradient-to-b from-[rgba(214,179,106,0.25)] to-[rgba(214,179,106,0.05)]">
-              <div className="relative rounded-3xl bg-[rgba(255,255,255,0.65)] backdrop-blur-xl px-8 lg:px-12 py-9 lg:py-10 shadow-[0_20px_60px_rgba(0,0,0,0.06),0_8px_25px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_80px_rgba(214,179,106,0.08),0_12px_35px_rgba(0,0,0,0.05)] transition-shadow duration-500 text-center">
+            <div className="relative max-w-3xl mx-auto rounded-3xl p-[1px] bg-gradient-to-b from-[rgba(200,155,60,0.25)] to-[rgba(200,155,60,0.05)]">
+              <div className="relative rounded-3xl bg-[rgba(255,255,255,0.65)] backdrop-blur-xl px-8 lg:px-12 py-9 lg:py-10 shadow-[0_20px_60px_rgba(0,0,0,0.06),0_8px_25px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_80px_rgba(200,155,60,0.08),0_12px_35px_rgba(0,0,0,0.05)] transition-shadow duration-500 text-center">
                 {/* Decorative floral illustration */}
-                <div className="absolute top-3 right-5 text-[rgba(214,179,106,0.08)] pointer-events-none">
+                <div className="absolute top-3 right-5 text-[rgba(200,155,60,0.08)] pointer-events-none">
                   <Flower2 size={48} className="rotate-12" />
                 </div>
-                <div className="absolute bottom-3 left-5 text-[rgba(22,56,39,0.04)] pointer-events-none rotate-45">
+                <div className="absolute bottom-3 left-5 text-[rgba(24,77,54,0.04)] pointer-events-none rotate-45">
                   <Leaf size={36} />
                 </div>
 
                 <div className="relative">
-                  <p className="text-[#163827] font-serif-display font-bold text-xl lg:text-2xl leading-snug">
+                  <p className="text-[#184D36] font-serif-display font-bold text-xl lg:text-2xl leading-snug">
                     Delivering Happiness Across Delhi NCR Since 2018
                   </p>
                   <p className="text-[#6D6D6D] text-sm mt-3 max-w-lg mx-auto font-light leading-relaxed">
@@ -1723,7 +2127,7 @@ const Home = () => {
                   <div className="flex items-center justify-center gap-4 mt-6 flex-wrap">
                     <Link
                       to="/occasions"
-                      className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-gradient-to-r from-[#163827] to-[#1f4a30] text-white text-xs font-bold tracking-[0.1em] uppercase hover:scale-[1.04] active:scale-[0.97] transition-all duration-300 shadow-[0_4px_20px_rgba(22,56,39,0.25)] hover:shadow-[0_8px_30px_rgba(22,56,39,0.35)] group"
+                      className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-gradient-to-r from-[#184D36] to-[#1f4a30] text-white text-xs font-bold tracking-[0.1em] uppercase hover:scale-[1.04] active:scale-[0.97] transition-all duration-300 shadow-[0_4px_20px_rgba(24,77,54,0.25)] hover:shadow-[0_8px_30px_rgba(24,77,54,0.35)] group"
                     >
                       Explore Collection
                       <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
@@ -1732,7 +2136,7 @@ const Home = () => {
                       href={WHATSAPP_LINK}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-[rgba(214,179,106,0.35)] text-[#D6B36A] text-xs font-bold tracking-[0.1em] uppercase hover:bg-[rgba(214,179,106,0.08)] hover:scale-[1.04] active:scale-[0.97] transition-all duration-300 group"
+                      className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-[rgba(200,155,60,0.35)] text-[#C89B3C] text-xs font-bold tracking-[0.1em] uppercase hover:bg-[rgba(200,155,60,0.08)] hover:scale-[1.04] active:scale-[0.97] transition-all duration-300 group"
                     >
                       <Phone size={14} />
                       Call Florist
@@ -1748,8 +2152,8 @@ const Home = () => {
       {/* ─── Where Every Celebration Blooms ─── */}
       <section className="relative py-20 lg:py-28 bg-gradient-to-b from-[#FDFBF8] via-[#fcf9f4] to-[#FDFBF8] overflow-hidden">
         {/* Premium background layers */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(214,179,106,0.06)_0%,transparent_60%)] pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_80%,rgba(214,179,106,0.03)_0%,transparent_50%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(200,155,60,0.06)_0%,transparent_60%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_80%,rgba(200,155,60,0.03)_0%,transparent_50%)] pointer-events-none" />
         <div className="absolute inset-0 opacity-[0.015] pointer-events-none mix-blend-multiply"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
@@ -1759,34 +2163,34 @@ const Home = () => {
 
         {/* Floating botanical silhouettes */}
         <motion.div animate={{ y: [0, -15, 0], rotate: [0, 5, 0], opacity: [0.04, 0.08, 0.04] }} transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }} className="absolute top-[12%] right-[4%] w-24 h-24 pointer-events-none">
-          <Flower2 size={96} className="text-[rgba(214,179,106,0.06)]" />
+          <Flower2 size={96} className="text-[rgba(200,155,60,0.06)]" />
         </motion.div>
         <motion.div animate={{ y: [0, 12, 0], rotate: [0, -6, 0], opacity: [0.03, 0.06, 0.03] }} transition={{ duration: 16, repeat: Infinity, ease: "easeInOut", delay: 3 }} className="absolute bottom-[10%] left-[3%] w-20 h-20 pointer-events-none">
-          <Leaf size={80} className="text-[rgba(22,56,39,0.04)] rotate-45" />
+          <Leaf size={80} className="text-[rgba(24,77,54,0.04)] rotate-45" />
         </motion.div>
 
         {/* Golden sparkle particles */}
-        <motion.div animate={{ opacity: [0, 0.15, 0], scale: [0.5, 1, 0.5] }} transition={{ duration: 6, repeat: Infinity, delay: 1 }} className="absolute top-[20%] left-[12%] w-1 h-1 rounded-full bg-[#D6B36A] blur-[1px] pointer-events-none" />
-        <motion.div animate={{ opacity: [0, 0.12, 0], scale: [0.5, 1.2, 0.5] }} transition={{ duration: 7, repeat: Infinity, delay: 3.5 }} className="absolute top-[40%] right-[15%] w-1 h-1 rounded-full bg-[#D6B36A] blur-[1px] pointer-events-none" />
-        <motion.div animate={{ opacity: [0, 0.1, 0], scale: [0.5, 0.8, 0.5] }} transition={{ duration: 8, repeat: Infinity, delay: 6 }} className="absolute bottom-[25%] left-[25%] w-1 h-1 rounded-full bg-[#D6B36A] blur-[1px] pointer-events-none" />
+        <motion.div animate={{ opacity: [0, 0.15, 0], scale: [0.5, 1, 0.5] }} transition={{ duration: 6, repeat: Infinity, delay: 1 }} className="absolute top-[20%] left-[12%] w-1 h-1 rounded-full bg-[#C89B3C] blur-[1px] pointer-events-none" />
+        <motion.div animate={{ opacity: [0, 0.12, 0], scale: [0.5, 1.2, 0.5] }} transition={{ duration: 7, repeat: Infinity, delay: 3.5 }} className="absolute top-[40%] right-[15%] w-1 h-1 rounded-full bg-[#C89B3C] blur-[1px] pointer-events-none" />
+        <motion.div animate={{ opacity: [0, 0.1, 0], scale: [0.5, 0.8, 0.5] }} transition={{ duration: 8, repeat: Infinity, delay: 6 }} className="absolute bottom-[25%] left-[25%] w-1 h-1 rounded-full bg-[#C89B3C] blur-[1px] pointer-events-none" />
 
         <div className="max-w-[1440px] mx-auto px-6">
           {/* ─── Section Header ─── */}
           <div className="flex items-center justify-center gap-4 mb-8">
-            <span className="w-14 h-px bg-gradient-to-r from-transparent via-[#D6B36A]/40 to-[#D6B36A]/70" />
+            <span className="w-14 h-px bg-gradient-to-r from-transparent via-[#C89B3C]/40 to-[#C89B3C]/70" />
             <motion.span
               initial={{ opacity: 0, scale: 0 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[rgba(255,255,255,0.55)] backdrop-blur-md border border-[rgba(214,179,106,0.25)] text-[#D6B36A] text-[10px] font-bold tracking-[0.2em] uppercase shadow-sm"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[rgba(255,255,255,0.55)] backdrop-blur-md border border-[rgba(200,155,60,0.25)] text-[#C89B3C] text-[10px] font-bold tracking-[0.2em] uppercase shadow-sm"
             >
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" className="text-[#D6B36A]">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" className="text-[#C89B3C]">
                 <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="currentColor" />
               </svg>
               Curated Experiences
             </motion.span>
-            <span className="w-14 h-px bg-gradient-to-l from-transparent via-[#D6B36A]/40 to-[#D6B36A]/70" />
+            <span className="w-14 h-px bg-gradient-to-l from-transparent via-[#C89B3C]/40 to-[#C89B3C]/70" />
           </div>
 
           <div className="text-center mb-12 lg:mb-14">
@@ -1795,15 +2199,15 @@ const Home = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="text-3xl md:text-5xl lg:text-6xl font-serif-display font-black text-[#163827] leading-[1.06] tracking-tight"
+              className="text-3xl md:text-5xl lg:text-6xl font-serif-display font-black text-[#184D36] leading-[1.06] tracking-tight"
             >
               Where Every Celebration{" "}
               <span className="relative">
                 <span className="relative z-[1] italic font-light" style={{
-                  background: 'linear-gradient(135deg, #D6B36A 0%, #c9a050 40%, #e4cc8a 70%, #D6B36A 100%)',
+                  background: 'linear-gradient(135deg, #C89B3C 0%, #c9a050 40%, #e4cc8a 70%, #C89B3C 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
-                  filter: 'drop-shadow(0 0 20px rgba(214,179,106,0.15))',
+                  filter: 'drop-shadow(0 0 20px rgba(200,155,60,0.15))',
                 }}>
                   Blooms
                 </span>
@@ -1888,7 +2292,7 @@ const Home = () => {
                       setExpTiltIndex(null);
                       setExpTiltAngles({ rotateX: 0, rotateY: 0 });
                     }}
-                    className="relative w-full h-full rounded-[30px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.05),0_20px_60px_rgba(0,0,0,0.04)] hover:shadow-[0_25px_60px_rgba(214,179,106,0.10),0_40px_80px_rgba(0,0,0,0.08)] transition-shadow duration-500"
+                    className="relative w-full h-full rounded-[30px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.05),0_20px_60px_rgba(0,0,0,0.04)] hover:shadow-[0_25px_60px_rgba(200,155,60,0.10),0_40px_80px_rgba(0,0,0,0.08)] transition-shadow duration-500"
                   >
                     {/* Glass backdrop */}
                     <div className="absolute inset-0 bg-[rgba(255,255,255,0.12)] backdrop-blur-xl border border-[rgba(255,255,255,0.18)] rounded-[30px] z-[1] pointer-events-none" />
@@ -1925,7 +2329,7 @@ const Home = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.4, delay: 0.15 + idx * 0.12 }}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.15)] backdrop-blur-md border border-[rgba(214,179,106,0.3)] text-white text-[9px] font-bold tracking-[0.15em] uppercase shadow-[0_4px_16px_rgba(0,0,0,0.15)] group-hover:shadow-[0_0_20px_rgba(214,179,106,0.15)] group-hover:border-[#D6B36A]/50 transition-all duration-400"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.15)] backdrop-blur-md border border-[rgba(200,155,60,0.3)] text-white text-[9px] font-bold tracking-[0.15em] uppercase shadow-[0_4px_16px_rgba(0,0,0,0.15)] group-hover:shadow-[0_0_20px_rgba(200,155,60,0.15)] group-hover:border-[#C89B3C]/50 transition-all duration-400"
                       >
                         <span className="text-xs">{occ.emoji}</span>
                         <span>{occ.badge}</span>
@@ -1933,16 +2337,16 @@ const Home = () => {
                     </div>
 
                     {/* Gold corner highlights */}
-                    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-[rgba(214,179,106,0.1)] to-transparent rounded-bl-full z-[4] pointer-events-none" />
-                    <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-[rgba(214,179,106,0.06)] to-transparent rounded-tr-full z-[4] pointer-events-none" />
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-[rgba(200,155,60,0.1)] to-transparent rounded-bl-full z-[4] pointer-events-none" />
+                    <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-[rgba(200,155,60,0.06)] to-transparent rounded-tr-full z-[4] pointer-events-none" />
 
                     {/* Expanding bottom gold line */}
-                    <div className="absolute bottom-0 left-0 z-[6] h-[2px] bg-gradient-to-r from-[#D6B36A] to-[#e4cc8a] rounded-full w-[20%] group-hover:w-full transition-all duration-500 ease-out" />
+                    <div className="absolute bottom-0 left-0 z-[6] h-[2px] bg-gradient-to-r from-[#C89B3C] to-[#e4cc8a] rounded-full w-[20%] group-hover:w-full transition-all duration-500 ease-out" />
 
                     {/* ─── Floating Glass Content Panel ─── */}
-                    <div className="absolute bottom-3 left-3 right-3 z-[6] bg-[rgba(255,255,255,0.14)] backdrop-blur-xl border border-[rgba(255,255,255,0.18)] rounded-2xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.12)] group-hover:bg-[rgba(255,255,255,0.18)] group-hover:border-[rgba(214,179,106,0.2)] group-hover:shadow-[0_12px_40px_rgba(214,179,106,0.10)] transition-all duration-400">
+                    <div className="absolute bottom-3 left-3 right-3 z-[6] bg-[rgba(255,255,255,0.14)] backdrop-blur-xl border border-[rgba(255,255,255,0.18)] rounded-2xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.12)] group-hover:bg-[rgba(255,255,255,0.18)] group-hover:border-[rgba(200,155,60,0.2)] group-hover:shadow-[0_12px_40px_rgba(200,155,60,0.10)] transition-all duration-400">
                       {/* Gold accent line */}
-                      <div className="w-10 h-[2px] bg-[#D6B36A] rounded-full mb-3" />
+                      <div className="w-10 h-[2px] bg-[#C89B3C] rounded-full mb-3" />
 
                       <h3 className="font-serif-display font-bold text-lg lg:text-xl text-white tracking-wide leading-snug">
                         {occ.title}
@@ -1954,12 +2358,12 @@ const Home = () => {
                       {/* Hover-revealed content */}
                       <div className="mt-3 flex items-center justify-between opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-400">
                         <div className="flex items-center gap-2">
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[rgba(214,179,106,0.12)] backdrop-blur-sm border border-[rgba(214,179,106,0.2)] text-[#D6B36A] text-[8px] font-bold tracking-[0.1em] uppercase">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[rgba(200,155,60,0.12)] backdrop-blur-sm border border-[rgba(200,155,60,0.2)] text-[#C89B3C] text-[8px] font-bold tracking-[0.1em] uppercase">
                             <Clock size={9} />
                             Same Day
                           </span>
                           <span className="text-[rgba(255,255,255,0.5)] text-[10px] font-light italic">
-                            {occ.price}
+                            <CallForPricing className="text-[rgba(255,255,255,0.6)] hover:text-white text-[10px]" />
                           </span>
                         </div>
                         <span className="inline-flex items-center gap-1 text-white text-[10px] font-bold tracking-[0.1em] uppercase group-hover:gap-2 transition-all duration-300">
@@ -2020,7 +2424,7 @@ const Home = () => {
               <div className="flex marquee-ltr gap-4 w-max hover:[animation-play-state:paused]">
                 {[...Array(2)].flatMap((_, batchIdx) =>
                   reviewData.map((r, i) => (
-                    <div key={`review-ltr-${batchIdx}-${i}`} className="p-5 max-w-[280px] bg-white/80 backdrop-blur-xl border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.03)] hover:border-[var(--color-gold)]/40 hover:shadow-[0_16px_48px_rgba(201,161,90,0.08)] transition-all duration-300 rounded-2xl shrink-0">
+                    <div key={`review-ltr-${batchIdx}-${i}`} className="p-5 max-w-[280px] bg-white/80 backdrop-blur-xl border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.03)] hover:border-[var(--color-gold)]/40 hover:shadow-[0_16px_48px_rgba(200,155,60,0.08)] transition-all duration-300 rounded-2xl shrink-0">
                       <div className="flex gap-0.5 mb-2">
                         {[...Array(5)].map((_, s) => (
                           <Star key={`star-ltr-${batchIdx}-${i}-${s}`} size={10} className="text-[var(--color-gold)] fill-[var(--color-gold)]" />
@@ -2049,7 +2453,7 @@ const Home = () => {
               <div className="flex marquee-rtl gap-4 w-max hover:[animation-play-state:paused]">
                 {[...Array(2)].flatMap((_, batchIdx) =>
                   reviewData.map((r, i) => (
-                    <div key={`review-rtl-${batchIdx}-${i}`} className="p-5 max-w-[280px] bg-white/80 backdrop-blur-xl border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.03)] hover:border-[var(--color-gold)]/40 hover:shadow-[0_16px_48px_rgba(201,161,90,0.08)] transition-all duration-300 rounded-2xl shrink-0">
+                    <div key={`review-rtl-${batchIdx}-${i}`} className="p-5 max-w-[280px] bg-white/80 backdrop-blur-xl border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.03)] hover:border-[var(--color-gold)]/40 hover:shadow-[0_16px_48px_rgba(200,155,60,0.08)] transition-all duration-300 rounded-2xl shrink-0">
                       <div className="flex gap-0.5 mb-2">
                         {[...Array(5)].map((_, s) => (
                           <Star key={`star-rtl-${batchIdx}-${i}-${s}`} size={10} className="text-[var(--color-gold)] fill-[var(--color-gold)]" />
@@ -2117,7 +2521,7 @@ const Home = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   key={`ig-${index}`}
-                  className={`group relative aspect-square overflow-hidden cursor-pointer shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_12px_40px_rgba(201,161,90,0.1)] hover:-translate-y-1 transition-all duration-500 ${isOdd ? 'rounded-[32px_8px_32px_8px]' : 'rounded-[8px_32px_8px_32px]'}`}
+                  className={`group relative aspect-square overflow-hidden cursor-pointer shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_12px_40px_rgba(200,155,60,0.1)] hover:-translate-y-1 transition-all duration-500 ${isOdd ? 'rounded-[32px_8px_32px_8px]' : 'rounded-[8px_32px_8px_32px]'}`}
                 >
                   <LazyImage
                     src={img}
@@ -2140,7 +2544,7 @@ const Home = () => {
 
       {/* ─── FAQ ─── */}
       <RevealSection className="relative py-16 lg:py-20 bg-gradient-to-br from-[#06120e] via-[#091a15] to-[#040c0a] overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(201,161,90,0.08)_0%,transparent_70%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(200,155,60,0.08)_0%,transparent_70%)] pointer-events-none" />
         <div className="absolute inset-0 opacity-[0.015] pointer-events-none"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
@@ -2166,7 +2570,7 @@ const Home = () => {
               return (
                 <div
                   key={`faq-${index}`}
-                  className={`bg-white/[0.03] backdrop-blur-md border rounded-2xl transition-all duration-300 hover:bg-white/[0.06] hover:border-[var(--color-gold)]/30 ${isSelected ? 'shadow-[0_0_40px_rgba(201,161,90,0.08)] border-[var(--color-gold)]/40' : 'border-white/10'}`}
+                  className={`bg-white/[0.03] backdrop-blur-md border rounded-2xl transition-all duration-300 hover:bg-white/[0.06] hover:border-[var(--color-gold)]/30 ${isSelected ? 'shadow-[0_0_40px_rgba(200,155,60,0.08)] border-[var(--color-gold)]/40' : 'border-white/10'}`}
                 >
                   <button
                     onClick={() => setOpenFaq(isSelected ? null : index)}
@@ -2204,7 +2608,7 @@ const Home = () => {
       </RevealSection>
 
       {/* ─── Newsletter ─── */}
-      <RevealSection className="relative py-16 lg:py-20 bg-[#FAF8F5] overflow-hidden">
+      <RevealSection className="relative py-16 lg:py-20 bg-[#FFF9F7] overflow-hidden">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <motion.div
             className="relative bg-gradient-to-br from-[#051410] via-[#09221b] to-[#04120e] rounded-[40px] p-10 md:p-16 border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.4)] overflow-hidden text-center"
@@ -2213,7 +2617,7 @@ const Home = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(201,161,90,0.15),transparent_60%)] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(200,155,60,0.15),transparent_60%)] pointer-events-none" />
             <div className="absolute inset-0 opacity-[0.02] pointer-events-none"
               style={{
                 backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
@@ -2223,7 +2627,7 @@ const Home = () => {
             <BokehLights spots={[
               { color: "from-rose-400/10 to-transparent", size: 280, top: "-12%", left: "-8%", anim: "bk-drift1", delay: 0, duration: 30 },
               { color: "from-amber-300/12 to-transparent", size: 220, bottom: "-15%", right: "8%", anim: "bk-drift4", delay: 3, duration: 28 },
-              { color: "from-[#C9A15A]/8 to-transparent", size: 180, top: "50%", left: "35%", anim: "bk-float", delay: 1, duration: 26 },
+              { color: "from-[#C89B3C]/8 to-transparent", size: 180, top: "50%", left: "35%", anim: "bk-float", delay: 1, duration: 26 },
             ]} />
             <FloatingDecoration type="petal5" side="left" top="10%" size={56} opacity={0.1} delay={0} duration={14} />
             <FloatingDecoration type="petal6" side="right" top="8%" size={44} opacity={0.08} delay={1.5} duration={12} animation="sway2" color="var(--color-gold)" />
@@ -2232,7 +2636,7 @@ const Home = () => {
               whileHover={{ scale: 1.05, rotate: -3 }}
               className="w-14 h-14 rounded-2xl bg-white/[0.06] backdrop-blur-md border border-white/10 flex items-center justify-center mx-auto mb-4 shadow-inner"
             >
-              <Mail size={24} className="text-[#C9A15A]" />
+              <Mail size={24} className="text-[#C89B3C]" />
             </motion.div>
 
             <h2 className="text-white font-serif font-light text-3xl md:text-5xl tracking-tight mb-3">
@@ -2254,7 +2658,7 @@ const Home = () => {
                 </motion.div>
               ) : (
                 <motion.div
-                  className="max-w-xl mx-auto flex flex-col sm:flex-row gap-3 sm:gap-0 bg-white/[0.04] backdrop-blur-md border border-white/10 rounded-full p-2 focus-within:border-[#C9A15A]/50 transition-all"
+                  className="max-w-xl mx-auto flex flex-col sm:flex-row gap-3 sm:gap-0 bg-white/[0.04] backdrop-blur-md border border-white/10 rounded-full p-2 focus-within:border-[#C89B3C]/50 transition-all"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -2272,7 +2676,7 @@ const Home = () => {
                     onClick={handleSubscribe}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
-                    className="relative bg-gradient-to-r from-[#C9A15A] to-[#b08b49] hover:from-[#b08b49] hover:to-[#C9A15A] text-black font-semibold tracking-widest text-xs uppercase px-8 py-3 rounded-full shadow-lg hover:shadow-[0_8px_30px_rgba(201,161,90,0.3)] transition-all duration-300 overflow-hidden group"
+                    className="relative bg-gradient-to-r from-[#C89B3C] to-[#a07d30] hover:from-[#a07d30] hover:to-[#C89B3C] text-black font-semibold tracking-widest text-xs uppercase px-8 py-3 rounded-full shadow-lg hover:shadow-[0_8px_30px_rgba(200,155,60,0.3)] transition-all duration-300 overflow-hidden group"
                   >
                     <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                     <span className="relative z-10">Subscribe</span>
@@ -2288,7 +2692,7 @@ const Home = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="w-10 h-10 rounded-full bg-white/[0.05] border border-white/10 text-stone-300 hover:border-[#C9A15A] hover:text-[#C9A15A] hover:bg-[#C9A15A]/10 flex items-center justify-center transition-all duration-300"
+                className="w-10 h-10 rounded-full bg-white/[0.05] border border-white/10 text-stone-300 hover:border-[#C89B3C] hover:text-[#C89B3C] hover:bg-[#C89B3C]/10 flex items-center justify-center transition-all duration-300"
               >
                 <FaInstagram size={14} />
               </motion.a>
@@ -2298,7 +2702,7 @@ const Home = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="w-10 h-10 rounded-full bg-white/[0.05] border border-white/10 text-stone-300 hover:border-[#C9A15A] hover:text-[#C9A15A] hover:bg-[#C9A15A]/10 flex items-center justify-center transition-all duration-300"
+                className="w-10 h-10 rounded-full bg-white/[0.05] border border-white/10 text-stone-300 hover:border-[#C89B3C] hover:text-[#C89B3C] hover:bg-[#C89B3C]/10 flex items-center justify-center transition-all duration-300"
               >
                 <FaFacebookF size={13} />
               </motion.a>

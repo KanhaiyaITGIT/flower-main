@@ -19,6 +19,7 @@ import {
 import { useSelector } from "react-redux";
 import { selectCartCount } from "../redux/cartSlice";
 import { WHATSAPP_LINK, BUSINESS_NAME_MAIN, BUSINESS_NAME_SUB } from "../constants";
+import CallForPricing from "../components/ui/CallForPricing";
 import { motion, AnimatePresence } from "framer-motion";
 import useGoogleAuth from "../hooks/useGoogleAuth";
 import { useTheme } from "../context/ThemeContext";
@@ -186,23 +187,23 @@ export default function Header() {
 
       <header className={`sticky top-0 z-50 w-full header-glass-premium transition-all duration-700 ${
         scrolled
-          ? "shadow-[0_1px_0_rgba(0,0,0,0.02),0_8px_32px_rgba(214,179,106,0.04)]"
+          ? "shadow-[0_1px_0_rgba(0,0,0,0.01),0_4px_24px_rgba(200,155,60,0.03)] header-scrolled"
           : ""
       }`}>
         <div className="max-w-[1440px] mx-auto px-4 md:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-[72px] gap-3 lg:gap-4">
+          <div className="flex items-center justify-between h-14 lg:h-16 gap-3 lg:gap-4">
               <Link to="/" className="flex items-center gap-3 shrink-0 group">
-                <motion.div
-                  whileHover={{ rotate: 12, scale: 1.1 }}
-                  className="w-10 h-10 rounded-full bg-gradient-to-br from-[#14301F] to-[#1a3d28] flex items-center justify-center shadow-[0_2px_8px_rgba(20,48,31,0.12)] group-hover:shadow-[0_4px_20px_rgba(20,48,31,0.25)] transition-all duration-400"
-                >
-                  <Flower2 size={19} color="#C8A882" />
-                </motion.div>
+                  <motion.div
+                    whileHover={{ rotate: 12, scale: 1.1 }}
+                    className="w-9 h-9 rounded-full bg-gradient-to-br from-[#184D36] to-[#1f5a40] flex items-center justify-center shadow-[0_2px_8px_rgba(24,77,54,0.12)] group-hover:shadow-[0_4px_20px_rgba(24,77,54,0.2)] transition-all duration-400"
+                  >
+                    <Flower2 size={17} color="#C89B3C" />
+                  </motion.div>
                 <span className="hidden sm:inline-block">
-                  <h1 className="font-serif-display font-black text-lg text-[#14301F] dark:text-stone-100 leading-none tracking-wide">
+                  <h1 className="font-serif-display font-bold text-base text-[#184D36] dark:text-stone-100 leading-none tracking-wide">
                     {BUSINESS_NAME_MAIN}
                   </h1>
-                  <p className="text-[8px] text-[#C9A15A] font-semibold tracking-[0.2em] uppercase leading-tight mt-0.5">
+                  <p className="text-[8px] text-[#C89B3C] font-semibold tracking-[0.2em] uppercase leading-tight mt-0.5">
                     {BUSINESS_NAME_SUB}
                   </p>
                 </span>
@@ -210,9 +211,9 @@ export default function Header() {
 
               <LocationDropdown />
 
-              <div className="hidden md:flex flex-1 max-w-[480px] lg:max-w-[560px] xl:max-w-[620px]">
+              <div className="hidden md:flex flex-1 max-w-[390px] lg:max-w-[460px] xl:max-w-[510px]">
                 <div className="relative w-full" ref={searchRef}>
-                  <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400/70 pointer-events-none z-10 transition-colors duration-300 peer-focus-within:text-[var(--color-gold)]/60" />
+                  <Search size={16} className="absolute left-[24px] top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none z-10 transition-colors duration-300 peer-focus-within:text-[var(--color-gold)]/60" />
                   <form onSubmit={handleFormSubmit}>
                     <input
                       type="text"
@@ -221,9 +222,11 @@ export default function Header() {
                       onFocus={() => setShowDropdown(true)}
                       onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
                       placeholder="Search flowers, cakes, plants..."
-                      className="w-full h-11 lg:h-12 pl-12 pr-5 search-premium-xl text-sm text-stone-800 placeholder:text-stone-500 placeholder:font-medium outline-none focus:ring-0 transition-all duration-400 dark:text-stone-200 dark:placeholder:text-stone-400"
+                      className="w-full pl-[58px] pr-12 search-premium-xl text-[15px] text-stone-800 placeholder:text-[#888] outline-none focus:ring-0 transition-all duration-300 dark:text-stone-200 dark:placeholder:text-stone-500"
                     />
                   </form>
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[rgba(198,162,93,0.35)] pointer-events-none text-sm select-none">✦</span>
+                  <div className="absolute -bottom-[1px] left-6 right-6 h-px bg-gradient-to-r from-transparent via-[rgba(198,162,93,0.10)] to-transparent pointer-events-none" />
                   {showDropdown && searchQuery.trim() && (
                     <div
                       ref={dropdownRef}
@@ -259,8 +262,8 @@ export default function Header() {
                                     {p.category}
                                   </span>
                                 </div>
-                                <span className="shrink-0 text-[var(--color-gold)] font-medium text-xs ml-3">
-                                  ₹{p.price.toLocaleString()}
+                                <span className="shrink-0 ml-3">
+                                  <CallForPricing />
                                 </span>
                               </button>
                             ))}
@@ -348,28 +351,21 @@ export default function Header() {
           </div>
 
         <div className="hidden lg:block cat-nav-premium">
-          <div className="max-w-[1440px] mx-auto px-8 h-full">
-            <nav className="flex items-center h-full gap-7 overflow-x-auto scrollbar-hide">
+          <div className="max-w-[1440px] mx-auto px-4 lg:px-8 h-full">
+            <nav className="flex items-center h-full gap-4 lg:gap-6 overflow-x-auto scrollbar-hide">
               {megaNavLinks.map((link) => {
                 const active = location.pathname === link.path || location.search.includes(link.path.split("=")[1] || "");
                 return (
                   <Link
                     key={link.name}
                     to={link.path}
-                    className={`cat-nav-link group ${
-                      active
-                        ? "active-nav"
-                        : "text-[#1A1A1A]/70 dark:text-stone-300/80"
+                    className={`nav-glass-pill group ${
+                      active ? "active-nav-pill" : ""
                     }`}
                   >
-                    <span className="relative z-10">{link.name}</span>
-                    <span className="nav-underline" />
-                    {active && (
-                      <span className="nav-active-indicator hidden absolute -bottom-[1px] left-1/2 -translate-x-1/2 flex-col items-center">
-                        <span className="block w-8 h-[2px] bg-gradient-to-r from-[#D6B36A] to-[#C9A15A] rounded-full" />
-                        <span className="block w-[5px] h-[5px] bg-[#D6B36A] rounded-full mt-[1px]" />
-                      </span>
-                    )}
+                    {active && <span className="nav-pill-dot" />}
+                    <span className="relative z-10 font-manrope tracking-wide">{link.name}</span>
+                    {active && <span className="nav-pill-underline" />}
                   </Link>
                 );
               })}
@@ -395,9 +391,9 @@ export default function Header() {
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="fixed top-0 right-0 bottom-0 w-full max-w-[320px] z-50 bg-white dark:bg-[#06120e] shadow-2xl flex flex-col overflow-y-auto"
             >
-              <div className="flex items-center justify-between p-5 bg-gradient-to-br from-[#FDF2F5] to-[#FCE7EF] dark:from-[#0a1c14] dark:to-[#0d281d]">
-                <span className="font-serif-display font-black text-lg text-[#163827] dark:text-[#F7F0E8]">
-                  {BUSINESS_NAME_MAIN} <span className="text-[#D6B36A] font-light italic">{BUSINESS_NAME_SUB}</span>
+              <div className="flex items-center justify-between p-5 bg-gradient-to-br from-[#FFF9F7] to-[#FCFAF8] dark:from-[#0a1c14] dark:to-[#0d281d]">
+                <span className="font-serif-display font-black text-lg text-[#184D36] dark:text-[#F7F0E8]">
+                  {BUSINESS_NAME_MAIN} <span className="text-[#C89B3C] font-light italic">{BUSINESS_NAME_SUB}</span>
                 </span>
                 <div className="flex items-center gap-2">
                   <button
