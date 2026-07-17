@@ -15,7 +15,7 @@ const CallForPricing = ({ className = "" }) => {
     >
       <span className="flex items-center gap-1.5 group-hover/call:hidden transition-all duration-300">
         <Phone size={11} className="transition-transform duration-300 group-hover/call:-rotate-6" />
-        <span>📞 Call For Pricing</span>
+        <span> Call For Pricing</span>
       </span>
       <span className="hidden group-hover/call:inline-flex items-center gap-1 transition-all duration-300">
         Call Now
