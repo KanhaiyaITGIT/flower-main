@@ -47,7 +47,7 @@ function CheckoutModal({ isOpen, onClose, onOrderSuccess, grandTotal, items }) {
 
   const handleSubmit = async () => {
     if (!form.name || !form.email || !form.phone || !form.transactionId || !form.transactionTime) {
-      setError("Sabhi fields bharna zaroori hai.");
+      setError("all fields required");
       return;
     }
     setError("");
