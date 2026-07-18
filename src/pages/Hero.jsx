@@ -643,7 +643,7 @@ const Home = () => {
               { label: "Devotional", image: image9, link: "/category?cat=Devotional", discount: null },
               { label: "Luxury", image: image26, link: "/category", discount: null },
               { label: "Gifts", image: image27, link: "/category", discount: "10% Off" },
-              { label: "Flowers", image: image6, link: "/category?cat=Anniversary", discount: null },
+              { label: "Flowers", image: image6, link: "/category?cat=Bouquets", discount: null },
               { label: "Plants", image: image5, link: "/category?cat=Birthday", discount: null },
               { label: "Birthday", image: image8, link: "/category?cat=Birthday", discount: "Flat 15%" },
               { label: "Reception", image: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=600&q=80", link: "/category?cat=Reception", discount: null },
