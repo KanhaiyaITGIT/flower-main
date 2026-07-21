@@ -760,19 +760,19 @@ const Home = () => {
                   <span className="w-5 h-px bg-white/40 inline-block" />
                   Premium Florist Since 2015
                 </div>
-                <h1 className="hero-heading-premium text-white max-w-[480px] tracking-tight">
-                  Luxury Blooms<br />
-                  <span className="text-[#C89B3C]">Handcrafted for You</span>
+                <h1 className="hero-heading-premium text-white max-w-[520px] tracking-tight">
+                  <span className="hero-text-reveal" style={{ animationDelay: '0.3s' }}>Luxury Blooms</span><br />
+                  <span className="gold-shimmer" style={{ animationDelay: '0.8s' }}>Handcrafted for You</span>
                 </h1>
-                <p className="text-white/70 text-[16px] lg:text-[20px] mt-5 max-w-[420px] font-light leading-relaxed tracking-wide">
+                <p className="text-white/70 text-[16px] lg:text-[20px] mt-5 max-w-[440px] font-light leading-relaxed tracking-wide">
                   Handpicked fresh every morning. Artisan arrangements, premium gifts — curated for life's most beautiful moments.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                  <span className="btn-ripple btn-shimmer inline-flex items-center gap-3 px-9 py-4 bg-gradient-to-r from-[#184D36] to-[#1f4a30] text-white font-bold text-sm tracking-wider uppercase rounded-full shadow-[0_8px_32px_rgba(24,77,54,0.35)] hover:shadow-[0_12px_48px_rgba(24,77,54,0.5)] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer">
+                  <span className="btn-ripple btn-shimmer inline-flex items-center gap-3 px-9 py-4 bg-gradient-to-r from-[#184D36] to-[#1f4a30] text-white font-bold text-sm tracking-wider uppercase rounded-full shadow-[0_8px_32px_rgba(24,77,54,0.35)] hover:shadow-[0_12px_48px_rgba(24,77,54,0.5)] hover:-translate-y-0.5 hover:scale-[1.03] transition-all duration-300 cursor-pointer">
                     <ShoppingBag size={16} />
                     Shop Collection
                   </span>
-                  <span className="btn-ripple btn-shimmer inline-flex items-center gap-3 px-9 py-4 bg-white/20 backdrop-blur-lg border border-white/30 text-white font-bold text-sm tracking-wider uppercase rounded-full hover:bg-white/30 transition-all duration-300 cursor-pointer">
+                  <span className="btn-ripple btn-shimmer inline-flex items-center gap-3 px-9 py-4 bg-white/20 backdrop-blur-lg border border-white/30 text-white font-bold text-sm tracking-wider uppercase rounded-full hover:bg-white/30 hover:scale-[1.03] transition-all duration-300 cursor-pointer">
                     <Flower2 size={16} />
                     Explore Occasions
                   </span>

@@ -1382,3 +1382,247 @@ body {
 .hero-overlay-dark {
   background: linear-gradient(135deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.12) 40%, transparent 60%);
 }
+
+/* ════════════════════════════════════════════════════════════════ */
+/* ─── PREMIUM UI ENHANCEMENTS ─── */
+/* ════════════════════════════════════════════════════════════════ */
+
+/* ─── 3D Tilt Card Effect ─── */
+.tilt-card {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+.tilt-card-inner {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+.tilt-card:hover .tilt-card-inner {
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+}
+.tilt-card .tilt-card-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.06) 45%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.06) 55%, transparent 60%);
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  transition: background-position 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+}
+.tilt-card:hover .tilt-card-shine {
+  opacity: 1;
+  background-position: 0 0;
+}
+
+/* ─── Premium Product Card ─── */
+.product-card-premium {
+  position: relative;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.product-card-premium::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(200,155,60,0.08), rgba(214,83,122,0.04), rgba(200,155,60,0.08));
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: -1;
+}
+.product-card-premium:hover::before {
+  opacity: 1;
+}
+
+/* ─── Cart Pulse Badge ─── */
+@keyframes cart-pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(214,83,122,0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(214,83,122,0); }
+}
+.cart-pulse-glow {
+  animation: cart-pulse-glow 2s ease-in-out infinite;
+}
+
+/* ─── Image Reveal ─── */
+@keyframes img-reveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+.img-reveal {
+  animation: img-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ─── Scale In ─── */
+@keyframes scale-in {
+  from { transform: scale(0.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.scale-in {
+  animation: scale-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ─── Slide Up Fade ─── */
+@keyframes slide-up-fade {
+  from { transform: translateY(12px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.slide-up-fade {
+  animation: slide-up-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ─── Success Check Animation ─── */
+@keyframes success-pop {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+.success-pop {
+  animation: success-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ─── Shimmer Text ─── */
+.shimmer-text {
+  background: linear-gradient(90deg, #184D36 25%, #C89B3C 50%, #184D36 75%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+/* ─── Card Stack Entrance ─── */
+@keyframes card-stack {
+  from { transform: translateY(30px) scale(0.95); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+.card-stack {
+  animation: card-stack 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ─── Nav Link Glow ─── */
+.nav-link-glow {
+  position: relative;
+  transition: color 0.3s ease;
+}
+.nav-link-glow::before {
+  content: '';
+  position: absolute;
+  inset: -4px -8px;
+  border-radius: 12px;
+  background: radial-gradient(ellipse at center, rgba(200,155,60,0.08) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.nav-link-glow:hover::before {
+  opacity: 1;
+}
+
+/* ─── Button Success State ─── */
+@keyframes btn-success-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+  70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+.btn-success-pulse {
+  animation: btn-success-pulse 1.5s ease-in-out infinite;
+}
+
+/* ─── Mobile Sheet Overlay ─── */
+.mobile-sheet-overlay {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ─── Search Result Highlight ─── */
+@keyframes search-highlight {
+  from { background-color: rgba(200,155,60,0.08); }
+  to { background-color: transparent; }
+}
+.search-highlight {
+  animation: search-highlight 2s ease-out both;
+}
+
+/* ─── Price Tag Glow ─── */
+.price-tag-glow {
+  position: relative;
+  display: inline-block;
+}
+.price-tag-glow::after {
+  content: '';
+  position: absolute;
+  inset: -4px -8px;
+  border-radius: 20px;
+  background: radial-gradient(ellipse at center, rgba(200,155,60,0.06) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.price-tag-glow:hover::after {
+  opacity: 1;
+}
+
+/* ─── Floating Badge Float ─── */
+@keyframes badge-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+.badge-float {
+  animation: badge-float 3s ease-in-out infinite;
+}
+
+/* ─── Glass Card Enhanced ─── */
+.glass-card-enhanced {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.02);
+}
+.dark .glass-card-enhanced {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+/* ─── Hero Text Reveal ─── */
+@keyframes hero-text-reveal {
+  from { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+  to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+}
+.hero-text-reveal {
+  animation: hero-text-reveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ─── Corner Accent ─── */
+.corner-accent {
+  position: relative;
+}
+.corner-accent::before,
+.corner-accent::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: rgba(200, 155, 60, 0.15);
+  border-style: solid;
+  pointer-events: none;
+}
+.corner-accent::before {
+  top: 0;
+  left: 0;
+  border-width: 2px 0 0 2px;
+}
+.corner-accent::after {
+  bottom: 0;
+  right: 0;
+  border-width: 0 2px 2px 0;
+}
+
+/* ─── Grid Gap Override ─── */
+.gap-premium {
+  gap: 20px;
+}
+@media (max-width: 640px) {
+  .gap-premium {
+    gap: 12px;
+  }
+}

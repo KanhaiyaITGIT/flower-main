@@ -429,26 +429,40 @@ export default function Header() {
               </div>
 
               <nav className="flex-1 py-4 px-4 flex flex-col gap-0.5">
-                {megaNavLinks.map((link) => (
-                  <Link
+                {megaNavLinks.map((link, i) => (
+                  <motion.div
                     key={link.name}
-                    to={link.path}
-                    onClick={() => setIsOpen(false)}
-                    className="py-2.5 px-3 rounded-xl text-sm font-medium text-stone-700 hover:text-[var(--color-accent)] hover:bg-rose-50 dark:text-stone-200 dark:hover:text-[#C9A15A] dark:hover:bg-white/5 transition-colors"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 + i * 0.03 }}
                   >
-                    {link.name}
-                  </Link>
+                    <Link
+                      to={link.path}
+                      onClick={() => setIsOpen(false)}
+                      className="group flex items-center gap-3 py-2.5 px-3 rounded-xl text-sm font-medium text-stone-700 hover:text-[var(--color-accent)] hover:bg-rose-50 dark:text-stone-200 dark:hover:text-[#C9A15A] dark:hover:bg-white/5 transition-all duration-200"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)]/30 group-hover:bg-[var(--color-accent)] transition-colors duration-200" />
+                      {link.name}
+                    </Link>
+                  </motion.div>
                 ))}
                 <div className="border-t border-stone-100 dark:border-white/5 my-3" />
-                {navLinks.map((link) => (
-                  <Link
+                {navLinks.map((link, i) => (
+                  <motion.div
                     key={link.name}
-                    to={link.path}
-                    onClick={() => setIsOpen(false)}
-                    className="py-2.5 px-3 rounded-xl text-sm font-medium text-stone-500 hover:text-[var(--color-primary)] hover:bg-stone-50 dark:text-stone-400 dark:hover:text-[#C9A15A] dark:hover:bg-white/5 transition-colors"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: 0.3 + i * 0.03 }}
                   >
-                    {link.name}
-                  </Link>
+                    <Link
+                      to={link.path}
+                      onClick={() => setIsOpen(false)}
+                      className="group flex items-center gap-3 py-2.5 px-3 rounded-xl text-sm font-medium text-stone-500 hover:text-[var(--color-primary)] hover:bg-stone-50 dark:text-stone-400 dark:hover:text-[#C9A15A] dark:hover:bg-white/5 transition-all duration-200"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-stone-300 group-hover:bg-[var(--color-primary)] transition-colors duration-200" />
+                      {link.name}
+                    </Link>
+                  </motion.div>
                 ))}
               </nav>
 

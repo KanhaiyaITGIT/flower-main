@@ -338,28 +338,24 @@ export default function CartPage() {
               <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.2rem", fontWeight: 400, color: "#0D1F0F" }}>
                 Your Blooms
               </h2>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => dispatch(clearCart())}
-                style={{
-                  background: "none", border: "none", cursor: "pointer",
-                  fontSize: "12px", color: "#9ca3af", letterSpacing: "0.06em",
-                  textTransform: "uppercase", transition: "color 0.15s",
-                }}
-                onMouseEnter={e => e.currentTarget.style.color = "#f43f5e"}
-                onMouseLeave={e => e.currentTarget.style.color = "#9ca3af"}
+                className="text-[11px] text-stone-400 hover:text-rose-500 font-bold tracking-wider uppercase transition-colors duration-200 cursor-pointer bg-transparent border-none"
               >
-                Clear all
-              </button>
+                ✕ Clear all
+              </motion.button>
             </div>
 
             <AnimatePresence>
-            {items.map((item) => (
+            {items.map((item, idx) => (
               <motion.div
                 key={item.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0, x: -20, y: 10 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                exit={{ opacity: 0, x: 20, y: -10 }}
+                transition={{ duration: 0.35, delay: idx * 0.05 }}
                 layout
                 className="cart-row"
               >
@@ -382,24 +378,30 @@ export default function CartPage() {
 
                 <div className="cart-row-controls">
                   <div className="qty-group">
-                    <button className="qty-btn" onClick={() => dispatch(decrementQty(item.id))}>−</button>
+                    <motion.button className="qty-btn" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={() => dispatch(decrementQty(item.id))}>−</motion.button>
                     <span style={{ fontSize: "14px", fontWeight: 600, color: "#0D1F0F", minWidth: "20px", textAlign: "center" }}>
                       {item.quantity}
                     </span>
-                    <button className="qty-btn" onClick={() => dispatch(incrementQty(item.id))}>+</button>
+                    <motion.button className="qty-btn" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={() => dispatch(incrementQty(item.id))}>+</motion.button>
                   </div>
                   <div className="cart-row-total">
                     ₹{(item.price * item.quantity).toFixed(2)}
                   </div>
-                  <button className="remove-btn" onClick={() => dispatch(removeFromCart(item.id))} aria-label="Remove">✕</button>
+                  <motion.button className="remove-btn" whileHover={{ scale: 1.15 }} whileTap={{ scale: 0.9 }} onClick={() => dispatch(removeFromCart(item.id))} aria-label="Remove">✕</motion.button>
                 </div>
               </motion.div>
             ))}
             </AnimatePresence>
 
-            <button className="continue-btn" onClick={() => navigate("/gallery")} style={{ marginTop: "8px" }}>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="continue-btn"
+              onClick={() => navigate("/category")}
+              style={{ marginTop: "8px" }}
+            >
               ← Continue Shopping
-            </button>
+            </motion.button>
           </div>
 
           {/* Right: order summary */}

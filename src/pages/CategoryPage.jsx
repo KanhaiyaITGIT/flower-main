@@ -614,11 +614,12 @@ const CategoryPage = () => {
                 <button
                   key={cat}
                   onClick={() => handleCategoryChange(cat)}
-                  className={`shrink-0 rounded-2xl px-5 py-2 text-xs font-bold tracking-widest uppercase transition-all duration-300 border ${isSelected
-                      ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-lg shadow-[var(--color-primary)]/20"
+                  className={`shrink-0 rounded-2xl px-5 py-2 text-xs font-bold tracking-widest uppercase transition-all duration-300 border cursor-pointer ${isSelected
+                      ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-lg shadow-[var(--color-primary)]/20 scale-[1.02]"
                       : "bg-white/60 backdrop-blur-sm text-gray-500 border-white/40 hover:border-[var(--color-gold)]/40 hover:text-[var(--color-gold)] hover:bg-white/80 hover:scale-[1.04]"
                     }`}
                 >
+                  {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)] mr-1.5 inline-block" />}
                   {cat}
                 </button>
               );
@@ -735,13 +736,28 @@ const CategoryPage = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: idx * 0.04 }}
                     key={product.id}
-                    whileHover={{ y: -6, scale: 1.02 }}
-                    className="group rounded-2xl overflow-hidden border cursor-pointer relative flex flex-col transition-all duration-500"
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    className="group rounded-2xl overflow-hidden border cursor-pointer relative flex flex-col transition-all duration-500 product-card-premium"
                     style={{
                       background:"rgba(255,255,255,0.58)",
                       backdropFilter:"blur(16px) saturate(1.3)",
                       WebkitBackdropFilter:"blur(16px) saturate(1.3)",
                       borderColor:"rgba(255,255,255,0.35)"
+                    }}
+                    onMouseMove={(e) => {
+                      const card = e.currentTarget.querySelector('.tilt-card');
+                      if (!card) return;
+                      const rect = card.getBoundingClientRect();
+                      const x = (e.clientX - rect.left) / rect.width - 0.5;
+                      const y = (e.clientY - rect.top) / rect.height - 0.5;
+                      card.style.setProperty('--tilt-x', `${-y * 12}deg`);
+                      card.style.setProperty('--tilt-y', `${x * 12}deg`);
+                    }}
+                    onMouseLeave={(e) => {
+                      const card = e.currentTarget.querySelector('.tilt-card');
+                      if (!card) return;
+                      card.style.setProperty('--tilt-x', `0deg`);
+                      card.style.setProperty('--tilt-y', `0deg`);
                     }}
                   >
                     {/* Image Block */}
@@ -753,6 +769,7 @@ const CategoryPage = () => {
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                         />
                       </div>
+                      <div className="tilt-card-shine" />
 
                       {/* Subtle gradient overlay on hover */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-[1]"/>
@@ -776,6 +793,14 @@ const CategoryPage = () => {
                           {addedToCart[product.id] ? "✓ Added" : "Quick Add"}
                         </button>
                       </div>
+
+                      {/* Price Badge */}
+                      {product.originalPrice && (
+                        <div className="absolute top-3 right-3 z-10 hidden group-hover:flex items-center gap-1 bg-white/90 backdrop-blur-sm rounded-full px-2.5 py-1 shadow-lg">
+                          <span className="text-[10px] font-bold text-emerald-600">₹{product.price}</span>
+                          <span className="text-[8px] text-gray-400 line-through">₹{product.originalPrice}</span>
+                        </div>
+                      )}
                     </div>
 
                     {/* Meta Details Block */}
@@ -817,12 +842,18 @@ const CategoryPage = () => {
                             handleAddToCart(product);
                           }}
                           className={`group w-9 h-9 rounded-full flex items-center justify-center border transition-all duration-300 shadow-soft ${addedToCart[product.id]
-                              ? "bg-emerald-500 border-emerald-500"
-                              : "bg-[var(--color-primary)] border-[#14301F] hover:bg-[var(--color-accent)] hover:border-rose-500 hover:scale-105"
+                              ? "bg-emerald-500 border-emerald-500 btn-success-pulse"
+                              : "bg-[var(--color-primary)] border-[#14301F] hover:bg-[var(--color-accent)] hover:border-rose-500 hover:scale-110 hover:shadow-lg hover:shadow-[var(--color-accent)]/20"
                             }`}
                           aria-label="Add to cart"
                         >
-                          <ShoppingBag size={14} className="text-white icon-wiggle" strokeWidth={2} />
+                          {addedToCart[product.id] ? (
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="success-pop">
+                              <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                          ) : (
+                            <ShoppingBag size={14} className="text-white icon-wiggle" strokeWidth={2} />
+                          )}
                         </button>
                       </div>
                     </div>
@@ -841,10 +872,10 @@ const CategoryPage = () => {
                   ) : (
                     <button
                       onClick={handleShowMore}
-                      className="group inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-700 hover:text-[var(--color-accent)] hover:border-rose-300 rounded-2xl px-8 py-3 text-xs font-bold tracking-wider uppercase transition-all duration-300 shadow-soft hover:shadow-soft-lg hover:scale-[1.03]"
+                      className="group inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-700 hover:text-[var(--color-accent)] hover:border-rose-300 rounded-2xl px-8 py-3 text-xs font-bold tracking-wider uppercase transition-all duration-300 shadow-soft hover:shadow-soft-lg hover:scale-[1.03] btn-ripple"
                     >
                       <span>Show More ({filtered.length - visibleCount} remaining)</span>
-                      <ChevronDown size={14} className="icon-wiggle" />
+                      <ChevronDown size={14} className="icon-wiggle group-hover:translate-y-0.5 transition-transform" />
                     </button>
                   )}
                 </div>
