@@ -38,7 +38,9 @@ import CallForPricing from "../components/ui/CallForPricing";
 import { WHATSAPP_LINK, INSTAGRAM_LINK, FACEBOOK_LINK } from "../constants";
 import igShot1 from "../assets/flower/ff1.jpg";
 import igShot2 from "../assets/recepmarriage/bride1.jpg";
+import wed from "../assets/recepmarriage/bride1.jpg";
 import igShot3 from "../assets/recepmarriage/r1.jpg";
+import recep from "../assets/recepmarriage/r1.jpg";
 import igShot4 from "../assets/birthday/birthday1.png";
 import igShot5 from "../assets/optimized/anni1-320.webp";
 import igShot6 from "../assets/devotional/dev1.jpg";
@@ -49,6 +51,7 @@ import image4 from "../assets/optimized/anni1-320.webp";
 import image5 from "../assets/f24.png";
 import image6 from "../assets/f20.png";
 import image7 from "../assets/optimized/bride2-320.webp";
+import house from "../assets/optimized/bride2-320.webp";
 import image8 from "../assets/birthday/birthday1.png";
 import image9 from "../assets/devotional/dev1.jpg";
 import image10 from "../assets/s10.png";
@@ -67,7 +70,8 @@ import grandWeddingImg from "../assets/recepmarriage/r9.jpg";
 import sacredImg from "../assets/devotional/dev3.jpg";
 import luxuryEventImg from "../assets/recepmarriage/r10.jpg";
 import birthdayExpImg from "../assets/birthday/birthday10.png";
-
+import baby from "../assets/baby.jpg";
+import engage from "../assets/recepmarriage/bride7.jpg";
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -185,14 +189,14 @@ const Home = () => {
     // { title: "Birthday Surprises", image: "https://images.unsplash.com/photo-1498579150354-977475b7ea0b?w=600&q=80", products: "20+ Luxury Designs", category: "Birthday", placeholderFile: "category-18.jpg" },
  
     // { title: "Corporate Gifting", image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", products: "15+ Premium Collections", category: "Candles & More", placeholderFile: "category-21.jpg" },
-    { title: "Wedding Stage Decor", image: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=600&q=80", products: "12+ Luxury Designs", category: "Wedding", placeholderFile: "category-22.jpg" },
-    { title: "Reception Flowers", image: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600&q=80", products: "18+ Premium Collections", category: "Reception", placeholderFile: "category-23.jpg" },
+    { title: "Wedding Stage Decor", image: wed, products: "12+ Luxury Designs", category: "Wedding", placeholderFile: "category-22.jpg" },
+    { title: "Reception Flowers", image: recep, products: "18+ Premium Collections", category: "Reception", placeholderFile: "category-23.jpg" },
    
-    { title: "Baby Shower Decor", image: "https://images.unsplash.com/photo-1498579150354-977475b7ea0b?w=600&q=80", products: "14+ Premium Collections", category: "Baby Shower", placeholderFile: "category-25.jpg" },
-    { title: "House Party Decor", image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&q=80", products: "16+ Luxury Designs", category: "House Party", placeholderFile: "category-26.jpg" },
+    { title: "Baby Shower Decor", image:baby , products: "14+ Premium Collections", category: "Baby Shower", placeholderFile: "category-25.jpg" },
+    { title: "House Party Decor", image: house, products: "16+ Luxury Designs", category: "House Party", placeholderFile: "category-26.jpg" },
     // { title: "Pre-Wedding Setup", image: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600&q=80", products: "20+ Premium Collections", category: "Pre-Wedding", placeholderFile: "category-27.jpg" },
    
-    { title: "Engagement Decor", image: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=600&q=80", products: "15+ Premium Collections", category: "Wedding", placeholderFile: "category-29.jpg" },
+    { title: "Engagement Decor", image: engage, products: "15+ Premium Collections", category: "Wedding", placeholderFile: "category-29.jpg" },
     { title: "Elegant Gift Wraps", image: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", products: "35+ Luxury Designs", category: "All", placeholderFile: "category-30.jpg" },
   ];
 
