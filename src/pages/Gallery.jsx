@@ -1,7 +1,5 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { Play, Image as ImageIcon, Film, X, ChevronLeft, ChevronRight, Eye } from "lucide-react";
-import FloatingDecoration from "../components/FloatingDecoration";
-import BokehLights from "../components/BokehLights";
 
 // Import all images from the src/assets/gallery folder
 import gal0 from "../assets/gallery/gal.jpeg";
@@ -197,20 +195,10 @@ export default function Gallery() {
 
       {/* Elegant Floating Leaf & Floral Decorations */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <FloatingDecoration type="leaf" side="left" top="4%" size={26} opacity={0.12} delay={0.4} duration={14} animation="sway3" color="#C9A15A" />
-        <FloatingDecoration type="petal6" side="right" top="3%" size={22} opacity={0.12} delay={1.3} duration={13} animation="sway2" color="#C9A15A" />
-        <FloatingDecoration type="petal5" side="left" bottom="10%" size={30} opacity={0.1} delay={0.7} duration={12} animation="sway1" color="#C9A15A" />
-        <FloatingDecoration type="petal" side="right" bottom="8%" size={20} opacity={0.12} delay={2} duration={15} animation="sway2" color="#C9A15A" />
-        <FloatingDecoration type="rose" side="right" top="6%" size={36} opacity={0.08} delay={0} duration={18} animation="bloom" color="#C9A15A" />
-        <FloatingDecoration type="lotus" side="left" top="auto" bottom="15%" size={40} opacity={0.08} delay={2} duration={16} animation="drift-bloom" color="#C9A15A" />
       </div>
 
       {/* Soft Bokeh Backdrop Glows */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{ zIndex: 0 }}>
-        <BokehLights spots={[
-          { color: "from-[#C9A15A]/10 to-transparent", size: 300, top: "-6%", right: "-4%", anim: "bk-drift1", delay: 0, duration: 32 },
-          { color: "from-[#D6537A]/8 to-transparent", size: 260, bottom: "-8%", left: "8%", anim: "bk-drift4", delay: 3, duration: 34 },
-          { color: "from-green-700/8 to-transparent", size: 240, top: "40%", left: "35%", anim: "bk-float", delay: 1, duration: 28 },
         ]} />
       </div>
 

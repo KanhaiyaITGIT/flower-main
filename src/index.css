@@ -890,7 +890,8 @@ body {
   .fd-sway1, .fd-sway2, .fd-sway3, .fd-rotate,
   .float-card, .whatsapp-pulse, .gold-shimmer,
   .marquee-ltr, .marquee-rtl,
-  .scroll-mouse::after, .cart-bounce, .pulse-dot, .rotate-slow, .gold-text {
+  .scroll-mouse::after, .cart-bounce, .pulse-dot, .rotate-slow, .gold-text,
+  .animate-shimmer-sweep, .success-pop, .badge-float, .micro-bounce {
     animation: none !important;
   }
   .ru, .ru1, .ru2, .ru3, .ru4 { animation: none !important; opacity: 1; transform: none; }
@@ -1383,6 +1384,49 @@ body {
   background: linear-gradient(135deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.12) 40%, transparent 60%);
 }
 
+/* ─── Ripple Effect ─── */
+@keyframes ripple-effect {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ─── Toast Notification ─── */
+@keyframes toast-in {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes toast-out {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+.toast-enter { animation: toast-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.toast-exit { animation: toast-out 0.3s ease-in both; }
+
+/* ─── Micro Interactions ─── */
+@keyframes micro-bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+.micro-bounce { animation: micro-bounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+@keyframes micro-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ─── Drawer Slide ─── */
+@keyframes drawer-slide-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.drawer-slide-up { animation: drawer-slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* ─── Dropdown Fade ─── */
+@keyframes dropdown-fade {
+  from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.dropdown-fade { animation: dropdown-fade 0.2s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
 /* ════════════════════════════════════════════════════════════════ */
 /* ─── PREMIUM UI ENHANCEMENTS ─── */
 /* ════════════════════════════════════════════════════════════════ */
@@ -1625,4 +1669,59 @@ body {
   .gap-premium {
     gap: 12px;
   }
+}
+
+/* ════════════════════════════════════════════════════════════════ */
+/* ─── RESPONSIVE / MOBILE UTILITIES ─── */
+/* ════════════════════════════════════════════════════════════════ */
+
+/* Touch-friendly tap targets */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+.touch-target-sm {
+  min-height: 36px;
+  min-width: 36px;
+}
+@media (hover: none) and (pointer: coarse) {
+  .touch-target,
+  .touch-target-sm {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Safe area inset for notched devices */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.safe-left {
+  padding-left: env(safe-area-inset-left, 0px);
+}
+.safe-right {
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* Prevent horizontal overflow */
+.overflow-x-clip {
+  overflow-x: clip;
+}
+
+/* Better tap highlight */
+* {
+  -webkit-tap-highlight-color: rgba(200, 155, 60, 0.12);
+}
+
+/* Mobile typography scaling */
+@media (max-width: 480px) {
+  .text-mobile-sm { font-size: 0.8125rem; }
+  .text-mobile-base { font-size: 0.9375rem; }
+}
+@media (max-width: 380px) {
+  .text-mobile-sm { font-size: 0.75rem; }
+  .text-mobile-base { font-size: 0.875rem; }
 }

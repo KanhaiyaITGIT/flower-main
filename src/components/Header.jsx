@@ -15,6 +15,10 @@ import {
   Navigation,
   Sun,
   Moon,
+  Pencil,
+  Check,
+  LocateFixed,
+  ShieldCheck,
 } from "lucide-react";
 import { useSelector } from "react-redux";
 import { selectCartCount } from "../redux/cartSlice";
@@ -479,87 +483,108 @@ export default function Header() {
   );
 }
 
-function LocationDropdown() {
-  const [displayText, setDisplayText] = useState("Detecting location...");
-  const [status, setStatus] = useState("loading"); // loading | success | error
+const popularCities = [
+  "Delhi", "Mumbai", "Bangalore", "Hyderabad", "Ahmedabad",
+  "Chennai", "Kolkata", "Pune", "Jaipur", "Lucknow",
+  "Gurugram", "Noida", "Ghaziabad", "Faridabad", "Chandigarh",
+];
 
-  const fallbackByIP = useCallback(async () => {
-    try {
-      const res = await fetch("https://ipapi.co/json/");
-      if (!res.ok) throw new Error("IP geolocation failed");
-      const data = await res.json();
-      const city = data.city || "Delhi NCR";
-      const region = data.region || "";
-      const country = data.country_name || "India";
-      setDisplayText(region ? `${city}, ${region}` : `${city}, ${country}`);
-      setStatus("success");
-    } catch {
-      setDisplayText("Delhi NCR, India");
-      setStatus("success");
-    }
+function LocationDropdown() {
+  const [displayText, setDisplayText] = useState(() => {
+    return localStorage.getItem("manualLocation") || "Detecting location...";
+  });
+  const [status, setStatus] = useState(() => {
+    return localStorage.getItem("manualLocation") ? "success" : "loading";
+  });
+  const [isOpen, setIsOpen] = useState(false);
+  const [manualInput, setManualInput] = useState("");
+  const [showManualInput, setShowManualInput] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const saveLocation = useCallback((text) => {
+    setDisplayText(text);
+    setStatus("success");
+    localStorage.setItem("manualLocation", text);
+    setShowManualInput(false);
+    setManualInput("");
+    setIsOpen(false);
   }, []);
 
-  useEffect(() => {
-    let cancelled = false;
-    let retryCount = 0;
-    const MAX_RETRIES = 2;
+  const detectLocation = useCallback(() => {
+    setStatus("loading");
+    setDisplayText("Detecting location...");
+
+    const fallbackByIP = async () => {
+      try {
+        const res = await fetch("https://ipapi.co/json/");
+        if (!res.ok) throw new Error("IP geolocation failed");
+        const data = await res.json();
+        const city = data.city || "Delhi NCR";
+        const region = data.region || "";
+        const country = data.country_name || "India";
+        saveLocation(region ? `${city}, ${region}` : `${city}, ${country}`);
+      } catch {
+        saveLocation("Delhi NCR, India");
+      }
+    };
 
     if (!navigator.geolocation) {
       fallbackByIP();
       return;
     }
 
-    const attemptGeolocation = () => {
-      navigator.geolocation.getCurrentPosition(
-        async (pos) => {
-          try {
-            const { latitude, longitude } = pos.coords;
-            const res = await fetch(
-              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
-            );
-            if (!res.ok) throw new Error("Reverse geocode failed");
-            const data = await res.json();
-            if (!cancelled) {
-              const city = data.city || data.locality || "Delhi NCR";
-              const ctry = data.countryName || "India";
-              setDisplayText(`${city}, ${ctry}`);
-              setStatus("success");
-            }
-          } catch {
-            if (!cancelled) fallbackByIP();
-          }
-        },
-        (err) => {
-          if (cancelled) return;
-          if (err.code === err.PERMISSION_DENIED) {
-            setDisplayText("Location off");
-            setStatus("error");
-            fallbackByIP();
-          } else if (err.code === err.TIMEOUT && retryCount < MAX_RETRIES) {
-            retryCount++;
-            setTimeout(attemptGeolocation, 1000 * retryCount);
-          } else {
-            if (!cancelled) fallbackByIP();
-          }
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 120000,
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        try {
+          const { latitude, longitude } = pos.coords;
+          const res = await fetch(
+            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+          );
+          if (!res.ok) throw new Error("Reverse geocode failed");
+          const data = await res.json();
+          const city = data.city || data.locality || "Delhi NCR";
+          const ctry = data.countryName || "India";
+          saveLocation(`${city}, ${ctry}`);
+        } catch {
+          fallbackByIP();
         }
-      );
+      },
+      () => {
+        fallbackByIP();
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 120000,
+      }
+    );
+  }, [saveLocation]);
+
+  useEffect(() => {
+    if (!localStorage.getItem("manualLocation")) {
+      detectLocation();
+    }
+  }, [detectLocation]);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsOpen(false);
+        setShowManualInput(false);
+      }
     };
-
-    attemptGeolocation();
-
-    return () => { cancelled = true; };
-  }, [fallbackByIP]);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const Icon = status === "loading" ? Loader2 : status === "error" ? MapPinOff : Navigation;
 
   return (
-    <div className="hidden lg:flex items-center gap-3 pr-4 relative" aria-live="polite">
-      <div className="location-pill-premium cursor-default group">
+    <div className="hidden lg:flex items-center gap-3 pr-4 relative z-[100]" ref={dropdownRef} aria-live="polite">
+      <button
+        onClick={() => { if (status !== "loading") setIsOpen(!isOpen); }}
+        className="location-pill-premium cursor-pointer group"
+      >
         <Icon
           size={14}
           className={`shrink-0 transition-colors duration-300 ${
@@ -570,12 +595,114 @@ function LocationDropdown() {
               : "text-[var(--color-accent)]"
           }`}
         />
-        <span className="text-[12px] font-medium text-stone-600 dark:text-stone-400 transition-colors duration-300 group-hover:text-stone-700 dark:group-hover:text-stone-300">
+        <span className="text-[12px] font-medium text-stone-600 dark:text-stone-400 transition-colors duration-300 group-hover:text-stone-700 dark:group-hover:text-stone-300 whitespace-nowrap max-w-[140px] truncate">
           {displayText}
         </span>
-        <ChevronDown size={10} className="text-stone-400/50 dark:text-stone-500/50 transition-all duration-300 group-hover:translate-y-[0.5px]" />
-      </div>
+        <ChevronDown size={10} className={`text-stone-400/50 dark:text-stone-500/50 transition-all duration-300 ${isOpen ? "rotate-180" : ""}`} />
+      </button>
       <div className="w-px h-6 bg-gradient-to-b from-stone-200/40 via-stone-200/20 to-transparent dark:from-white/[0.03] dark:via-white/[0.02] dark:to-transparent" />
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.96 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute top-full left-0 mt-2 w-[320px] bg-white/95 dark:bg-[#0a1c14]/95 backdrop-blur-xl border border-stone-200/60 dark:border-white/5 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.08)] overflow-hidden"
+          >
+            <div className="p-4">
+              <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-stone-400 dark:text-stone-500 mb-3">
+                Your Location
+              </p>
+
+              {/* Current location display */}
+              <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[var(--color-primary)]/5 dark:bg-white/5 mb-3">
+                <MapPin size={16} className="text-[var(--color-accent)] shrink-0" />
+                <span className="text-[13px] font-medium text-stone-700 dark:text-stone-200 truncate">
+                  {displayText}
+                </span>
+              </div>
+
+              {/* Detect my location button */}
+              <button
+                onClick={detectLocation}
+                disabled={status === "loading"}
+                className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[12px] font-medium text-[var(--color-primary)] dark:text-[#C9A15A] hover:bg-[var(--color-primary)]/5 dark:hover:bg-white/5 transition-colors mb-2 disabled:opacity-50"
+              >
+                <LocateFixed size={14} />
+                Detect my location
+              </button>
+
+              {/* Manual input toggle */}
+              {!showManualInput ? (
+                <button
+                  onClick={() => setShowManualInput(true)}
+                  className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[12px] font-medium text-stone-500 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-white/5 transition-colors mb-3"
+                >
+                  <Pencil size={14} />
+                  Set location manually
+                </button>
+              ) : (
+                <div className="mb-3">
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={manualInput}
+                      onChange={(e) => setManualInput(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && manualInput.trim()) {
+                          saveLocation(manualInput.trim());
+                        }
+                      }}
+                      placeholder="Enter your city, area..."
+                      className="flex-1 px-3 py-2 rounded-xl border border-stone-200 dark:border-white/10 bg-white dark:bg-white/5 text-[12px] text-stone-700 dark:text-stone-200 placeholder-stone-400 outline-none focus:border-[var(--color-gold)]/50 transition-colors"
+                      autoFocus
+                    />
+                    <button
+                      onClick={() => { if (manualInput.trim()) saveLocation(manualInput.trim()); }}
+                      disabled={!manualInput.trim()}
+                      className="w-8 h-8 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center hover:bg-[var(--color-primary)]/90 transition-colors disabled:opacity-40"
+                    >
+                      <Check size={14} />
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Popular cities */}
+              <div>
+                <p className="text-[10px] font-bold tracking-[0.15em] uppercase text-stone-400 dark:text-stone-500 mb-2">
+                  Popular Cities
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {popularCities.map((city) => (
+                    <button
+                      key={city}
+                      onClick={() => saveLocation(`${city}, India`)}
+                      className={`px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all duration-200 ${
+                        displayText.includes(city)
+                          ? "bg-[var(--color-primary)] text-white"
+                          : "bg-stone-100 dark:bg-white/5 text-stone-600 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-white/10"
+                      }`}
+                    >
+                      {city}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="px-4 py-3 border-t border-stone-100 dark:border-white/5 text-center">
+              <p className="text-[10px] text-stone-400 dark:text-stone-500 flex items-center justify-center gap-1.5">
+                <ShieldCheck size={10} />
+                Your location is stored locally
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

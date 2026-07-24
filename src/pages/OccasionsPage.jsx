@@ -11,8 +11,6 @@ import {
 import CallForPricing from "../components/ui/CallForPricing";
 import { motion } from "framer-motion";
 import RevealSection from "../components/RevealSection";
-import FloatingDecoration from "../components/FloatingDecoration";
-import BokehLights from "../components/BokehLights";
 
 // Import actual images
 import image1 from "../assets/s1.png";
@@ -283,24 +281,11 @@ const OccasionsPage = () => {
   return (
     <div className="w-full bg-[var(--color-cream)] overflow-hidden relative">
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <FloatingDecoration type="leaf" side="left" top="4%" size={26} opacity={0.1} delay={0.3} duration={13} animation="sway3" color="#d1bca8" />
-        <FloatingDecoration type="petal6" side="right" top="3%" size={22} opacity={0.1} delay={1.2} duration={14} animation="sway2" color="#d1bca8" />
-        <FloatingDecoration type="petal5" side="left" bottom="10%" size={30} opacity={0.1} delay={0.8} duration={12} animation="sway1" color="#d1bca8" />
-        <FloatingDecoration type="petal" side="right" bottom="8%" size={20} opacity={0.1} delay={2} duration={15} animation="sway2" color="#d1bca8" />
       </div>
       {/* Hero Banner */}
       <RevealSection className="relative min-h-[500px] flex items-center overflow-hidden bg-[#0a0805]">
         {/* Bokeh Lights */}
-        <BokehLights spots={[
-          { color: "from-rose-400/15 to-transparent", size: 300, top: "-8%", right: "-5%", anim: "bk-drift1", delay: 0, duration: 30 },
-          { color: "from-amber-300/12 to-transparent", size: 260, bottom: "-10%", left: "5%", anim: "bk-drift2", delay: 2, duration: 35 },
-          { color: "from-purple-400/10 to-transparent", size: 240, top: "40%", left: "30%", anim: "bk-float", delay: 4, duration: 28 },
-          { color: "from-pink-400/12 to-transparent", size: 220, top: "15%", left: "45%", anim: "bk-drift3", delay: 1, duration: 32 },
         ]} />
-        <FloatingDecoration type="lotus" side="right" top="10%" size={80} opacity={0.1} delay={0} duration={16} animation="drift-bloom" color="#C9A15A" />
-        <FloatingDecoration type="rose" side="left" top="20%" size={56} opacity={0.08} delay={1.5} duration={18} animation="breathe" color="#D6537A" />
-        <FloatingDecoration type="petal5" side="right" top="auto" bottom="12%" size={60} opacity={0.1} delay={2} duration={14} animation="sway2" />
-        <FloatingDecoration type="petal6" side="left" top="auto" bottom="6%" size={44} opacity={0.08} delay={3} duration={12} animation="sway3" color="#C9A15A" />
         {/* Layered ambient gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-rose-950/60 via-gray-950 to-purple-950/50 pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_60%_40%,rgba(253,164,175,0.08),transparent)] pointer-events-none" />
@@ -370,13 +355,7 @@ const OccasionsPage = () => {
 
       {/* ── OCCASIONS GRID ── */}
       <RevealSection id="occasions-grid" className="py-24 px-6 relative overflow-hidden">
-        <BokehLights spots={[
-          { color: "from-rose-200/10 to-transparent", size: 240, top: "-5%", right: "-3%", anim: "bk-drift2", delay: 0, duration: 32 },
-          { color: "from-amber-100/8 to-transparent", size: 200, bottom: "-8%", left: "5%", anim: "bk-drift4", delay: 3, duration: 28 },
-          { color: "from-purple-200/6 to-transparent", size: 180, top: "40%", left: "45%", anim: "bk-float", delay: 1, duration: 26 },
         ]} />
-        <FloatingDecoration type="rose" side="left" top="6%" size={48} opacity={0.08} delay={0} duration={16} animation="bloom" color="#D6537A" />
-        <FloatingDecoration type="lotus" side="right" top="auto" bottom="10%" size={52} opacity={0.07} delay={2} duration={18} animation="drift-bloom" color="#C9A15A" />
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <span className="text-xs font-bold tracking-widest text-[var(--color-accent)] uppercase font-inter">Find Your Moment</span>
@@ -564,12 +543,7 @@ const OccasionsPage = () => {
 
       {/* ── FEATURED PICKS ── */}
       <RevealSection className="py-24 bg-white border-t border-gray-100 relative overflow-hidden">
-        <BokehLights spots={[
-          { color: "from-rose-200/10 to-transparent", size: 240, top: "-5%", left: "15%", anim: "bk-drift2", delay: 0, duration: 32 },
-          { color: "from-amber-100/8 to-transparent", size: 200, bottom: "-8%", right: "8%", anim: "bk-drift4", delay: 3, duration: 28 },
         ]} />
-        <FloatingDecoration type="rose" side="left" top="8%" size={44} opacity={0.08} delay={0} duration={16} animation="breathe" color="#D6537A" />
-        <FloatingDecoration type="lotus" side="right" top="auto" bottom="8%" size={48} opacity={0.06} delay={2} duration={18} animation="drift-bloom" color="#C9A15A" />
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
             <div>
@@ -645,14 +619,7 @@ const OccasionsPage = () => {
 
       {/* ── CUSTOM ORDER CTA ── */}
       <RevealSection className="py-24 px-6 relative overflow-hidden bg-[#0a0805]">
-        <BokehLights spots={[
-          { color: "from-rose-400/12 to-transparent", size: 280, top: "-6%", right: "-4%", anim: "bk-drift1", delay: 0, duration: 30 },
-          { color: "from-amber-300/10 to-transparent", size: 240, bottom: "-8%", left: "8%", anim: "bk-drift4", delay: 3, duration: 32 },
-          { color: "from-purple-400/8 to-transparent", size: 200, top: "35%", left: "40%", anim: "bk-float", delay: 1, duration: 28 },
         ]} />
-        <FloatingDecoration type="lotus" side="left" top="12%" size={64} opacity={0.08} delay={0} duration={18} animation="drift-bloom" color="#C9A15A" />
-        <FloatingDecoration type="rose" side="right" top="8%" size={52} opacity={0.07} delay={1.5} duration={16} animation="breathe" color="#D6537A" />
-        <FloatingDecoration type="petal6" side="left" top="auto" bottom="10%" size={44} opacity={0.06} delay={3} duration={14} animation="sway3" color="#C9A15A" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_50%,rgba(253,164,175,0.08),transparent)] pointer-events-none" />
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-rose-500/20 to-transparent" />
         <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-rose-500/10 to-transparent" />

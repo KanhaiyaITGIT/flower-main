@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { Star, ArrowRight, Phone, Sparkles } from "lucide-react";
-import FloatingDecoration from "./FloatingDecoration";
 
 const AnimatedStat = ({ value, label, accent }) => {
   const ref = useRef(null);
@@ -60,7 +59,6 @@ const categoryConfig = {
     quote: "Crafted for the most beautiful day of your life.",
     badgeEmoji: "👑",
     badgeText: "Luxury Wedding Collection",
-    ambientEmoji: "✨",
     gradient: "from-[#3c0f1a] via-[#5c1a2a] to-[#2d0a12]",
     bgImage: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=700&q=80",
     bgIllustration: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&q=80",
@@ -81,16 +79,6 @@ const categoryConfig = {
       { src: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&q=80", label: "Grand Stage Decor" },
       { src: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=600&q=80", label: "Mandap Design" },
     ],
-    decor: [
-      { type: "rose", side: "left", top: "5%", size: 48, opacity: 0.08, delay: 0, duration: 16, animation: "bloom", color: "#C9A15A" },
-      { type: "petal5", side: "right", top: "12%", size: 36, opacity: 0.06, delay: 1.5, duration: 14, animation: "sway2", color: "#C9A15A" },
-      { type: "leaf", side: "left", bottom: "10%", size: 40, opacity: 0.07, delay: 2, duration: 18, animation: "sway3", color: "#8B4513" },
-      { type: "lotus", side: "right", bottom: "8%", size: 32, opacity: 0.05, delay: 0.8, duration: 15, animation: "drift-bloom", color: "#FFD700" },
-    ],
-    floatingIcons: [
-      { icon: "💍", label: "Wedding" },
-      { icon: "🌹", label: "Roses" },
-    ],
   },
   Birthday: {
     heading: "Celebrate Every",
@@ -99,7 +87,6 @@ const categoryConfig = {
     quote: "Every birthday deserves unforgettable blooms.",
     badgeEmoji: "🎂",
     badgeText: "Trending Birthday Themes",
-    ambientEmoji: "🎈",
     gradient: "from-[#f8a5a5] via-[#f5cdcd] to-[#fce4e4]",
     bgImage: "https://images.unsplash.com/photo-1498579150354-977475b7ea0b?w=700&q=80",
     bgIllustration: "https://images.unsplash.com/photo-1468327768560-75b778c8f20b?w=400&q=80",
@@ -120,16 +107,6 @@ const categoryConfig = {
       { src: "https://images.unsplash.com/photo-1498579150354-977475b7ea0b?w=600&q=80", label: "Birthday Floral Basket" },
       { src: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", label: "Birthday Bouquet" },
     ],
-    decor: [
-      { type: "petal6", side: "left", top: "8%", size: 36, opacity: 0.08, delay: 0, duration: 16, animation: "sway1", color: "#F472B6" },
-      { type: "petal5", side: "right", top: "15%", size: 28, opacity: 0.06, delay: 1.5, duration: 14, animation: "sway2", color: "#FB923C" },
-      { type: "leaf", side: "left", bottom: "10%", size: 32, opacity: 0.07, delay: 2, duration: 18, animation: "sway3", color: "#A3E635" },
-      { type: "petal", side: "right", bottom: "5%", size: 24, opacity: 0.05, delay: 0.8, duration: 15, animation: "sway2", color: "#FBBF24" },
-    ],
-    floatingIcons: [
-      { icon: "🎂", label: "Cake" },
-      { icon: "🎈", label: "Balloons" },
-    ],
   },
   Anniversary: {
     heading: "Forever in",
@@ -138,7 +115,6 @@ const categoryConfig = {
     quote: "Love grows stronger with every bloom.",
     badgeEmoji: "❤️",
     badgeText: "Romantic Collection",
-    ambientEmoji: "❤️",
     gradient: "from-[#4a0e1b] via-[#6b1d30] to-[#3a0a15]",
     bgImage: "https://images.unsplash.com/photo-1549465220-1a8b2308cd89?w=700&q=80",
     bgIllustration: "https://images.unsplash.com/photo-1519378458060-57e16e3cfa83?w=400&q=80",
@@ -159,16 +135,6 @@ const categoryConfig = {
       { src: "https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=600&q=80", label: "Preserved Flower Box" },
       { src: "https://images.unsplash.com/photo-1549465220-1a8b2308cd89?w=600&q=80", label: "Luxury Rose Arrangement" },
     ],
-    decor: [
-      { type: "rose", side: "left", top: "5%", size: 44, opacity: 0.08, delay: 0, duration: 16, animation: "bloom", color: "#E11D48" },
-      { type: "petal5", side: "right", top: "10%", size: 32, opacity: 0.06, delay: 1.5, duration: 14, animation: "sway2", color: "#C9A15A" },
-      { type: "leaf", side: "left", bottom: "12%", size: 36, opacity: 0.07, delay: 2, duration: 18, animation: "sway3", color: "#8B4513" },
-      { type: "lotus", side: "right", bottom: "6%", size: 28, opacity: 0.05, delay: 0.8, duration: 15, animation: "drift-bloom", color: "#FFD700" },
-    ],
-    floatingIcons: [
-      { icon: "❤️", label: "Love" },
-      { icon: "🥂", label: "Celebrate" },
-    ],
   },
   Reception: {
     heading: "Royal",
@@ -177,7 +143,6 @@ const categoryConfig = {
     quote: "Grand moments deserve grand entrances.",
     badgeEmoji: "💎",
     badgeText: "Premium Reception Decor",
-    ambientEmoji: "✨",
     gradient: "from-[#0a2e1a] via-[#0d4a2a] to-[#061f12]",
     bgImage: "https://images.unsplash.com/photo-1478146059778-8fad5fb5a185?w=700&q=80",
     bgIllustration: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&q=80",
@@ -198,16 +163,6 @@ const categoryConfig = {
       { src: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&q=80", label: "Elegant Table Decor" },
       { src: "https://images.unsplash.com/photo-1478146059778-8fad5fb5a185?w=600&q=80", label: "Floral Backdrop" },
     ],
-    decor: [
-      { type: "leaf", side: "left", top: "8%", size: 40, opacity: 0.08, delay: 0, duration: 16, animation: "sway3", color: "#C9A15A" },
-      { type: "lotus", side: "right", top: "12%", size: 32, opacity: 0.06, delay: 1.5, duration: 14, animation: "drift-bloom", color: "#FFD700" },
-      { type: "petal5", side: "left", bottom: "10%", size: 28, opacity: 0.07, delay: 2, duration: 18, animation: "sway2", color: "#4ADE80" },
-      { type: "petal6", side: "right", bottom: "8%", size: 24, opacity: 0.05, delay: 0.8, duration: 15, animation: "sway1", color: "#C9A15A" },
-    ],
-    floatingIcons: [
-      { icon: "✨", label: "Elegance" },
-      { icon: "💎", label: "Luxury" },
-    ],
   },
   Haldi: {
     heading: "Traditional",
@@ -216,7 +171,6 @@ const categoryConfig = {
     quote: "Golden traditions, blooming celebrations.",
     badgeEmoji: "🌼",
     badgeText: "Traditional Haldi Decor",
-    ambientEmoji: "🌼",
     gradient: "from-[#8a5a1a] via-[#c47a2a] to-[#6a4010]",
     bgImage: "https://images.unsplash.com/photo-1495954484750-af469f2f9be5?w=700&q=80",
     bgIllustration: "https://images.unsplash.com/photo-1527330662700-1a16b10c2596?w=400&q=80",
@@ -237,16 +191,6 @@ const categoryConfig = {
       { src: "https://images.unsplash.com/photo-1495954484750-af469f2f9be5?w=600&q=80", label: "Marigold Decor" },
       { src: "https://images.unsplash.com/photo-1527330662700-1a16b10c2596?w=600&q=80", label: "Traditional Floral Setup" },
     ],
-    decor: [
-      { type: "petal5", side: "left", top: "5%", size: 36, opacity: 0.08, delay: 0, duration: 16, animation: "sway1", color: "#F59E0B" },
-      { type: "petal6", side: "right", top: "12%", size: 28, opacity: 0.06, delay: 1.5, duration: 14, animation: "sway2", color: "#FBBF24" },
-      { type: "leaf", side: "left", bottom: "10%", size: 32, opacity: 0.07, delay: 2, duration: 18, animation: "sway3", color: "#65A30D" },
-      { type: "petal", side: "right", bottom: "5%", size: 22, opacity: 0.05, delay: 0.8, duration: 15, animation: "sway2", color: "#F59E0B" },
-    ],
-    floatingIcons: [
-      { icon: "🌼", label: "Marigold" },
-      { icon: "🪔", label: "Tradition" },
-    ],
   },
   Devotional: {
     heading: "Sacred Floral",
@@ -255,7 +199,6 @@ const categoryConfig = {
     quote: "Flowers offered with devotion and purity.",
     badgeEmoji: "🪷",
     badgeText: "Sacred Floral Offerings",
-    ambientEmoji: "🔔",
     gradient: "from-[#8a3a0a] via-[#b85a1a] to-[#6a2a08]",
     bgImage: "https://images.unsplash.com/photo-1530092285049-1c42085fd395?w=700&q=80",
     bgIllustration: "https://images.unsplash.com/photo-1527330662700-1a16b10c2596?w=400&q=80",
@@ -276,16 +219,6 @@ const categoryConfig = {
       { src: "https://images.unsplash.com/photo-1527330662700-1a16b10c2596?w=600&q=80", label: "Fresh Garlands" },
       { src: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=600&q=80", label: "Aromatic Offerings" },
     ],
-    decor: [
-      { type: "lotus", side: "left", top: "5%", size: 40, opacity: 0.08, delay: 0, duration: 16, animation: "drift-bloom", color: "#D97706" },
-      { type: "petal5", side: "right", top: "10%", size: 32, opacity: 0.06, delay: 1.5, duration: 14, animation: "sway2", color: "#C9A15A" },
-      { type: "petal6", side: "left", bottom: "10%", size: 28, opacity: 0.07, delay: 2, duration: 18, animation: "sway1", color: "#F59E0B" },
-      { type: "leaf", side: "right", bottom: "8%", size: 24, opacity: 0.05, delay: 0.8, duration: 15, animation: "sway3", color: "#65A30D" },
-    ],
-    floatingIcons: [
-      { icon: "🪷", label: "Lotus" },
-      { icon: "🔔", label: "Blessings" },
-    ],
   },
   Bouquets: {
     heading: "Fresh Blooms,",
@@ -294,7 +227,6 @@ const categoryConfig = {
     quote: "Handcrafted with love, delivered with care.",
     badgeEmoji: "💐",
     badgeText: "Handcrafted Bouquets",
-    ambientEmoji: "🌹",
     gradient: "from-[#2d1a12] via-[#4a2a1a] to-[#1f120a]",
     bgImage: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=700&q=80",
     bgIllustration: "https://images.unsplash.com/photo-1490757467854-4d9434b1d2f0?w=400&q=80",
@@ -315,16 +247,6 @@ const categoryConfig = {
       { src: "https://images.unsplash.com/photo-1494972308805-463bc619d34e?w=600&q=80", label: "Premium Wrapped Bouquet" },
       { src: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=600&q=80", label: "Luxury Floral Arrangement" },
     ],
-    decor: [
-      { type: "rose", side: "left", top: "5%", size: 44, opacity: 0.08, delay: 0, duration: 16, animation: "bloom", color: "#C9A15A" },
-      { type: "petal6", side: "right", top: "12%", size: 32, opacity: 0.06, delay: 1.5, duration: 14, animation: "sway2", color: "#8B4513" },
-      { type: "leaf", side: "left", bottom: "10%", size: 36, opacity: 0.07, delay: 2, duration: 18, animation: "sway3", color: "#4ADE80" },
-      { type: "petal5", side: "right", bottom: "5%", size: 24, opacity: 0.05, delay: 0.8, duration: 15, animation: "sway1", color: "#C9A15A" },
-    ],
-    floatingIcons: [
-      { icon: "💐", label: "Bouquets" },
-      { icon: "🌹", label: "Roses" },
-    ],
   },
   Flowers: {
     heading: "Nature's Finest,",
@@ -333,7 +255,6 @@ const categoryConfig = {
     quote: "Freshly picked. Expertly arranged.",
     badgeEmoji: "🌸",
     badgeText: "Fresh Imported Flowers",
-    ambientEmoji: "🌸",
     gradient: "from-[#2d1a12] via-[#4a2a1a] to-[#1f120a]",
     bgImage: "https://images.unsplash.com/photo-1490757467854-4d9434b1d2f0?w=700&q=80",
     bgIllustration: "https://images.unsplash.com/photo-1508615070457-399a42d32061?w=400&q=80",
@@ -354,16 +275,6 @@ const categoryConfig = {
       { src: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", label: "Seasonal Specials" },
       { src: "https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=600&q=80", label: "Exquisite Floral Art" },
     ],
-    decor: [
-      { type: "petal6", side: "left", top: "5%", size: 36, opacity: 0.08, delay: 0, duration: 16, animation: "sway1", color: "#C9A15A" },
-      { type: "leaf", side: "right", top: "12%", size: 40, opacity: 0.06, delay: 1.5, duration: 14, animation: "sway3", color: "#4ADE80" },
-      { type: "rose", side: "left", bottom: "10%", size: 32, opacity: 0.07, delay: 2, duration: 18, animation: "bloom", color: "#F472B6" },
-      { type: "petal5", side: "right", bottom: "6%", size: 22, opacity: 0.05, delay: 0.8, duration: 15, animation: "sway2", color: "#C9A15A" },
-    ],
-    floatingIcons: [
-      { icon: "🌸", label: "Blooms" },
-      { icon: "🌿", label: "Greenery" },
-    ],
   },
   Corporate: {
     heading: "Corporate",
@@ -372,7 +283,6 @@ const categoryConfig = {
     quote: "Elegance that speaks professionalism.",
     badgeEmoji: "💼",
     badgeText: "Corporate Floral Design",
-    ambientEmoji: "🌿",
     gradient: "from-[#1a1a1a] via-[#2a2a2a] to-[#0f0f0f]",
     bgImage: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=700&q=80",
     bgIllustration: "https://images.unsplash.com/photo-1470509037660-dbebadaeb3b6?w=400&q=80",
@@ -393,16 +303,6 @@ const categoryConfig = {
       { src: "https://images.unsplash.com/photo-1478146059778-8fad5fb5a185?w=600&q=80", label: "Lobby Arrangement" },
       { src: "https://images.unsplash.com/photo-1490757467854-4d9434b1d2f0?w=600&q=80", label: "Premium Floral Design" },
     ],
-    decor: [
-      { type: "leaf", side: "left", top: "5%", size: 40, opacity: 0.08, delay: 0, duration: 16, animation: "sway3", color: "#84CC16" },
-      { type: "petal6", side: "right", top: "12%", size: 28, opacity: 0.06, delay: 1.5, duration: 14, animation: "sway1", color: "#C9A15A" },
-      { type: "petal5", side: "left", bottom: "10%", size: 24, opacity: 0.07, delay: 2, duration: 18, animation: "sway2", color: "#E2E8F0" },
-      { type: "leaf", side: "right", bottom: "6%", size: 20, opacity: 0.05, delay: 0.8, duration: 15, animation: "sway3", color: "#84CC16" },
-    ],
-    floatingIcons: [
-      { icon: "💼", label: "Corporate" },
-      { icon: "🌿", label: "Green" },
-    ],
   },
   Luxury: {
     heading: "Luxury Blooms",
@@ -411,7 +311,6 @@ const categoryConfig = {
     quote: "Where elegance meets floral artistry.",
     badgeEmoji: "💎",
     badgeText: "Bespoke Luxury Collection",
-    ambientEmoji: "💎",
     gradient: "from-[#1a1208] via-[#2a1a0a] to-[#0f0a04]",
     bgImage: "https://images.unsplash.com/photo-1519378458060-57e16e3cfa83?w=700&q=80",
     bgIllustration: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=400&q=80",
@@ -432,16 +331,6 @@ const categoryConfig = {
       { src: "https://images.unsplash.com/photo-1494972308805-463bc619d34e?w=600&q=80", label: "Premium Gift Packaging" },
       { src: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=600&q=80", label: "Imported Floral Design" },
     ],
-    decor: [
-      { type: "rose", side: "left", top: "5%", size: 48, opacity: 0.08, delay: 0, duration: 16, animation: "bloom", color: "#C9A15A" },
-      { type: "lotus", side: "right", top: "10%", size: 36, opacity: 0.06, delay: 1.5, duration: 14, animation: "drift-bloom", color: "#FFD700" },
-      { type: "petal5", side: "left", bottom: "10%", size: 32, opacity: 0.07, delay: 2, duration: 18, animation: "sway2", color: "#C9A15A" },
-      { type: "leaf", side: "right", bottom: "5%", size: 28, opacity: 0.05, delay: 0.8, duration: 15, animation: "sway3", color: "#8B4513" },
-    ],
-    floatingIcons: [
-      { icon: "💎", label: "Luxury" },
-      { icon: "✨", label: "Premium" },
-    ],
   },
   Balloon: {
     heading: "Celebrate With",
@@ -450,7 +339,6 @@ const categoryConfig = {
     quote: "Pop of color, burst of joy.",
     badgeEmoji: "🎈",
     badgeText: "Balloon Magic Collection",
-    ambientEmoji: "🎉",
     gradient: "from-[#3a1a4a] via-[#5a2a6a] to-[#2a0f3a]",
     bgImage: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=700&q=80",
     bgIllustration: "https://images.unsplash.com/photo-1518599212517-bf1f0c137833?w=400&q=80",
@@ -471,16 +359,6 @@ const categoryConfig = {
       { src: "https://images.unsplash.com/photo-1518599212517-bf1f0c137833?w=600&q=80", label: "Custom Installation" },
       { src: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", label: "Party Setup" },
     ],
-    decor: [
-      { type: "petal6", side: "left", top: "5%", size: 32, opacity: 0.08, delay: 0, duration: 16, animation: "sway1", color: "#A855F7" },
-      { type: "petal5", side: "right", top: "12%", size: 28, opacity: 0.06, delay: 1.5, duration: 14, animation: "sway2", color: "#F472B6" },
-      { type: "petal", side: "left", bottom: "10%", size: 24, opacity: 0.07, delay: 2, duration: 18, animation: "sway2", color: "#FBBF24" },
-      { type: "leaf", side: "right", bottom: "6%", size: 20, opacity: 0.05, delay: 0.8, duration: 15, animation: "sway3", color: "#4ADE80" },
-    ],
-    floatingIcons: [
-      { icon: "🎈", label: "Balloons" },
-      { icon: "🎉", label: "Celebration" },
-    ],
   },
   Gallery: {
     heading: "Our Floral",
@@ -489,7 +367,6 @@ const categoryConfig = {
     quote: "A gallery of nature's finest art.",
     badgeEmoji: "🖼️",
     badgeText: "Floral Masterpieces",
-    ambientEmoji: "✨",
     gradient: "from-[#1a1a2a] via-[#2a2a3a] to-[#0f0f1a]",
     bgImage: "https://images.unsplash.com/photo-1478146059778-8fad5fb5a185?w=700&q=80",
     bgIllustration: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&q=80",
@@ -510,16 +387,6 @@ const categoryConfig = {
       { src: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&q=80", label: "Wedding Portfolio" },
       { src: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", label: "Event Showcase" },
     ],
-    decor: [
-      { type: "lotus", side: "left", top: "5%", size: 36, opacity: 0.08, delay: 0, duration: 16, animation: "drift-bloom", color: "#C9A15A" },
-      { type: "rose", side: "right", top: "10%", size: 32, opacity: 0.06, delay: 1.5, duration: 14, animation: "bloom", color: "#C9A15A" },
-      { type: "petal5", side: "left", bottom: "10%", size: 28, opacity: 0.07, delay: 2, duration: 18, animation: "sway2", color: "#E2E8F0" },
-      { type: "leaf", side: "right", bottom: "5%", size: 24, opacity: 0.05, delay: 0.8, duration: 15, animation: "sway3", color: "#4ADE80" },
-    ],
-    floatingIcons: [
-      { icon: "🖼️", label: "Gallery" },
-      { icon: "✨", label: "Showcase" },
-    ],
   },
   Candles: {
     heading: "Bloom &",
@@ -528,7 +395,6 @@ const categoryConfig = {
     quote: "Warm fragrances paired with timeless blooms.",
     badgeEmoji: "🕯️",
     badgeText: "Luxury Candle Collection",
-    ambientEmoji: "🕯",
     gradient: "from-[#2a1a0a] via-[#3a2a1a] to-[#1a0f05]",
     bgImage: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=700&q=80",
     bgIllustration: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&q=80",
@@ -549,16 +415,6 @@ const categoryConfig = {
       { src: "https://images.pexels.com/photos/29570066/pexels-photo-29570066.jpeg?auto=compress&cs=tinysrgb&w=600&q=80", label: "Candle & Flowers Gift Set" },
       { src: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", label: "Luxury Home Fragrance" },
     ],
-    decor: [
-      { type: "petal6", side: "left", top: "5%", size: 32, opacity: 0.08, delay: 0, duration: 16, animation: "sway1", color: "#D97706" },
-      { type: "petal5", side: "right", top: "12%", size: 28, opacity: 0.06, delay: 1.5, duration: 14, animation: "sway2", color: "#C9A15A" },
-      { type: "leaf", side: "left", bottom: "10%", size: 24, opacity: 0.07, delay: 2, duration: 18, animation: "sway3", color: "#65A30D" },
-      { type: "petal", side: "right", bottom: "6%", size: 20, opacity: 0.05, delay: 0.8, duration: 15, animation: "sway2", color: "#F59E0B" },
-    ],
-    floatingIcons: [
-      { icon: "🕯️", label: "Candles" },
-      { icon: "✨", label: "Ambiance" },
-    ],
   },
   Gifts: {
     heading: "Luxury Gifts",
@@ -567,7 +423,6 @@ const categoryConfig = {
     quote: "Every gift tells a beautiful story.",
     badgeEmoji: "🎁",
     badgeText: "Luxury Gift Collection",
-    ambientEmoji: "💝",
     gradient: "from-[#2a0a1a] via-[#4a1a2a] to-[#1a0510]",
     bgImage: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=700&q=80",
     bgIllustration: "https://images.unsplash.com/photo-1496062031456-07b8f6f0c2e5?w=400&q=80",
@@ -588,16 +443,6 @@ const categoryConfig = {
       { src: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", label: "Chocolate & Flowers Combo" },
       { src: "https://images.unsplash.com/photo-1494972308805-463bc619d34e?w=600&q=80", label: "Personalized Gift Box" },
     ],
-    decor: [
-      { type: "rose", side: "left", top: "5%", size: 40, opacity: 0.08, delay: 0, duration: 16, animation: "bloom", color: "#E11D48" },
-      { type: "petal5", side: "right", top: "10%", size: 32, opacity: 0.06, delay: 1.5, duration: 14, animation: "sway2", color: "#C9A15A" },
-      { type: "petal6", side: "left", bottom: "10%", size: 28, opacity: 0.07, delay: 2, duration: 18, animation: "sway1", color: "#F472B6" },
-      { type: "leaf", side: "right", bottom: "5%", size: 24, opacity: 0.05, delay: 0.8, duration: 15, animation: "sway3", color: "#8B4513" },
-    ],
-    floatingIcons: [
-      { icon: "🎁", label: "Gifts" },
-      { icon: "💝", label: "Love" },
-    ],
   },
   "Candles & More": {
     heading: "Bloom &",
@@ -606,7 +451,6 @@ const categoryConfig = {
     quote: "Warm fragrances paired with timeless blooms.",
     badgeEmoji: "🕯️",
     badgeText: "Candles & Home Fragrance",
-    ambientEmoji: "🕯",
     gradient: "from-[#2a1a0a] via-[#3a2a1a] to-[#1a0f05]",
     bgImage: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=700&q=80",
     bgIllustration: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&q=80",
@@ -627,16 +471,6 @@ const categoryConfig = {
       { src: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=600&q=80", label: "Luxury Home Diffuser" },
       { src: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", label: "Gift Ready Packaging" },
     ],
-    decor: [
-      { type: "petal6", side: "left", top: "5%", size: 32, opacity: 0.08, delay: 0, duration: 16, animation: "sway1", color: "#D97706" },
-      { type: "petal5", side: "right", top: "12%", size: 28, opacity: 0.06, delay: 1.5, duration: 14, animation: "sway2", color: "#C9A15A" },
-      { type: "leaf", side: "left", bottom: "10%", size: 24, opacity: 0.07, delay: 2, duration: 18, animation: "sway3", color: "#65A30D" },
-      { type: "petal", side: "right", bottom: "6%", size: 20, opacity: 0.05, delay: 0.8, duration: 15, animation: "sway2", color: "#F59E0B" },
-    ],
-    floatingIcons: [
-      { icon: "🕯️", label: "Candles" },
-      { icon: "✨", label: "Ambiance" },
-    ],
   },
   Default: {
     heading: "Bespoke Blooms,",
@@ -645,7 +479,6 @@ const categoryConfig = {
     quote: "Freshly picked. Expertly arranged. Delivered with love.",
     badgeEmoji: "🌸",
     badgeText: "Premium Floral Collection",
-    ambientEmoji: "✨",
     gradient: "from-rose-950 via-rose-900 to-pink-950",
     bgImage: "https://images.unsplash.com/photo-1490757467854-4d9434b1d2f0?w=700&q=80",
     bgIllustration: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=400&q=80",
@@ -665,16 +498,6 @@ const categoryConfig = {
       { src: "https://images.unsplash.com/photo-1490757467854-4d9434b1d2f0?w=600&q=80", label: "Premium Fresh Flowers" },
       { src: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", label: "Handcrafted Bouquet" },
       { src: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=600&q=80", label: "Luxury Arrangement" },
-    ],
-    decor: [
-      { type: "leaf", side: "left", top: "5%", size: 36, opacity: 0.08, delay: 0, duration: 16, animation: "sway3", color: "#C9A15A" },
-      { type: "petal6", side: "right", top: "12%", size: 28, opacity: 0.06, delay: 1.5, duration: 14, animation: "sway2", color: "#C9A15A" },
-      { type: "petal5", side: "left", bottom: "10%", size: 24, opacity: 0.07, delay: 2, duration: 18, animation: "sway1", color: "#C9A15A" },
-      { type: "petal", side: "right", bottom: "6%", size: 20, opacity: 0.05, delay: 0.8, duration: 15, animation: "sway2", color: "#C9A15A" },
-    ],
-    floatingIcons: [
-      { icon: "🌸", label: "Flowers" },
-      { icon: "✨", label: "Premium" },
     ],
   },
 };
@@ -815,60 +638,6 @@ const CategoryHero = ({ category }) => {
           style={{ backgroundColor: config.accent }}
         />
       </div>
-
-      {/* Floating decorations */}
-      {config.decor.map((d, i) => (
-        <FloatingDecoration
-          key={i}
-          type={d.type}
-          side={d.side}
-          top={d.top}
-          bottom={d.bottom}
-          size={d.size}
-          opacity={d.opacity}
-          delay={d.delay}
-          duration={d.duration}
-          animation={d.animation}
-          color={d.color}
-        />
-      ))}
-
-      {/* Tiny floating elements per category (suggestion 7) */}
-      {[0, 1, 2].map((i) => (
-        <motion.div
-          key={`ambient-${i}`}
-          className="absolute pointer-events-none z-[1]"
-          style={{
-            top: `${15 + i * 30}%`,
-            left: i === 1 ? '50%' : `${i === 0 ? '5%' : '92%'}`,
-          }}
-          animate={{
-            y: [0, -10, 0],
-            x: [0, i % 2 === 0 ? 5 : -5, 0],
-            opacity: [0.12, 0.18, 0.12],
-          }}
-          transition={{
-            duration: 5 + i * 2,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            delay: i * 1.5,
-          }}
-        >
-          <span className="text-xl">{config.ambientEmoji}</span>
-        </motion.div>
-      ))}
-
-      {/* Floating icons */}
-      {config.floatingIcons.map((fi, i) => (
-        <motion.div
-          key={i}
-          className={`absolute ${i === 0 ? 'top-8 left-8 lg:top-10 lg:left-10' : 'top-8 right-8 lg:top-10 lg:right-10'} z-10`}
-          animate={{ y: [0, -6, 0], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 3 + i, repeat: Infinity, ease: 'easeInOut', delay: i * 0.5 }}
-        >
-          <span className="text-xl lg:text-2xl">{fi.icon}</span>
-        </motion.div>
-      ))}
 
       <div className="max-w-6xl mx-auto px-6 w-full relative z-10">
         <motion.div

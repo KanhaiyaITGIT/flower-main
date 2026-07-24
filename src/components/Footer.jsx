@@ -1,7 +1,8 @@
-import { Flower2, Phone, ArrowRight, MapPin, Mail, ShieldCheck, CreditCard, Truck, Leaf } from "lucide-react";
+import { useState } from "react";
+import { Flower2, Phone, ArrowRight, MapPin, Mail, ShieldCheck, CreditCard, Truck, Leaf, ChevronDown } from "lucide-react";
 import { FaFacebook, FaInstagram, FaWhatsapp, FaCcVisa, FaCcMastercard, FaCcPaypal, FaRupeeSign } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   BUSINESS_NAME_MAIN,
   BUSINESS_NAME_SUB,
@@ -14,16 +15,17 @@ import {
 
 const infoLinks = [
   { name: "About Us", path: "/about" },
+  { name: "Contact", path: "/contact" },
   { name: "Gallery", path: "/gallery" },
   { name: "Occasions", path: "/occasions" },
   { name: "Decor", path: "/decor" },
 ];
 
 const policyLinks = [
-  { name: "Terms & Conditions", path: "#" },
-  { name: "Privacy Policy", path: "#" },
-  { name: "Shipping Policy", path: "#" },
-  { name: "Refund Policy", path: "#" },
+  { name: "Terms & Conditions", path: "/terms" },
+  { name: "Privacy Policy", path: "/privacy" },
+  { name: "Shipping Policy", path: "/shipping" },
+  { name: "Refund Policy", path: "/refund" },
 ];
 
 const categoryLinks = [
@@ -39,18 +41,22 @@ const categoryLinks = [
 ];
 
 const supportLinks = [
-  { name: "Help Center", path: "#" },
-  { name: "Track Order", path: "#" },
-  { name: "Delivery Info", path: "#" },
-  { name: "Bulk Orders", path: "#" },
-  { name: "Careers", path: "#" },
-  { name: "Become a Partner", path: "#" },
+  { name: "Help Center", path: "/help-center" },
+  { name: "Track Order", path: "/track-order" },
+  { name: "Delivery Info", path: "/delivery-info" },
+  { name: "Bulk Orders", path: "/bulk-orders" },
+  { name: "Careers", path: "/careers" },
+  { name: "Become a Partner", path: "/become-partner" },
 ];
 
 const storeLocations = [
-  { name: "Gurgaon", address: "Sector 56, Gurugram" },
-  { name: "Delhi", address: "Connaught Place, New Delhi" },
-  { name: "Noida", address: "Sector 18, Noida" },
+  { name: "Noida", address: "Serving entire city" },
+  { name: "Greater Noida", address: "Serving entire city" },
+  { name: "Delhi", address: "Serving all zones" },
+  { name: "New Delhi", address: "Serving all zones" },
+  { name: "Ghaziabad", address: "Serving entire city" },
+  { name: "Gurugram", address: "Serving entire city" },
+  { name: "Faridabad", address: "Serving entire city" },
 ];
 
 const staggerItem = {
@@ -58,12 +64,45 @@ const staggerItem = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
 };
 
+function FooterColumn({ title, children }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="footer-glass-card lg:bg-transparent lg:backdrop-blur-none lg:border-0 lg:p-0">
+      <button
+        onClick={() => setOpen(!open)}
+        className="lg:cursor-default flex items-center justify-between w-full lg:pointer-events-none"
+      >
+        <h3 className="text-[#C9A15A] font-bold tracking-[0.15em] text-xs uppercase mb-0 lg:mb-5">
+          {title}
+        </h3>
+        <ChevronDown size={14} className={`lg:hidden text-[#C9A15A] transition-transform duration-300 ${open ? 'rotate-180' : ''}`} />
+      </button>
+      <div className="hidden lg:block">{children}</div>
+      <div className="lg:hidden">
+        <AnimatePresence initial={false}>
+          {open && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="pt-4">{children}</div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
+
 export default function Footer() {
   return (
     <footer className="footer-premium text-stone-300 pt-16 pb-0">
       {/* Ambient gold glow */}
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#C9A15A]/[0.03] rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute top-1/3 left-1/4 w-80 h-80 bg-rose-500/[0.02] rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/3 right-1/3 w-64 h-64 bg-emerald-500/[0.015] rounded-full blur-[80px] pointer-events-none" />
 
       {/* Main Content */}
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 relative z-10">
@@ -116,88 +155,57 @@ export default function Footer() {
           </motion.div>
 
           {/* Categories */}
-          <motion.div
-            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.03, delayChildren: 0.1 } } }}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-40px" }}
-            className="footer-glass-card lg:bg-transparent lg:backdrop-blur-none lg:border-0 lg:p-0"
-          >
-            <motion.h3 variants={staggerItem} className="text-[#C9A15A] font-bold tracking-[0.15em] text-xs uppercase mb-5">
-              Categories
-            </motion.h3>
+          <FooterColumn title="Categories">
             <ul className="flex flex-col gap-2.5">
               {categoryLinks.map((item) => (
-                <motion.li key={item.name} variants={staggerItem}>
+                <li key={item.name}>
                   <Link to={item.path} className="text-stone-400 hover:text-white text-sm font-light transition-all duration-200 block py-0.5 relative group w-fit">
                     <span className="relative z-10">{item.name}</span>
                     <span className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-[#C9A15A] to-transparent group-hover:w-full transition-all duration-300" />
                   </Link>
-                </motion.li>
+                </li>
               ))}
             </ul>
-          </motion.div>
+          </FooterColumn>
 
           {/* Quick Links */}
-          <motion.div
-            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.03, delayChildren: 0.15 } } }}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-40px" }}
-            className="footer-glass-card lg:bg-transparent lg:backdrop-blur-none lg:border-0 lg:p-0"
-          >
-            <motion.h3 variants={staggerItem} className="text-[#C9A15A] font-bold tracking-[0.15em] text-xs uppercase mb-5">
-              Quick Links
-            </motion.h3>
+          <FooterColumn title="Quick Links">
             <ul className="flex flex-col gap-2.5">
               {infoLinks.map((item) => (
-                <motion.li key={item.name} variants={staggerItem}>
+                <li key={item.name}>
                   <Link to={item.path} className="text-stone-400 hover:text-white text-sm font-light transition-all duration-200 block py-0.5 relative group w-fit">
                     <span className="relative z-10">{item.name}</span>
                     <span className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-[#C9A15A] to-transparent group-hover:w-full transition-all duration-300" />
                   </Link>
-                </motion.li>
+                </li>
               ))}
             </ul>
-          </motion.div>
+          </FooterColumn>
 
           {/* Customer Support */}
-          <motion.div
-            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.03, delayChildren: 0.2 } } }}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-40px" }}
-            className="footer-glass-card lg:bg-transparent lg:backdrop-blur-none lg:border-0 lg:p-0"
-          >
-            <motion.h3 variants={staggerItem} className="text-[#C9A15A] font-bold tracking-[0.15em] text-xs uppercase mb-5">
-              Support
-            </motion.h3>
-            <ul className="flex flex-col gap-2.5">
+          <FooterColumn title="Support">
+            <ul className="flex flex-col gap-2.5 mb-5 lg:mb-6">
               {supportLinks.map((item) => (
-                <motion.li key={item.name} variants={staggerItem}>
+                <li key={item.name}>
                   <Link to={item.path} className="text-stone-400 hover:text-white text-sm font-light transition-all duration-200 block py-0.5 relative group w-fit">
                     <span className="relative z-10">{item.name}</span>
                     <span className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-[#C9A15A] to-transparent group-hover:w-full transition-all duration-300" />
                   </Link>
-                </motion.li>
+                </li>
               ))}
             </ul>
-
-            {/* Policies */}
-            <motion.h3 variants={staggerItem} className="text-[#C9A15A] font-bold tracking-[0.15em] text-xs uppercase mt-6 mb-4">
-              Policies
-            </motion.h3>
+            <h3 className="text-[#C9A15A] font-bold tracking-[0.15em] text-xs uppercase mb-4 lg:mb-5">Policies</h3>
             <ul className="flex flex-col gap-2.5">
               {policyLinks.map((item) => (
-                <motion.li key={item.name} variants={staggerItem}>
+                <li key={item.name}>
                   <Link to={item.path} className="text-stone-400 hover:text-white text-sm font-light transition-all duration-200 block py-0.5 relative group w-fit">
                     <span className="relative z-10">{item.name}</span>
                     <span className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-[#C9A15A] to-transparent group-hover:w-full transition-all duration-300" />
                   </Link>
-                </motion.li>
+                </li>
               ))}
             </ul>
-          </motion.div>
+          </FooterColumn>
 
           {/* Contact + Newsletter */}
           <motion.div
@@ -251,8 +259,9 @@ export default function Footer() {
                     className="newsletter-input pl-10"
                   />
                 </div>
-                <button className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#C9A15A] to-[#b08b49] flex items-center justify-center text-[#0a1a12] hover:shadow-[0_8px_24px_rgba(201,161,90,0.25)] transition-all duration-300 shrink-0 hover:scale-105 active:scale-95">
-                  <ArrowRight size={16} />
+                <button className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#C9A15A] to-[#b08b49] flex items-center justify-center text-[#0a1a12] hover:shadow-[0_8px_24px_rgba(201,161,90,0.25)] transition-all duration-300 shrink-0 hover:scale-105 active:scale-95 relative overflow-hidden group">
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                  <ArrowRight size={16} className="relative" />
                 </button>
               </div>
             </div>
@@ -311,10 +320,10 @@ export default function Footer() {
               </div>
               <div>
                 <p className="text-rose-400 text-xs font-bold tracking-wider uppercase mb-1">Our Locations</p>
-                <div className="flex flex-col gap-0.5">
+                <div className="grid grid-cols-2 gap-y-0.5 gap-x-3">
                   {storeLocations.map((loc) => (
                     <p key={loc.name} className="text-stone-400 text-xs font-light">
-                      <span className="text-stone-300 font-medium">{loc.name}</span> — {loc.address}
+                      <span className="text-stone-300 font-medium">{loc.name}</span>
                     </p>
                   ))}
                 </div>
@@ -353,7 +362,7 @@ export default function Footer() {
         </motion.div>
       </div>
 
-      {/* ─── Bottom Bar ─── */}
+      {/* ─── Premium Bottom Bar ─── */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -371,24 +380,47 @@ export default function Footer() {
           </div>
         </div>
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 pb-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-xs text-stone-500 tracking-wider font-light">
-              © {new Date().getFullYear()} <span className="text-stone-400">{BUSINESS_NAME_MAIN}</span> <span className="text-[#C9A15A]">{BUSINESS_NAME_SUB}</span>. All Rights Reserved.
-            </p>
-            <div className="flex items-center gap-4 text-xs text-stone-500">
-              <Link to="#" className="hover:text-stone-300 transition-colors">Privacy Policy</Link>
-              <span className="text-stone-600">·</span>
-              <Link to="#" className="hover:text-stone-300 transition-colors">Terms of Service</Link>
-              <span className="text-stone-600">·</span>
-              <Link to="#" className="hover:text-stone-300 transition-colors">Refund Policy</Link>
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-5">
+            {/* Left: Copyright + Tagline */}
+            <div className="text-center lg:text-left">
+              <p className="text-xs text-stone-500 tracking-wider font-light">
+                © {new Date().getFullYear()} <span className="text-stone-400">{BUSINESS_NAME_MAIN}</span> <span className="text-[#C9A15A]">{BUSINESS_NAME_SUB}</span>
+              </p>
+              <p className="text-[10px] text-stone-600 mt-1 font-light flex items-center gap-1 justify-center lg:justify-start">
+                Crafted with <motion.span
+                  className="text-rose-400 inline-block"
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >♥</motion.span> in India <span className="text-stone-700 mx-1">·</span> Serving Delhi NCR
+              </p>
             </div>
-            <p className="text-xs text-stone-500 tracking-wider font-light flex items-center gap-1.5 justify-center">
-              Made with <motion.span
-                className="text-rose-400 inline-block"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >♥</motion.span> in India
-            </p>
+
+            {/* Middle: Links */}
+            <div className="flex items-center gap-3 text-[11px] text-stone-500 flex-wrap justify-center">
+              <Link to="/privacy" className="hover:text-stone-300 transition-colors">Privacy Policy</Link>
+              <span className="text-stone-700">·</span>
+              <Link to="/terms" className="hover:text-stone-300 transition-colors">Terms</Link>
+              <span className="text-stone-700">·</span>
+              <Link to="/refund" className="hover:text-stone-300 transition-colors">Refund Policy</Link>
+              <span className="text-stone-700">·</span>
+              <Link to="/" className="hover:text-stone-300 transition-colors">Sitemap</Link>
+            </div>
+
+            {/* Right: Trust Badges */}
+            <div className="flex items-center gap-4 text-[11px] text-stone-400 flex-wrap justify-center">
+              <span className="flex items-center gap-1.5">
+                <ShieldCheck size={13} className="text-emerald-400" />
+                Secure Checkout
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Truck size={13} className="text-[#C9A15A]" />
+                Same Day Delivery
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Leaf size={13} className="text-emerald-400" />
+                Fresh Flowers Daily
+              </span>
+            </div>
           </div>
         </div>
       </motion.div>

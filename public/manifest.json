@@ -1,0 +1,33 @@
+{
+  "name": "Shivam Florist",
+  "short_name": "Shivam Florist",
+  "description": "Premium handcrafted flowers & luxury event decor across Delhi NCR. Same-day delivery available.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d0805",
+  "theme_color": "#184D36",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/vite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "lifestyle", "gifts"],
+  "lang": "en-IN",
+  "scope": "/"
+}

@@ -4,12 +4,12 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
 import LazyImage from "../components/ui/LazyImage";
 import RevealSection from "../components/RevealSection";
-import FloatingDecoration from "../components/FloatingDecoration";
 import Badge from "../components/ui/Badge";
 import { WHATSAPP_LINK } from "../constants";
 import CallForPricing from "../components/ui/CallForPricing";
 import CategoryHero from "../components/CategoryHero";
 import { motion, AnimatePresence } from "framer-motion";
+import { ProductCardSkeleton } from "../components/ui/Skeleton";
 
 // s1 - s45
 import image1 from "../assets/Bouquet/Bouquet1.jpg";
@@ -244,7 +244,6 @@ import {
   Truck,
   Sparkles,
   Search,
-  Loader2,
 } from "lucide-react";
 
 const ITEMS_PER_PAGE = 12;
@@ -526,6 +525,8 @@ const CategoryPage = () => {
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
   const [loadingMore, setLoadingMore] = useState(false);
   const loaderRef = useRef(null);
+  const productsRef = useRef(null);
+  const isLoadingMore = useRef(false);
 
   const handleAddToCart = (product) => {
     dispatch(
@@ -562,50 +563,42 @@ const CategoryPage = () => {
 
   useEffect(() => {
     setVisibleCount(ITEMS_PER_PAGE);
+    setLoadingMore(false);
+    isLoadingMore.current = false;
+    productsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [activeCategory, searchQuery, sortBy]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && visibleCount < filtered.length && !loadingMore) {
+        if (entry.isIntersecting && visibleCount < filtered.length && !isLoadingMore.current) {
+          isLoadingMore.current = true;
           setLoadingMore(true);
           setTimeout(() => {
             setVisibleCount((prev) => Math.min(prev + ITEMS_PER_PAGE, filtered.length));
+            isLoadingMore.current = false;
             setLoadingMore(false);
-          }, 600);
+          }, 50);
         }
       },
-      { rootMargin: "100px" }
+      { rootMargin: "0px 0px 500px 0px" }
     );
-    if (loaderRef.current) observer.observe(loaderRef.current);
+    const sentinel = loaderRef.current;
+    if (sentinel) observer.observe(sentinel);
     return () => observer.disconnect();
-  }, [visibleCount, filtered.length, loadingMore]);
+  }, [visibleCount, filtered.length]);
 
   const visibleProducts = filtered.slice(0, visibleCount);
   const hasMore = visibleCount < filtered.length;
 
-  const handleShowMore = () => {
-    setLoadingMore(true);
-    setTimeout(() => {
-      setVisibleCount((prev) => Math.min(prev + ITEMS_PER_PAGE, filtered.length));
-      setLoadingMore(false);
-    }, 600);
-  };
-
   return (
     <div className="w-full bg-[var(--color-cream)] min-h-screen pb-12 relative">
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <FloatingDecoration type="leaf" side="left" top="4%" size={28} opacity={0.1} delay={0.2} duration={14} animation="sway3" color="#d1bca8" />
-        <FloatingDecoration type="petal6" side="right" top="3%" size={24} opacity={0.1} delay={1} duration={13} animation="sway2" color="#d1bca8" />
-        <FloatingDecoration type="petal5" side="left" bottom="10%" size={32} opacity={0.1} delay={0.6} duration={12} animation="sway1" color="#d1bca8" />
-        <FloatingDecoration type="petal" side="right" bottom="8%" size={22} opacity={0.1} delay={1.8} duration={15} animation="sway2" color="#d1bca8" />
-      </div>
       {/* ── Hero Banner ── */}
       <CategoryHero category={activeCategory} />
 
       {/* ── Sticky Filter / Search Bar ── */}
       <div className="sticky top-[80px] z-40 bg-white/70 backdrop-blur-xl border-b border-white/30 shadow-lg py-4" style={{background:"rgba(255,255,255,0.58)"}}>
-        <div className="max-w-6xl mx-auto px-6 flex flex-col gap-4">
+        <div className="w-full mx-auto px-4 md:px-6 flex flex-col gap-4 xl:w-[92vw] xl:max-w-[1920px]">
           {/* Scrollable Categories List */}
           <div className="flex gap-2.5 overflow-x-auto scrollbar-hide py-1">
             {categoryFilters.map((cat) => {
@@ -702,8 +695,8 @@ const CategoryPage = () => {
       </div>
 
       {/* ── Products Grid ── */}
-      <RevealSection className="py-12 px-6">
-        <div className="max-w-6xl mx-auto">
+      <RevealSection className="py-12 px-4 md:px-6">
+        <div ref={productsRef} className="w-full mx-auto xl:w-[92vw] xl:max-w-[1920px]">
           {filtered.length === 0 ? (
             <motion.div
               initial={{ opacity: 0 }}
@@ -726,8 +719,7 @@ const CategoryPage = () => {
           ) : (
             <>
               <motion.div
-                layout
-                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"
+                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-6 lg:gap-8"
               >
                 {visibleProducts.map((product, idx) => (
                   <motion.div
@@ -761,18 +753,19 @@ const CategoryPage = () => {
                     }}
                   >
                     {/* Image Block */}
-                    <div className="relative overflow-hidden bg-[var(--color-blush)]/30 w-full tilt-card" style={{aspectRatio:"1/1"}}>
-                      <div className="tilt-card-inner absolute inset-0">
+                    <div className="relative overflow-hidden w-full tilt-card" style={{aspectRatio:"3/4"}}>
+                      <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-blush)]/20 via-white/50 to-white/90 pointer-events-none" />
+                      <div className="tilt-card-inner absolute inset-0 z-[1]">
                         <LazyImage
                           src={product.image}
                           alt={product.name}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
                         />
                       </div>
                       <div className="tilt-card-shine" />
 
                       {/* Subtle gradient overlay on hover */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-[1]"/>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-[2]"/>
 
                       <div className="absolute top-3 left-3 z-10 pointer-events-none">
                         {product.tag && (
@@ -804,18 +797,18 @@ const CategoryPage = () => {
                     </div>
 
                     {/* Meta Details Block */}
-                    <div className="p-5 flex flex-col flex-1">
-                      <p className="text-[9px] font-bold text-[var(--color-gold)] tracking-widest uppercase mb-1">{product.category}</p>
-                      <h3 className="font-serif-display text-sm font-bold text-[var(--color-primary)] leading-snug mb-1 line-clamp-2">{product.name}</h3>
-                      <p className="text-gray-400 text-xs mb-3 line-clamp-1 font-light">{product.desc}</p>
+                    <div className="p-4 md:p-5 lg:p-6 flex flex-col flex-1">
+                      <p className="text-[9px] lg:text-[10px] font-bold text-[var(--color-gold)] tracking-widest uppercase mb-1">{product.category}</p>
+                      <h3 className="font-serif-display text-sm md:text-base lg:text-lg font-bold text-[var(--color-primary)] leading-snug mb-1 line-clamp-2">{product.name}</h3>
+                      <p className="text-gray-400 text-xs lg:text-sm mb-2 md:mb-3 lg:mb-4 line-clamp-1 font-light">{product.desc}</p>
 
                       {/* Review row */}
-                      <div className="flex items-center gap-1.5 mb-4">
+                      <div className="flex items-center gap-1.5 mb-3 md:mb-4 lg:mb-5">
                         <div className="flex">
                           {[1, 2, 3, 4, 5].map((s) => (
                             <Star
                               key={`cat-star-${product.id}-${s}`}
-                              size={10}
+                              size={11}
                               className={
                                 s <= Math.round(product.rating)
                                   ? "text-amber-400 fill-amber-400"
@@ -824,13 +817,13 @@ const CategoryPage = () => {
                             />
                           ))}
                         </div>
-                        <span className="text-[9px] text-gray-400 font-bold font-inter mt-0.5">
+                        <span className="text-[9px] lg:text-[10px] text-gray-400 font-bold font-inter mt-0.5">
                           {product.rating} ({product.reviews})
                         </span>
                       </div>
 
                       {/* Pricing Row */}
-                      <div className="flex items-center justify-between mt-auto pt-2 border-t border-white/30">
+                      <div className="flex items-center justify-between mt-auto pt-2.5 md:pt-3 lg:pt-4 border-t border-white/30">
                         <div className="flex flex-col">
                           <CallForPricing />
                         </div>
@@ -859,26 +852,38 @@ const CategoryPage = () => {
                     </div>
                   </motion.div>
                 ))}
+                {loadingMore && visibleCount < filtered.length && (
+                  Array.from({ length: Math.min(ITEMS_PER_PAGE, Math.max(0, filtered.length - visibleCount)) }).map((_, i) => (
+                    <motion.div
+                      key={`skel-${visibleCount}-${i}`}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.25, delay: i * 0.025 }}
+                    >
+                      <ProductCardSkeleton />
+                    </motion.div>
+                  ))
+                )}
               </motion.div>
 
-              {/* Load More Section */}
-              {hasMore && (
-                <div ref={loaderRef} className="flex flex-col items-center gap-4 mt-12">
-                  {loadingMore ? (
-                    <div className="flex items-center gap-2 text-[var(--color-accent)]">
-                      <Loader2 size={16} className="animate-spin" />
-                      <span className="text-xs font-bold tracking-widest uppercase font-inter">Loading more blooms...</span>
-                    </div>
-                  ) : (
-                    <button
-                      onClick={handleShowMore}
-                      className="group inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-700 hover:text-[var(--color-accent)] hover:border-rose-300 rounded-2xl px-8 py-3 text-xs font-bold tracking-wider uppercase transition-all duration-300 shadow-soft hover:shadow-soft-lg hover:scale-[1.03] btn-ripple"
-                    >
-                      <span>Show More ({filtered.length - visibleCount} remaining)</span>
-                      <ChevronDown size={14} className="icon-wiggle group-hover:translate-y-0.5 transition-transform" />
-                    </button>
-                  )}
-                </div>
+              {/* Sentinel for infinite scroll */}
+              <div ref={loaderRef} className="h-2" />
+
+              {/* End of collection */}
+              {!hasMore && filtered.length > 0 && !loadingMore && (
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex flex-col items-center gap-3 py-16 select-none"
+                >
+                  <span className="text-2xl">✨</span>
+                  <p className="font-serif-display text-lg text-[var(--color-primary)] font-bold text-center">
+                    You&apos;ve explored our complete collection.
+                  </p>
+                  <p className="text-sm text-gray-400 font-light text-center max-w-md">
+                    Discover another category to find more beautiful arrangements.
+                  </p>
+                </motion.div>
               )}
             </>
           )}

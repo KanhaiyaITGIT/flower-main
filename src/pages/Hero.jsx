@@ -30,8 +30,6 @@ import {
 import { FaInstagram, FaFacebookF } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import LazyImage from "../components/ui/LazyImage";
-import FloatingDecoration from "../components/FloatingDecoration";
-import BokehLights from "../components/BokehLights";
 import RevealSection from "../components/RevealSection";
 import AnimatedCounter from "../components/ui/AnimatedCounter";
 import CallForPricing from "../components/ui/CallForPricing";
@@ -91,17 +89,6 @@ const itemVariants = {
   },
 };
 
-const floatingVariants = {
-  animate: {
-    y: [0, -12, 0],
-    transition: {
-      duration: 6,
-      ease: "easeInOut",
-      repeat: Infinity,
-    },
-  },
-};
-
 const Home = () => {
   const navigate = useNavigate();
   const categorySliderRef = useRef(null);
@@ -131,6 +118,12 @@ const Home = () => {
     seconds: 18,
   });
 
+  const [activeCollection, setActiveCollection] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const imageParallaxRef = useRef(null);
+  const [tickerIndex, setTickerIndex] = useState(0);
+
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
@@ -153,6 +146,13 @@ const Home = () => {
       });
     }, 1000);
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const ticker = setInterval(() => {
+      setTickerIndex((prev) => (prev + 1) % tickerMessages.length);
+    }, 5500);
+    return () => clearInterval(ticker);
   }, []);
 
   const handleSubscribe = () => {
@@ -526,6 +526,54 @@ const Home = () => {
     // },
   ];
 
+  const signatureCollections = [
+    {
+      id: 0,
+      eyebrow: "🌸 Signature Collection",
+      heading: "Blush Rose Symphony",
+      subtitle: "Curated by our Master Florists",
+      description: "This week's most admired handcrafted arrangement — fifty premium blush roses intertwined with fresh eucalyptus, baby's breath, and finished with our signature silk ribbon. Each bloom is selected by hand for exceptional quality.",
+      heroImage: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=800&q=80",
+      thumbImage: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=400&q=80",
+      badge: "🏆 Editor's Choice",
+      label: "Pink Rose Collection",
+      sublabel: "12 Arrangements Available",
+      cat: "Bouquets",
+      emoji: "🌹",
+      photosCount: 6,
+    },
+    {
+      id: 1,
+      eyebrow: "🤍 Luxe White Collection",
+      heading: "White Elegance",
+      subtitle: "Curated by our Master Florists",
+      description: "An ethereal arrangement of hand-selected white peonies and garden roses, accented with silver brunia and fresh eucalyptus. Perfect for milestone celebrations and sophisticated gifting.",
+      heroImage: "https://images.unsplash.com/photo-1591886960571-74d43a9d4166?w=800&q=80",
+      thumbImage: "https://images.unsplash.com/photo-1591886960571-74d43a9d4166?w=400&q=80",
+      badge: "✨ Limited Signature Edition",
+      label: "White Elegance",
+      sublabel: "8 Luxury Bouquets",
+      cat: "Anniversary",
+      emoji: "🤍",
+      photosCount: 4,
+    },
+    {
+      id: 2,
+      eyebrow: "💐 Wedding Signature",
+      heading: "Golden Hour Luxe",
+      subtitle: "Curated by our Master Florists",
+      description: "A stunning arrangement of 75 premium roses in a signature hat box, complemented by dried pampas and preserved eucalyptus — a show-stopping gift that lasts for months.",
+      heroImage: "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=800&q=80",
+      thumbImage: "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=400&q=80",
+      badge: "🌟 Bestseller",
+      label: "Wedding Signature",
+      sublabel: "15 Premium Designs",
+      cat: "Wedding",
+      emoji: "💐",
+      photosCount: 8,
+    },
+  ];
+
   const steps = [
     {
       title: "Browse & Choose",
@@ -628,6 +676,18 @@ const Home = () => {
   igShot6,
   // "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80",
 ];
+
+  const tickerMessages = [
+    { icon: "🌸", text: "Priya from Delhi ordered 12 minutes ago" },
+    { icon: "❤️", text: "24 people are viewing this bouquet" },
+    { icon: "🔥", text: "156 sold this week" },
+    { icon: "🚚", text: "Same Day Delivery Available" },
+    { icon: "⭐", text: "Rated 4.9 by 2300+ customers" },
+  ];
+
+  const trendingSizes = [
+    "featured", "tall", "square", "wide", "tall", "square", "wide", "tall",
+  ];
 
   return (
     <div className="w-full overflow-hidden bg-[#FFF9F7]">
@@ -846,16 +906,42 @@ const Home = () => {
             </div>
           </div>
 
-          {/* ═══ 3. TRENDING NOW — Grid Layout ═══ */}
+          {/* ═══ 3. TRENDING NOW — Premium Editorial Layout ═══ */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
             className="mt-16 lg:mt-24"
           >
-            <div className="flex items-end justify-between mb-8">
+            {/* ─── Live Social Proof Ticker ─── */}
+            <div className="mb-8 flex items-center gap-3 overflow-hidden">
+              <div className="flex items-center gap-2 bg-[#184D36]/5 dark:bg-white/5 rounded-full px-4 py-2 border border-[#184D36]/8 dark:border-white/8 min-w-0">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                <div className="relative h-5 overflow-hidden">
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={tickerIndex}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -12 }}
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      className="text-[11px] text-stone-600 dark:text-stone-400 font-medium whitespace-nowrap block leading-5"
+                    >
+                      {tickerMessages[tickerIndex].icon} {tickerMessages[tickerIndex].text}
+                    </motion.span>
+                  </AnimatePresence>
+                </div>
+              </div>
+              <div className="hidden sm:flex items-center gap-1.5 text-[10px] text-stone-400 font-medium">
+                <span className="w-1 h-1 rounded-full bg-stone-300" />
+                Live
+              </div>
+            </div>
+
+            {/* ─── Editorial Heading Row ─── */}
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
               <div>
-                <div className="inline-flex items-center gap-2.5 mb-2">
+                <div className="inline-flex items-center gap-2 mb-2">
                   <span className="w-6 h-px bg-gradient-to-r from-transparent to-[#C89B3C]/60" />
                   <span className="text-[10px] font-bold tracking-[0.25em] text-[#C89B3C] uppercase">Curated Picks</span>
                   <span className="w-6 h-px bg-gradient-to-l from-transparent to-[#C89B3C]/60" />
@@ -863,105 +949,186 @@ const Home = () => {
                 <h2 className="font-serif-display font-black text-3xl lg:text-4xl text-[#184D36] dark:text-[#f0ece6] leading-tight">
                   Trending Now
                 </h2>
-                <p className="text-stone-400 text-sm mt-1 font-light">Most loved arrangements this week</p>
-              </div>
-              <Link
-                to="/category"
-                className="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wider uppercase text-[#C89B3C] hover:text-[#c89e44] transition-colors shrink-0"
-              >
-                View All <ArrowRight size={12} />
-              </Link>
-            </div>
-
-            {/* Desktop: 4-col grid, Tablet: 2-col, Mobile: 2-col */}
-            <div className="hidden lg:grid lg:grid-cols-4 gap-6">
-              {bestSellers.slice(0, 8).map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() => navigate(`/category?cat=${item.category}`)}
-                  className="group rounded-[24px] overflow-hidden bg-white dark:bg-white/5 border border-stone-100 dark:border-white/5 hover:shadow-[0_16px_48px_-12px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-400 cursor-pointer card-elevate"
-                >
-                  <div className="relative h-[280px] lg:h-[300px] overflow-hidden bg-stone-50 dark:bg-white/5">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    {/* Wishlist icon */}
-                    <span className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white shadow-sm">
-                      <Heart size={14} className="text-stone-500 hover:text-rose-500 transition-colors" />
-                    </span>
-                    {/* Quick view button */}
-                    <div className="absolute inset-x-0 bottom-0 flex justify-center pb-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                      <span className="px-4 py-2 bg-white/90 backdrop-blur-sm text-stone-700 text-[10px] font-semibold tracking-wider rounded-full shadow-lg hover:bg-white">
-                        Quick View
-                      </span>
-                    </div>
-                    {item.badge && (
-                      <span className="absolute top-3 left-3 px-2.5 py-1 bg-white/85 backdrop-blur-sm text-[8px] font-bold tracking-wider text-stone-600 rounded-full border border-stone-200/50 shadow-sm">
-                        {item.badge}
-                      </span>
-                    )}
-                  </div>
-                  <div className="p-4 lg:p-5">
-                    <h3 className="text-sm font-semibold text-stone-700 dark:text-stone-300 truncate">
-                      {item.title}
-                    </h3>
-                    <div className="flex items-center justify-between mt-2">
-                      <CallForPricing />
-                      <span className="flex items-center gap-1 text-[11px] text-amber-500 font-medium">
-                        <Star size={10} className="fill-amber-500" /> {item.rating}
-                      </span>
-                    </div>
-                  </div>
+                <p className="text-stone-400 text-sm mt-1 font-light">Most Loved Bouquets This Week</p>
+                <div className="flex items-center gap-1.5 mt-2.5">
+                  {[1,2,3,4,5].map(s => (
+                    <Star key={`tn-star-${s}`} size={11} className="fill-amber-400 text-amber-400" />
+                  ))}
+                  <span className="text-[10px] text-stone-500 font-medium ml-1">Loved by 12,000+ customers</span>
                 </div>
-              ))}
+              </div>
+              <div className="flex items-center gap-4 flex-wrap">
+                <Link
+                  to="/category"
+                  className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wider uppercase text-[#C89B3C] hover:text-[#c89e44] transition-colors shrink-0"
+                >
+                  View All <ArrowRight size={12} />
+                </Link>
+                <span className="text-[9px] text-stone-400 font-medium tracking-wide bg-stone-100 dark:bg-white/5 px-2.5 py-1 rounded-full">
+                  Sort by Popular
+                </span>
+                <span className="text-[9px] text-emerald-600 font-semibold tracking-wide bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-1 rounded-full flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  Auto Updated Today
+                </span>
+              </div>
             </div>
 
-            {/* Tablet/Mobile: horizontal scroll */}
-            <div className="lg:hidden overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden -mx-6 lg:mx-0">
-              <div className="flex gap-4 px-6 pb-2">
-                {bestSellers.slice(0, 8).map((item) => (
+            {/* ─── Desktop: 4-col equal card grid ─── */}
+            <div className="hidden lg:grid lg:grid-cols-4 gap-5">
+              {bestSellers.slice(0, 8).map((item) => {
+                const ordersToday = (item.id * 7) % 31 + 3;
+                return (
                   <div
-                    key={item.id}
+                    key={`tn-${item.id}`}
                     onClick={() => navigate(`/category?cat=${item.category}`)}
-                    className="group shrink-0 w-[180px] sm:w-[200px] rounded-[20px] overflow-hidden bg-white dark:bg-white/5 border border-stone-100 dark:border-white/5 hover:shadow-[0_12px_32px_-12px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
+                    className="group relative rounded-[20px] overflow-hidden bg-white dark:bg-white/5 border border-stone-100 dark:border-white/5 hover:shadow-[0_16px_40px_-12px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-500 cursor-pointer"
                   >
-                    <div className="relative h-[180px] sm:h-[220px] overflow-hidden bg-stone-50 dark:bg-white/5">
+                    <div className="relative h-[280px] lg:h-[320px] overflow-hidden bg-stone-50 dark:bg-white/5">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent pointer-events-none" />
+
+                      {/* Badge */}
+                      {item.badge && (
+                        <span className={`absolute top-3 left-3 text-[7px] font-bold tracking-wider uppercase px-2 py-1 rounded-full border backdrop-blur-sm ${
+                          item.badge === 'Bestseller' ? 'bg-amber-500/15 text-amber-300 border-amber-400/20' :
+                          item.badge === 'Premium' ? 'bg-purple-500/15 text-purple-300 border-purple-400/20' :
+                          item.badge === 'New' ? 'bg-emerald-500/15 text-emerald-300 border-emerald-400/20' :
+                          item.badge === 'Popular' ? 'bg-blue-500/15 text-blue-300 border-blue-400/20' :
+                          item.badge === 'Gift' ? 'bg-pink-500/15 text-pink-300 border-pink-400/20' :
+                          item.badge === 'Limited' ? 'bg-orange-500/15 text-orange-300 border-orange-400/20' :
+                          item.badge === 'Trending' ? 'bg-rose-500/15 text-rose-300 border-rose-400/20' :
+                          'bg-stone-500/15 text-stone-300 border-stone-400/20'
+                        }`}>
+                          {item.badge === 'Bestseller' ? '★ Best Seller' : item.badge}
+                        </span>
+                      )}
+
+                      {/* Fresh Today badge */}
+                      <span className="absolute top-3 right-3 text-[7px] font-semibold tracking-wide px-2 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-400/20 backdrop-blur-sm">
+                        Fresh Today
+                      </span>
+
+                      {/* Wishlist */}
+                      <span
+                        onClick={(e) => { e.stopPropagation(); toggleWishlist(item.id); }}
+                        className="absolute top-11 right-3 w-7 h-7 rounded-full bg-white/70 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white shadow-sm cursor-pointer"
+                      >
+                        <Heart
+                          size={12}
+                          className={`transition-colors duration-300 ${wishlist[item.id] ? 'fill-rose-500 text-rose-500' : 'text-stone-500 hover:text-rose-500'}`}
+                        />
+                      </span>
+
+                      {/* Quick Add */}
+                      <div className="absolute inset-x-0 bottom-0 flex justify-center pb-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-400">
+                        <span className="px-4 py-2 bg-white/90 backdrop-blur-md text-stone-700 text-[9px] font-bold tracking-wider rounded-full shadow-xl hover:bg-white cursor-pointer flex items-center gap-1.5">
+                          <ShoppingBag size={10} />
+                          Quick Add
+                        </span>
+                      </div>
+
+                      {/* Bottom content overlaid */}
+                      <div className="absolute bottom-0 left-0 right-0 p-3.5">
+                        <h3 className="text-[13px] font-bold text-white leading-snug truncate drop-shadow-sm">
+                          {item.title}
+                        </h3>
+                        <div className="flex items-center gap-2 mt-1.5">
+                          <span className="flex items-center gap-1 text-[9px] text-white/80">
+                            <Star size={8} className="fill-amber-400 text-amber-400" />
+                            {item.rating}
+                          </span>
+                          <span className="text-white/30 text-[8px]">·</span>
+                          <span className="text-[8px] text-white/60 font-medium">{ordersToday}k reviews</span>
+                          <span className="text-white/30 text-[8px]">·</span>
+                          <span className="text-[8px] text-emerald-300 font-semibold">🔥 {ordersToday} sold</span>
+                        </div>
+                        <div className="flex items-center justify-between mt-2">
+                          <CallForPricing />
+                          <span className="text-[8px] text-white/70 font-medium flex items-center gap-1">
+                            <Truck size={8} />
+                            {item.id % 2 === 0 ? 'Today' : 'Express'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* ─── Tablet/Mobile: 2-col equal grid ─── */}
+            <div className="lg:hidden grid grid-cols-2 gap-4">
+              {bestSellers.slice(0, 8).map((item) => {
+                const ordersToday = (item.id * 7) % 31 + 3;
+                return (
+                  <div
+                    key={`tn-m-${item.id}`}
+                    onClick={() => navigate(`/category?cat=${item.category}`)}
+                    className="group relative rounded-[20px] overflow-hidden bg-white dark:bg-white/5 border border-stone-100 dark:border-white/5 hover:shadow-[0_12px_32px_-12px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
+                  >
+                    <div className="relative h-[220px] overflow-hidden bg-stone-50 dark:bg-white/5">
                       <img
                         src={item.image}
                         alt={item.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent pointer-events-none" />
                       {item.badge && (
-                        <span className="absolute top-2.5 left-2.5 px-2 py-0.5 bg-white/80 backdrop-blur-sm text-[8px] font-bold tracking-wider text-stone-600 rounded-full border border-stone-200/50">
-                          {item.badge}
+                        <span className={`absolute top-2.5 left-2.5 text-[7px] font-bold tracking-wider uppercase px-2 py-1 rounded-full border backdrop-blur-sm ${
+                          item.badge === 'Bestseller' ? 'bg-amber-500/15 text-amber-300 border-amber-400/20' :
+                          item.badge === 'Premium' ? 'bg-purple-500/15 text-purple-300 border-purple-400/20' :
+                          item.badge === 'New' ? 'bg-emerald-500/15 text-emerald-300 border-emerald-400/20' :
+                          item.badge === 'Popular' ? 'bg-blue-500/15 text-blue-300 border-blue-400/20' :
+                          item.badge === 'Gift' ? 'bg-pink-500/15 text-pink-300 border-pink-400/20' :
+                          item.badge === 'Limited' ? 'bg-orange-500/15 text-orange-300 border-orange-400/20' :
+                          'bg-stone-500/15 text-stone-300 border-stone-400/20'
+                        }`}>
+                          {item.badge === 'Bestseller' ? '★ Best Seller' : item.badge}
                         </span>
                       )}
-                    </div>
-                    <div className="p-3.5">
-                      <h3 className="text-[13px] font-semibold text-stone-700 dark:text-stone-300 truncate">
-                        {item.title}
-                      </h3>
-                      <div className="flex items-center justify-between mt-1.5">
-                        <CallForPricing />
-                        <span className="flex items-center gap-0.5 text-[10px] text-amber-500 font-medium">
-                          <Star size={9} className="fill-amber-500" /> {item.rating}
-                        </span>
+                      <div className="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 className="text-[13px] font-bold text-white leading-snug truncate drop-shadow-sm">
+                          {item.title}
+                        </h3>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="flex items-center gap-0.5 text-[8px] text-white/80">
+                            <Star size={7} className="fill-amber-400 text-amber-400" />
+                            {item.rating}
+                          </span>
+                          <span className="text-white/30">·</span>
+                          <span className="text-[7px] text-white/60">{ordersToday}k reviews</span>
+                          <span className="text-[7px] text-emerald-300 font-semibold">🔥 {ordersToday} sold</span>
+                        </div>
+                        <div className="flex items-center justify-between mt-1.5">
+                          <CallForPricing />
+                          <span className="text-[7px] text-white/70 flex items-center gap-0.5">
+                            <Truck size={7} />
+                            {item.id % 2 === 0 ? 'Today' : 'Express'}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
+                );
+              })}
             </div>
 
-            <div className="flex sm:hidden justify-center mt-6">
+            {/* ─── Bottom: Explore More Collections ─── */}
+            <div className="mt-16 lg:mt-20 flex items-center gap-4">
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-stone-200 dark:via-white/10 to-transparent" />
               <Link
                 to="/category"
-                className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wider uppercase text-[#C89B3C]"
+                className="inline-flex items-center gap-2 text-[11px] font-bold tracking-wider uppercase text-[#C89B3C] hover:text-[#c89e44] transition-colors shrink-0 whitespace-nowrap"
               >
-                View All Products <ArrowRight size={12} />
+                Explore More Collections
+                <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
               </Link>
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-stone-200 dark:via-white/10 to-transparent" />
             </div>
           </motion.div>
         </div>
@@ -1002,9 +1169,6 @@ const Home = () => {
 
       {/* ─── Trust Stats Strip ─── */}
       <section className="relative bg-gradient-to-r from-[var(--color-primary)] via-[#1a3d28] to-[var(--color-primary)] py-10 lg:py-12 overflow-hidden">
-        <BokehLights spots={[
-          { color: "from-rose-400/15 to-transparent", size: 200, top: "-20%", left: "10%", anim: "bk-drift1", delay: 0, duration: 26 },
-          { color: "from-amber-300/12 to-transparent", size: 180, bottom: "-20%", right: "15%", anim: "bk-drift3", delay: 2, duration: 24 },
         ]} />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(200,155,60,0.08)_0%,transparent_60%)] pointer-events-none" />
         <div className="max-w-[1440px] mx-auto px-6 relative grid grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-8">
@@ -1048,18 +1212,7 @@ const Home = () => {
           }}
         />
         <div className="absolute inset-0 opacity-60 pointer-events-none" style={{ backgroundImage: `url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNDOUExNUEiIGZpbGwtb3BhY2l0eT0iMC4wNCI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')` }} />
-        <BokehLights spots={[
-          { color: "from-rose-300/20 to-transparent", size: 300, top: "-8%", right: "-4%", anim: "bk-drift2", delay: 0, duration: 32 },
-          { color: "from-amber-200/18 to-transparent", size: 240, bottom: "-10%", left: "5%", anim: "bk-drift1", delay: 3, duration: 28 },
-          { color: "from-[var(--color-gold)]/10 to-transparent", size: 280, top: "50%", left: "50%", anim: "bk-float", delay: 1, duration: 30 },
-          { color: "from-rose-200/15 to-transparent", size: 200, top: "20%", left: "10%", anim: "bk-drift3", delay: 2, duration: 26 },
         ]} />
-        <FloatingDecoration type="rose" side="left" top="12%" size={72} opacity={0.1} delay={0} duration={16} animation="bloom" color="var(--color-accent)" />
-        <FloatingDecoration type="leaf" side="right" top="20%" size={60} opacity={0.15} delay={1.5} duration={12} animation="sway2" color="var(--color-primary)" />
-        <FloatingDecoration type="lotus" side="right" top="auto" bottom="12%" size={56} opacity={0.08} delay={2} duration={18} animation="drift-bloom" color="var(--color-gold)" />
-        <FloatingDecoration type="petal5" side="left" top="auto" bottom="8%" size={48} opacity={0.1} delay={2.5} duration={14} animation="sway3" color="var(--color-gold)" />
-        <FloatingDecoration type="petal6" side="left" top="35%" size={40} opacity={0.08} delay={1} duration={15} animation="sway1" color="var(--color-accent)" />
-        <FloatingDecoration type="leaf" side="right" top="55%" size={44} opacity={0.12} delay={3} duration={10} animation="sway3" color="var(--color-gold)" />
         <div className="absolute -top-4 -left-4 w-36 h-36 opacity-[0.07] pointer-events-none rotate-[15deg]">
           <Flower2 size={144} strokeWidth={0.8} className="text-[var(--color-accent)]" />
         </div>
@@ -1194,10 +1347,6 @@ const Home = () => {
               <div className="absolute -bottom-20 -left-20 w-36 h-36 rounded-full bg-rose-200/20 blur-3xl animate-pulse pointer-events-none" style={{ animationDuration: '5s' }} />
 
               {/* Floating petals */}
-              <FloatingDecoration type="petal6" side="left" top="8%" size={32} opacity={0.07} delay={0} duration={16} animation="sway1" color="var(--color-gold)" />
-              <FloatingDecoration type="petal5" side="right" top="12%" size={28} opacity={0.06} delay={1.5} duration={14} animation="sway2" color="var(--color-accent)" />
-              <FloatingDecoration type="leaf" side="left" top="auto" bottom="10%" size={30} opacity={0.06} delay={2} duration={18} animation="sway3" color="var(--color-gold)" />
-              <FloatingDecoration type="lotus" side="right" top="auto" bottom="8%" size={24} opacity={0.05} delay={0.8} duration={15} animation="drift-bloom" color="var(--color-primary)" />
 
               {/* Content */}
               <motion.div
@@ -1281,12 +1430,15 @@ const Home = () => {
         <div className="max-w-[1440px] mx-auto px-6">
           <div className="flex justify-between items-end mb-6 lg:mb-8 flex-wrap gap-4">
             <div>
-              <span className="text-[10px] font-semibold tracking-[0.25em] text-[var(--color-gold)] uppercase">
+              <span className="text-[10px] font-bold tracking-[0.25em] text-[var(--color-gold)] uppercase">
                 Customer Favorites
               </span>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif-display font-black text-[#1a0f0a] mt-1.5 leading-[1.08]">
                 Bestselling Bouquets
               </h2>
+              <p className="text-stone-500 text-xs sm:text-sm max-w-xl mt-2 font-light">
+                Our most cherished handpicked luxury arrangements, curated just for you
+              </p>
             </div>
             <Link
               to="/category"
@@ -1383,108 +1535,166 @@ const Home = () => {
       </RevealSection>
 
       {/* ─── Masterpiece of the Week ─── */}
+      {/* ═══ 4. LUXURY SIGNATURE COLLECTION — Interactive Masterpiece ═══ */}
       <RevealSection className="py-20 lg:py-28 bg-gradient-to-br from-[#051410] via-[#0b241d] to-[#04120e] relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_45%,rgba(200,155,60,0.15)_0%,rgba(200,155,60,0.05)_30%,transparent_60%)] pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_55%,rgba(214,83,122,0.06)_0%,transparent_50%)] pointer-events-none" />
-        <div className="absolute inset-0 opacity-[0.015] pointer-events-none"
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_25%_40%,rgba(200,155,60,0.12)_0%,rgba(200,155,60,0.04)_35%,transparent_65%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_75%_60%,rgba(214,83,122,0.05)_0%,transparent_50%)] pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(200,155,60,0.05)_0%,transparent_70%)] pointer-events-none" />
+        <div className="absolute inset-0 opacity-[0.012] pointer-events-none"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
             backgroundSize: '200px 200px',
           }}
         />
-        <BokehLights spots={[
-          { color: "from-[var(--color-gold)]/15 to-transparent", size: 320, top: "-6%", right: "-3%", anim: "bk-drift1", delay: 0, duration: 28 },
-          { color: "from-rose-400/12 to-transparent", size: 240, bottom: "-8%", left: "-2%", anim: "bk-drift2", delay: 2, duration: 32 },
-          { color: "from-amber-300/10 to-transparent", size: 180, top: "55%", left: "30%", anim: "bk-float", delay: 4, duration: 24 },
-          { color: "from-violet-400/8 to-transparent", size: 280, top: "12%", right: "28%", anim: "bk-drift3", delay: 1, duration: 30 },
-        ]} />
 
         <div className="max-w-[1440px] mx-auto px-6 relative">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div className="grid lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-16 items-center">
+
+            {/* ─── LEFT: Interactive Premium Image Container ─── */}
             <motion.div
-              className="relative order-2 lg:order-1"
+              className="relative"
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="relative">
-                <div className="absolute -inset-3 bg-gradient-to-br from-[var(--color-gold)]/10 via-transparent to-rose-500/5 rounded-[56px_20px_56px_20px] blur-2xl pointer-events-none" />
-                <div className="absolute -inset-2 border border-[var(--color-gold)]/10 rounded-[52px_18px_52px_18px] pointer-events-none" />
-                <div className="absolute -top-4 -right-4 w-20 h-20 border-t-2 border-r-2 border-[var(--color-gold)]/20 rounded-tr-[32px] pointer-events-none" />
-                <div className="absolute -bottom-4 -left-4 w-20 h-20 border-b-2 border-l-2 border-[var(--color-gold)]/20 rounded-bl-[32px] pointer-events-none" />
+                <div className="absolute -inset-3 bg-gradient-to-br from-[var(--color-gold)]/8 via-transparent to-rose-500/5 rounded-[40px_24px_40px_24px] blur-2xl pointer-events-none" />
+                <div className="absolute -inset-2 border border-[var(--color-gold)]/8 rounded-[36px_20px_36px_20px] pointer-events-none" />
+
+                {/* Golden corner accents */}
+                <div className="absolute -top-5 -right-5 w-28 h-28 border-t-[2px] border-r-[2px] border-[var(--color-gold)]/15 rounded-tr-[44px] pointer-events-none z-10" />
+                <div className="absolute -bottom-5 -left-5 w-28 h-28 border-b-[2px] border-l-[2px] border-[var(--color-gold)]/15 rounded-bl-[44px] pointer-events-none z-10" />
+
                 <motion.div
-                  whileHover={{ scale: 1.015 }}
+                  whileHover={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                  className="rounded-[48px_16px_48px_16px] overflow-hidden border border-white/8 shadow-[0_24px_80px_rgba(0,0,0,0.5),0_0_0_1px_rgba(200,155,60,0.06)]"
+                  className="rounded-[24px] overflow-hidden border border-[var(--color-gold)]/12 shadow-[0_24px_80px_rgba(0,0,0,0.5),0_0_0_1px_rgba(200,155,60,0.06),_0_16px_48px_-12px_rgba(200,155,60,0.1)] cursor-pointer"
+                  onClick={() => setLightboxOpen(true)}
                 >
-                  <LazyImage
-                    src={image28}
-                    alt="Sunset Rose Grand Bouquet - Masterpiece of the Week"
-                    className="w-full h-[380px] lg:h-[500px] object-cover hover:scale-105 transition duration-1000"
-                  />
+                  <div
+                    ref={imageParallaxRef}
+                    onMouseMove={(e) => {
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 8;
+                      const y = ((e.clientY - rect.top) / rect.height - 0.5) * 8;
+                      setMousePos({ x, y });
+                    }}
+                    onMouseLeave={() => setMousePos({ x: 0, y: 0 })}
+                    className="w-full h-[400px] lg:h-[540px] overflow-hidden"
+                  >
+                    <LazyImage
+                      src={signatureCollections[activeCollection].heroImage}
+                      alt={signatureCollections[activeCollection].heading}
+                      className="w-full h-full object-cover object-center transition-transform duration-1000"
+                      style={{
+                        transform: `translate(${mousePos.x}px, ${mousePos.y}px) scale(1.02)`,
+                        transformOrigin: 'center center',
+                      }}
+                    />
+                  </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
                 </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute -bottom-2 -right-2 flex flex-wrap gap-1.5"
-                >
-                  <span className="bg-white/8 backdrop-blur-md border border-white/10 text-stone-300 text-[8px] font-semibold tracking-[0.15em] uppercase px-2.5 py-1.5 rounded-full">
+
+                {/* Bottom-left photo info */}
+                <div className="absolute bottom-4 left-4 flex items-center gap-3 z-10">
+                  <span className="bg-black/30 backdrop-blur-md border border-white/10 text-white/70 text-[9px] font-medium px-2.5 py-1 rounded-full flex items-center gap-1.5">
+                    📷 {signatureCollections[activeCollection].photosCount} Photos
+                  </span>
+                  <span className="bg-black/30 backdrop-blur-md border border-white/10 text-white/70 text-[9px] font-medium px-2.5 py-1 rounded-full flex items-center gap-1.5">
+                    🔍 Click to Explore
+                  </span>
+                </div>
+
+                {/* Top-left badges — dynamic */}
+                <div className="absolute top-5 left-5 flex flex-col gap-2 z-10">
+                  <span className="bg-white/10 backdrop-blur-md border border-white/15 text-white text-[9px] font-bold tracking-[0.15em] uppercase px-3 py-1.5 rounded-full shadow-lg">
+                    {signatureCollections[activeCollection].eyebrow}
+                  </span>
+                  <span className="bg-white/10 backdrop-blur-md border border-[var(--color-gold)]/25 text-[var(--color-gold)] text-[9px] font-bold tracking-[0.15em] uppercase px-3 py-1.5 rounded-full shadow-lg">
+                    {signatureCollections[activeCollection].badge}
+                  </span>
+                </div>
+
+                {/* Top-right — static badges */}
+                <div className="absolute top-5 right-5 flex flex-col gap-2 items-end z-10">
+                  <span className="bg-emerald-500/15 backdrop-blur-md border border-emerald-400/20 text-emerald-300 text-[9px] font-bold tracking-[0.15em] uppercase px-3 py-1.5 rounded-full shadow-lg">
                     Fresh Today
                   </span>
-                  <span className="bg-white/8 backdrop-blur-md border border-white/10 text-stone-300 text-[8px] font-semibold tracking-[0.15em] uppercase px-2.5 py-1.5 rounded-full">
+                  <span className="bg-white/10 backdrop-blur-md border border-white/15 text-white text-[9px] font-bold tracking-[0.15em] uppercase px-3 py-1.5 rounded-full shadow-lg">
                     Handcrafted
                   </span>
-                </motion.div>
+                </div>
               </div>
             </motion.div>
 
+            {/* ─── RIGHT: Dynamic Premium Content ─── */}
             <motion.div
-              className="text-white flex flex-col gap-5 order-1 lg:order-2"
+              className="text-white flex flex-col gap-6"
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
             >
-              <div>
-                <span className="inline-flex items-center gap-2 bg-white/[0.04] backdrop-blur-md border border-[var(--color-gold)]/15 text-[var(--color-gold)] text-[9px] font-bold uppercase tracking-[0.2em] px-4 py-2 rounded-full">
+              {/* Premium badges row */}
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="inline-flex items-center gap-2 bg-[var(--color-gold)]/10 backdrop-blur-md border border-[var(--color-gold)]/20 text-[var(--color-gold)] text-[9px] font-bold uppercase tracking-[0.2em] px-4 py-2 rounded-full">
                   <Flower2 size={11} className="shrink-0" />
                   Florist's Signature
                 </span>
-                <h2 className="font-serif-display text-white text-3xl md:text-4xl lg:text-5xl font-black leading-[1.08] mt-5 tracking-tight">
-                  Masterpiece of the Week
+                <span className="inline-flex items-center gap-1.5 bg-white/5 backdrop-blur-md border border-white/10 text-white/70 text-[9px] font-bold uppercase tracking-[0.2em] px-4 py-2 rounded-full">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)]" />
+                  Premium Pick
+                </span>
+              </div>
+
+              {/* Dynamic typography hierarchy */}
+              <div>
+                <span className="text-[var(--color-gold)] text-[10px] font-bold tracking-[0.25em] uppercase block mb-2">
+                  {signatureCollections[activeCollection].eyebrow}
+                </span>
+                <h2 className="font-serif-display text-white text-3xl md:text-4xl lg:text-5xl font-black leading-[1.08] tracking-tight">
+                  {signatureCollections[activeCollection].heading}
                 </h2>
-                <p className="font-serif-display text-white/80 text-xl md:text-2xl font-light italic leading-snug mt-2">
-                  Sunset Rose Grand Bouquet
+                <p className="font-serif-display text-white/80 text-lg md:text-xl font-light italic leading-snug mt-2">
+                  {signatureCollections[activeCollection].subtitle}
                 </p>
                 <p className="text-stone-400/90 text-sm leading-relaxed mt-4 max-w-md font-light">
-                  A breathtaking arrangement of 50 long-stemmed roses in warm sunset hues,
-                  hand-tied with fresh eucalyptus and finished with our signature silk ribbon.
-                  Each bloom is selected by our master florists for exceptional quality.
+                  {signatureCollections[activeCollection].description}
                 </p>
               </div>
 
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="flex items-center gap-1.5 text-stone-400 text-[10px] font-medium tracking-wide">
-                  <span className="w-1 h-1 rounded-full bg-emerald-400/60" />
-                  Premium Quality
-                </span>
-                <span className="flex items-center gap-1.5 text-stone-400 text-[10px] font-medium tracking-wide">
-                  <span className="w-1 h-1 rounded-full bg-emerald-400/60" />
-                  Expert Florists
-                </span>
-                <span className="flex items-center gap-1.5 text-stone-400 text-[10px] font-medium tracking-wide">
-                  <span className="w-1 h-1 rounded-full bg-emerald-400/60" />
-                  Luxury Wrapping
+              {/* Premium trust features */}
+              <div className="flex flex-wrap gap-2">
+                {[
+                  { icon: <Leaf size={10} />, label: "Farm Fresh Flowers" },
+                  { icon: <Award size={10} />, label: "Handcrafted by Experts" },
+                  { icon: <Gift size={10} />, label: "Luxury Gift Wrapping" },
+                  { icon: <Truck size={10} />, label: "Same Day Delivery" },
+                  { icon: <ShieldCheck size={10} />, label: "Freshness Guarantee" },
+                ].map((f) => (
+                  <span
+                    key={`t-${f.label}`}
+                    className="inline-flex items-center gap-1.5 bg-white/[0.04] border border-white/[0.06] hover:border-white/[0.12] text-stone-300 text-[10px] font-medium px-3 py-1.5 rounded-full transition-all duration-200 cursor-default"
+                  >
+                    {f.icon}
+                    {f.label}
+                  </span>
+                ))}
+              </div>
+
+              {/* Call for Pricing + tagline */}
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <CallForPricing />
+                <span className="text-stone-500 text-[10px] font-medium tracking-wide">
+                  Premium handcrafted arrangement &middot; Made to order
                 </span>
               </div>
 
-              <div className="flex flex-col gap-3">
-                <p className="text-stone-500 text-[10px] font-semibold tracking-[0.2em] uppercase">
-                  Limited Availability — Offer Ends In
+              {/* Limited Offer — Premium Countdown */}
+              <div className="flex flex-col gap-2.5">
+                <p className="text-stone-500 text-[9px] font-semibold tracking-[0.2em] uppercase">
+                  Limited Availability &mdash; Offer Ends In
                 </p>
                 <div className="flex gap-2.5">
                   {[
@@ -1494,7 +1704,7 @@ const Home = () => {
                   ].map((t) => (
                     <div
                       key={`countdown-${t.label}`}
-                      className="bg-white/[0.03] backdrop-blur-md border border-white/[0.06] hover:border-[var(--color-gold)]/20 rounded-2xl p-3 w-[68px] h-[76px] flex flex-col items-center justify-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all duration-300 group"
+                      className="bg-white/[0.04] backdrop-blur-md border border-white/[0.06] hover:border-[var(--color-gold)]/20 rounded-2xl p-3 w-[68px] h-[76px] flex flex-col items-center justify-center shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all duration-300 group"
                     >
                       <p className="text-white text-2xl font-serif-display font-bold tracking-tight tabular-nums leading-none">
                         {pad(t.value)}
@@ -1507,33 +1717,131 @@ const Home = () => {
                 </div>
               </div>
 
-              <a
-                href={WHATSAPP_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[var(--color-gold)] to-[#a07d30] hover:from-[#a07d30] hover:to-[var(--color-gold)] text-[#0a1a12] font-bold tracking-widest text-xs uppercase px-9 py-4 rounded-full shadow-[0_8px_28px_rgba(200,155,60,0.15)] hover:shadow-[0_16px_40px_rgba(200,155,60,0.35)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] transition-all duration-300 relative overflow-hidden"
-              >
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                <span className="relative z-10 flex items-center gap-2.5">
-                  Inquire Now
-                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
-                </span>
-              </a>
-
-              <div className="flex items-center gap-3 pt-1">
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3">
                 <a
                   href={WHATSAPP_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-stone-500 hover:text-[var(--color-gold)] text-[10px] font-medium tracking-wide transition-colors duration-300 underline underline-offset-4 decoration-stone-700/30 hover:decoration-[var(--color-gold)]/40"
+                  className="group inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[var(--color-gold)] to-[#a07d30] hover:from-[#a07d30] hover:to-[var(--color-gold)] text-[#0a1a12] font-bold tracking-widest text-xs uppercase px-9 py-4 rounded-full shadow-[0_8px_28px_rgba(200,155,60,0.15)] hover:shadow-[0_16px_40px_rgba(200,155,60,0.35)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] transition-all duration-300 relative overflow-hidden"
                 >
-                  Or call for bespoke pricing
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                  <span className="relative z-10 flex items-center gap-2.5">
+                    ✨ Inquire for Custom Bouquet
+                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
+                  </span>
                 </a>
+                <Link
+                  to="/category"
+                  className="inline-flex items-center justify-center gap-2 bg-white/[0.06] backdrop-blur-md border border-white/[0.1] hover:bg-white/[0.1] text-white/80 font-semibold tracking-wider text-xs uppercase px-8 py-4 rounded-full transition-all duration-300 hover:-translate-y-0.5"
+                >
+                  View Details
+                </Link>
+              </div>
+
+              {/* Social Proof Pills */}
+              <div className="flex flex-wrap gap-2 pt-1">
+                {[
+                  { icon: <Star size={10} className="fill-amber-500 text-amber-500" />, label: "4.9 Rating" },
+                  { icon: <Users size={10} />, label: "2,500+ Happy Customers" },
+                  { icon: <CheckCircle2 size={10} />, label: "100% Fresh Flowers" },
+                  { icon: <Clock size={10} />, label: "Trusted Since 2015" },
+                ].map((s) => (
+                  <span
+                    key={`s-${s.label}`}
+                    className="inline-flex items-center gap-1.5 bg-white/[0.04] border border-white/[0.06] text-stone-400 text-[9px] font-medium px-3 py-1.5 rounded-full"
+                  >
+                    {s.icon}
+                    {s.label}
+                  </span>
+                ))}
               </div>
             </motion.div>
           </div>
+
+          {/* ─── Interactive Collection Selector Cards — Full Width ─── */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mt-14 lg:mt-20">
+            {signatureCollections.map((col, idx) => {
+              const isActive = idx === activeCollection;
+              return (
+                <div
+                  key={`selector-${col.id}`}
+                  onClick={() => setActiveCollection(idx)}
+                  className={`group cursor-pointer rounded-[20px] overflow-hidden transition-all duration-300 hover:-translate-y-1 ${
+                    isActive
+                      ? 'border border-[var(--color-gold)]/40 shadow-[0_0_24px_rgba(200,155,60,0.15)]'
+                      : 'border border-white/[0.06] hover:border-white/[0.15] shadow-none'
+                  }`}
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden bg-white/[0.03]">
+                    <LazyImage
+                      src={col.heroImage}
+                      alt={col.label}
+                      className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent pointer-events-none" />
+                    {isActive && (
+                      <div className="absolute top-3 right-3 bg-[var(--color-gold)]/20 backdrop-blur-md border border-[var(--color-gold)]/30 text-[var(--color-gold)] text-[8px] font-bold tracking-[0.15em] uppercase px-2 py-1 rounded-full">
+                        Viewing
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-4 lg:p-5 bg-white/[0.02]">
+                    <p className="text-white/90 text-sm lg:text-base font-semibold tracking-wide">
+                      {col.emoji} {col.label}
+                    </p>
+                    <p className="text-stone-500 text-[10px] lg:text-[11px] font-medium mt-1">
+                      {col.sublabel}
+                    </p>
+                    <Link
+                      to={`/category?cat=${col.cat}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center gap-1.5 mt-3 text-[var(--color-gold)] text-[10px] font-bold tracking-wider uppercase hover:gap-2.5 transition-all duration-300"
+                    >
+                      Explore Collection
+                      <ArrowRight size={11} />
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </RevealSection>
+
+      {/* ═══ Lightbox Modal ═══ */}
+      <AnimatePresence>
+        {lightboxOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 md:p-8"
+            onClick={() => setLightboxOpen(false)}
+          >
+            <button
+              onClick={() => setLightboxOpen(false)}
+              className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-colors z-10 text-lg"
+            >
+              ✕
+            </button>
+            <motion.img
+              initial={{ scale: 0.92, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.92, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              src={signatureCollections[activeCollection].heroImage.replace('w=800', 'w=1200')}
+              alt={signatureCollections[activeCollection].heading}
+              className="max-w-full max-h-[90vh] rounded-2xl shadow-2xl object-contain"
+              onClick={(e) => e.stopPropagation()}
+            />
+            <p className="absolute bottom-8 text-white/50 text-xs font-light tracking-wide">
+              {signatureCollections[activeCollection].heading} &mdash; {signatureCollections[activeCollection].eyebrow}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ─── Celebrate Every Beautiful Moment ─── */}
       <RevealSection className="relative bg-gradient-to-b from-[#FFF9F7] via-[#FCFAF8] to-[#FFF9F7] dark:from-[#05120e] dark:via-[#091f1a] dark:to-[#05120e] py-20 lg:py-28 transition-colors duration-500 overflow-hidden">
@@ -1885,9 +2193,6 @@ const Home = () => {
 
       {/* ─── Why Choose Us ─── */}
       <RevealSection className="relative py-14 lg:py-16 bg-gradient-to-b from-[#FDFBF7] via-[#fcf8f2] to-[#FDFBF7] overflow-hidden">
-        <FloatingDecoration type="petal5" side="left" top="15%" size={56} opacity={0.12} delay={1} duration={14} color="var(--color-accent)" />
-        <FloatingDecoration type="leaf" side="right" top="25%" size={60} opacity={0.18} delay={0} duration={11} animation="sway2" color="var(--color-primary)" />
-        <FloatingDecoration type="petal6" side="left" top="auto" bottom="12%" size={42} opacity={0.1} delay={2.5} duration={13} animation="sway3" color="var(--color-gold)" />
 
         {/* Premium background layers */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(200,155,60,0.06)_0%,transparent_60%)] pointer-events-none" />
@@ -2161,10 +2466,6 @@ const Home = () => {
         <motion.div animate={{ y: [0, -15, 0], rotate: [0, 5, 0], opacity: [0.04, 0.08, 0.04] }} transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }} className="absolute top-[12%] right-[4%] w-24 h-24 pointer-events-none">
           <Flower2 size={96} className="text-[rgba(200,155,60,0.06)]" />
         </motion.div>
-        <motion.div animate={{ y: [0, 12, 0], rotate: [0, -6, 0], opacity: [0.03, 0.06, 0.03] }} transition={{ duration: 16, repeat: Infinity, ease: "easeInOut", delay: 3 }} className="absolute bottom-[10%] left-[3%] w-20 h-20 pointer-events-none">
-          <Leaf size={80} className="text-[rgba(24,77,54,0.04)] rotate-45" />
-        </motion.div>
-
         {/* Golden sparkle particles */}
         <motion.div animate={{ opacity: [0, 0.15, 0], scale: [0.5, 1, 0.5] }} transition={{ duration: 6, repeat: Infinity, delay: 1 }} className="absolute top-[20%] left-[12%] w-1 h-1 rounded-full bg-[#C89B3C] blur-[1px] pointer-events-none" />
         <motion.div animate={{ opacity: [0, 0.12, 0], scale: [0.5, 1.2, 0.5] }} transition={{ duration: 7, repeat: Infinity, delay: 3.5 }} className="absolute top-[40%] right-[15%] w-1 h-1 rounded-full bg-[#C89B3C] blur-[1px] pointer-events-none" />
@@ -2383,14 +2684,7 @@ const Home = () => {
 
       {/* ─── Testimonials ─── */}
       <RevealSection className="relative py-16 lg:py-20 bg-gradient-to-b from-[#fdf6f0] via-[#faf3ec] to-[#fdf6f0] overflow-hidden">
-        <BokehLights spots={[
-          { color: "from-rose-300/12 to-transparent", size: 240, top: "-6%", right: "-3%", anim: "bk-drift2", delay: 0, duration: 32 },
-          { color: "from-amber-200/10 to-transparent", size: 200, bottom: "-8%", left: "8%", anim: "bk-drift4", delay: 3, duration: 28 },
-          { color: "from-violet-200/8 to-transparent", size: 180, top: "40%", left: "45%", anim: "bk-float", delay: 1, duration: 26 },
         ]} />
-        <FloatingDecoration type="petal5" side="left" top="8%" size={56} opacity={0.1} delay={0.5} duration={13} color="var(--color-gold)" />
-        <FloatingDecoration type="petal6" side="right" top="12%" size={60} opacity={0.12} delay={0} duration={14} animation="sway2" />
-        <FloatingDecoration type="leaf" side="right" top="auto" bottom="8%" size={48} opacity={0.16} delay={2} duration={11} animation="sway3" color="var(--color-primary)" />
         <div className="max-w-[1440px] mx-auto px-6">
           <div className="text-center mb-10 lg:mb-12">
             <span className="text-[11px] font-bold tracking-[0.25em] text-[var(--color-gold)] uppercase">
@@ -2620,13 +2914,7 @@ const Home = () => {
                 backgroundSize: '200px 200px',
               }}
             />
-            <BokehLights spots={[
-              { color: "from-rose-400/10 to-transparent", size: 280, top: "-12%", left: "-8%", anim: "bk-drift1", delay: 0, duration: 30 },
-              { color: "from-amber-300/12 to-transparent", size: 220, bottom: "-15%", right: "8%", anim: "bk-drift4", delay: 3, duration: 28 },
-              { color: "from-[#C89B3C]/8 to-transparent", size: 180, top: "50%", left: "35%", anim: "bk-float", delay: 1, duration: 26 },
             ]} />
-            <FloatingDecoration type="petal5" side="left" top="10%" size={56} opacity={0.1} delay={0} duration={14} />
-            <FloatingDecoration type="petal6" side="right" top="8%" size={44} opacity={0.08} delay={1.5} duration={12} animation="sway2" color="var(--color-gold)" />
 
             <motion.div
               whileHover={{ scale: 1.05, rotate: -3 }}
