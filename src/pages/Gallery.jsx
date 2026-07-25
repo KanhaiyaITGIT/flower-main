@@ -199,7 +199,7 @@ export default function Gallery() {
 
       {/* Soft Bokeh Backdrop Glows */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{ zIndex: 0 }}>
-        ]} />
+       
       </div>
 
       {/* Premium Header/Hero */}

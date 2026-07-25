@@ -1173,7 +1173,7 @@ const Home = () => {
 
       {/* ─── Trust Stats Strip ─── */}
       <section className="relative bg-gradient-to-r from-[var(--color-primary)] via-[#1a3d28] to-[var(--color-primary)] py-10 lg:py-12 overflow-hidden">
-        ]} />
+      
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(200,155,60,0.08)_0%,transparent_60%)] pointer-events-none" />
         <div className="max-w-[1440px] mx-auto px-6 relative grid grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-8">
           {[
@@ -1216,7 +1216,7 @@ const Home = () => {
           }}
         />
         <div className="absolute inset-0 opacity-60 pointer-events-none" style={{ backgroundImage: `url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNDOUExNUEiIGZpbGwtb3BhY2l0eT0iMC4wNCI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')` }} />
-        ]} />
+      
         <div className="absolute -top-4 -left-4 w-36 h-36 opacity-[0.07] pointer-events-none rotate-[15deg]">
           <Flower2 size={144} strokeWidth={0.8} className="text-[var(--color-accent)]" />
         </div>
@@ -2688,7 +2688,7 @@ const Home = () => {
 
       {/* ─── Testimonials ─── */}
       <RevealSection className="relative py-16 lg:py-20 bg-gradient-to-b from-[#fdf6f0] via-[#faf3ec] to-[#fdf6f0] overflow-hidden">
-        ]} />
+       
         <div className="max-w-[1440px] mx-auto px-6">
           <div className="text-center mb-10 lg:mb-12">
             <span className="text-[11px] font-bold tracking-[0.25em] text-[var(--color-gold)] uppercase">
@@ -2918,7 +2918,7 @@ const Home = () => {
                 backgroundSize: '200px 200px',
               }}
             />
-            ]} />
+          
 
             <motion.div
               whileHover={{ scale: 1.05, rotate: -3 }}

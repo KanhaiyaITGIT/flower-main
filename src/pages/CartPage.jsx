@@ -760,7 +760,7 @@ export default function CartPage() {
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
       </div>
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{ zIndex: 0 }}>
-        ]} />
+       
       </div>
 
       {/* Checkout Modal */}
