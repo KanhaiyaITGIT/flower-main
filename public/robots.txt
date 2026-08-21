@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Stateful / private routes
+Disallow: /cart
+Disallow: /track-order
+
+Sitemap: https://shivamflorist.shop/sitemap.xml

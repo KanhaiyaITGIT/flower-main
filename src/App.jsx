@@ -24,6 +24,8 @@ import MobileBottomNav from "./components/MobileBottomNav";
 import ScrollToTop from "./components/ScrollToTop";
 import CursorFollower from "./components/CursorFollower";
 import ErrorBoundary from "./components/ErrorBoundary";
+import RouteSeo from "./components/RouteSeo";
+import NotFound from "./pages/NotFound";
 import { AnimatePresence, motion } from "framer-motion";
 import { Flower2 } from "lucide-react";
 
@@ -63,6 +65,7 @@ const App = () => {
         </div>
       </div>
       <Header />
+      <RouteSeo />
       <AnimatePresence mode="wait">
         <motion.div
           key={location.pathname}
@@ -90,6 +93,7 @@ const App = () => {
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/shipping" element={<ShippingPolicy />} />
             <Route path="/refund" element={<RefundPolicy />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </motion.div>
       </AnimatePresence>

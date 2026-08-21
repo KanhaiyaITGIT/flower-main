@@ -285,7 +285,6 @@ const OccasionsPage = () => {
       {/* Hero Banner */}
       <RevealSection className="relative min-h-[500px] flex items-center overflow-hidden bg-[#0a0805]">
         {/* Bokeh Lights */}
-        ]} />
         {/* Layered ambient gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-rose-950/60 via-gray-950 to-purple-950/50 pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_60%_40%,rgba(253,164,175,0.08),transparent)] pointer-events-none" />
@@ -355,7 +354,6 @@ const OccasionsPage = () => {
 
       {/* ── OCCASIONS GRID ── */}
       <RevealSection id="occasions-grid" className="py-24 px-6 relative overflow-hidden">
-        ]} />
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <span className="text-xs font-bold tracking-widest text-[var(--color-accent)] uppercase font-inter">Find Your Moment</span>
@@ -543,7 +541,6 @@ const OccasionsPage = () => {
 
       {/* ── FEATURED PICKS ── */}
       <RevealSection className="py-24 bg-white border-t border-gray-100 relative overflow-hidden">
-        ]} />
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
             <div>
@@ -619,7 +616,6 @@ const OccasionsPage = () => {
 
       {/* ── CUSTOM ORDER CTA ── */}
       <RevealSection className="py-24 px-6 relative overflow-hidden bg-[#0a0805]">
-        ]} />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_50%,rgba(253,164,175,0.08),transparent)] pointer-events-none" />
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-rose-500/20 to-transparent" />
         <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-rose-500/10 to-transparent" />
