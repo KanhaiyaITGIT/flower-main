@@ -4,7 +4,7 @@ import Seo from "../components/Seo";
 
 export default function NotFound() {
   return (
-    <div className="min-h-[70vh] flex items-center justify-center bg-[#0d0805] px-6">
+    <div className="relative min-h-[70vh] flex items-center justify-center bg-[#0d0805] px-6 overflow-hidden">
       <Seo
         title="Page Not Found | Shivam Florist"
         description="The page you are looking for could not be found on Shivam Florist. Return home to browse flowers, bouquets and event decoration."
@@ -12,7 +12,11 @@ export default function NotFound() {
         noindex
         jsonLd={null}
       />
-      <div className="text-center max-w-md">
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+        <Flower2 size={420} className="absolute -top-28 -right-28 text-[#C89B3C]/[0.06] rotate-12" strokeWidth={0.5} />
+        <Flower2 size={320} className="absolute -bottom-28 -left-28 text-[#D6537A]/[0.06] -rotate-12" strokeWidth={0.5} />
+      </div>
+      <div className="relative text-center max-w-md">
         <div className="mx-auto w-16 h-16 rounded-full bg-gradient-to-br from-[#184D36] to-[#1f5a40] flex items-center justify-center mb-6 shadow-[0_8px_24px_rgba(24,77,54,0.2)]">
           <Flower2 size={28} className="text-[#C89B3C]" />
         </div>

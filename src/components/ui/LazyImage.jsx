@@ -27,10 +27,10 @@ export default function LazyImage({ src, alt, className = "", rootMargin = "200p
   return (
     <div ref={imgRef} className="w-full h-full relative overflow-hidden">
       {!loaded && (
-        <div
-          className="absolute inset-0 bg-gradient-to-r from-rose-50 via-pink-100 to-rose-50 animate-pulse"
-          aria-hidden="true"
-        />
+        <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#FBF6EF] via-[#f7e9ec] to-[#fbf3e8]" />
+          <div className="absolute inset-0 bg-[linear-gradient(110deg,transparent_30%,rgba(255,255,255,0.55)_50%,transparent_70%)] bg-[length:200%_100%] animate-shimmer" />
+        </div>
       )}
       {inView && (
         <img

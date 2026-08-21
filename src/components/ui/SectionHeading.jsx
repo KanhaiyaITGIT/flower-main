@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Flower2 } from "lucide-react";
 
 const stagger = {
   hidden: {},
@@ -17,7 +18,7 @@ const labelReveal = {
   show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
 };
 
-export default function SectionHeading({ label, title, description, labelColor = "var(--color-accent)", goldTitle = false, align = "center", className = "", titleSize = "large", dot = false }) {
+export default function SectionHeading({ label, title, description, labelColor = "var(--color-accent)", goldTitle = false, align = "center", className = "", titleSize = "large", dot = false, ornament = false }) {
   const isLeft = align === "left";
   const sizeClasses = {
     small: "text-xl sm:text-2xl md:text-3xl",
@@ -33,6 +34,13 @@ export default function SectionHeading({ label, title, description, labelColor =
       viewport={{ once: true, margin: "-40px" }}
       className={`${isLeft ? "text-left" : "text-center"} mb-14 md:mb-16 ${className}`}
     >
+      {ornament && !isLeft && (
+        <div className="flex items-center justify-center gap-4 mb-5">
+          <span className="h-px w-14 bg-gradient-to-r from-transparent to-[var(--color-gold)]/50" />
+          <Flower2 size={15} className="text-[var(--color-gold)]" strokeWidth={1.6} />
+          <span className="h-px w-14 bg-gradient-to-l from-transparent to-[var(--color-gold)]/50" />
+        </div>
+      )}
       {label && (
         <motion.div variants={labelReveal} className={`inline-flex items-center gap-3 mb-5 ${isLeft ? "" : "justify-center"}`}>
           <span className="w-8 h-px bg-gradient-to-r from-transparent to-current" style={{ color: labelColor }} />

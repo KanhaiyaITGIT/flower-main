@@ -105,7 +105,7 @@ export default function Footer() {
       <div className="absolute bottom-1/3 right-1/3 w-64 h-64 bg-emerald-500/[0.015] rounded-full blur-[80px] pointer-events-none" />
 
       {/* Main Content */}
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12 relative z-10">
+      <div className="container-x relative z-10">
         {/* ─── Top Row: Brand + Quick Links Grid ─── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-8 lg:gap-10">
           {/* Company Info */}

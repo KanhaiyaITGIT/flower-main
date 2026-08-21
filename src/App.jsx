@@ -26,6 +26,7 @@ import CursorFollower from "./components/CursorFollower";
 import ErrorBoundary from "./components/ErrorBoundary";
 import RouteSeo from "./components/RouteSeo";
 import NotFound from "./pages/NotFound";
+import DecorBackdrop from "./components/DecorBackdrop";
 import { AnimatePresence, motion } from "framer-motion";
 import { Flower2 } from "lucide-react";
 
@@ -47,7 +48,8 @@ const App = () => {
   const location = useLocation();
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#1a0f0a] transition-colors duration-300 dark:bg-[#05120e] dark:text-stone-100 pb-[64px] md:pb-0">
+    <div className="min-h-screen bg-transparent text-[#1a0f0a] transition-colors duration-300 dark:text-stone-100 pb-[64px] md:pb-0">
+      <DecorBackdrop />
       <CursorFollower />
       <ScrollToTop />
       <div className="relative w-full overflow-hidden whitespace-nowrap flex items-center bg-gradient-to-r from-[#163827]/95 via-[#1a3d28] to-[#163827]/95 text-stone-200 text-[11px] font-semibold tracking-[0.08em] py-2 md:py-2.5 group border-b border-[rgba(214,179,106,0.06)]">

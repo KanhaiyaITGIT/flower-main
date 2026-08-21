@@ -2,7 +2,7 @@ import { forwardRef, useRef } from "react";
 import { motion } from "framer-motion";
 
 const variants = {
-  primary: "bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary)]/90 shadow-[0_4px_20px_rgba(20,48,31,0.35)] hover:shadow-[0_8px_35px_rgba(20,48,31,0.55)]",
+  primary: "bg-gradient-to-r from-[var(--color-primary)] to-[#1f5a40] text-white shadow-[0_4px_20px_rgba(20,48,31,0.35)] hover:shadow-[0_10px_38px_rgba(20,48,31,0.5)]",
   secondary: "bg-white text-[var(--color-primary)] border-2 border-[var(--color-accent)]/30 hover:bg-[var(--color-accent)] hover:text-white hover:border-transparent hover:shadow-[0_8px_35px_rgba(214,83,122,0.45)]",
   accent: "bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent)]/90 shadow-[0_4px_20px_rgba(214,83,122,0.35)] hover:shadow-[0_8px_35px_rgba(214,83,122,0.55)]",
   ghost: "bg-white/5 hover:bg-white/10 text-white border border-white/15 backdrop-blur-md",

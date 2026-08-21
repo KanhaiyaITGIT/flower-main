@@ -107,6 +107,7 @@ const Careers = () => {
               description="We're always looking for talented individuals who share our passion for flowers and craftsmanship."
               goldTitle
               dot
+              ornament
             />
 
             <motion.div
