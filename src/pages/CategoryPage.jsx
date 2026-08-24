@@ -480,8 +480,14 @@ const allProducts = [
   { id: 258, name: "Floral Crystal Soap", price: 1999, originalPrice: null, rating: 4.8, reviews: 89, image: c13, category: "Candles & More", tag: "Gift", tagColor: "amber", isNew: false, desc: "Handcrafted candle in elegant glass jar", placeholderFile: "candles-23.jpg" },
   { id: 259, name: "Aromatic Pearl Set", price: 2199, originalPrice: null, rating: 4.9, reviews: 96, image: c14, category: "Candles & More", tag: null, tagColor: null, isNew: false, desc: "Aromatic gift set with candles and diffuser", placeholderFile: "candles-24.jpg" },
   { id: 260, name: "Premium Jade Hamper", price: 2499, originalPrice: null, rating: 5.0, reviews: 20, image: c15, category: "Candles & More", tag: null, tagColor: null, isNew: false, desc: "Botanical candle collection with natural scents", placeholderFile: "candles-25.jpg" },
-  
+
 ];
+
+// All products are quotation-based ("Call for Pricing"). The fixed `price`
+// values above are kept only as data, but the store treats every product as
+// a quote item so the cart never bills an unknown price. To give a product a
+// real fixed price later, set `callForPricing: false` on that entry.
+allProducts.forEach((p) => { p.callForPricing = true; });
 
 const categoryFilters = [
   "All",
@@ -533,7 +539,8 @@ const CategoryPage = () => {
       addToCart({
         id: product.id,
         name: product.name,
-        price: product.price,
+        price: product.callForPricing ? null : product.price,
+        callForPricing: !!product.callForPricing,
         image: product.image,
         category: product.category,
         season: product.desc,
@@ -788,7 +795,7 @@ const CategoryPage = () => {
                       </div>
 
                       {/* Price Badge */}
-                      {product.originalPrice && (
+                      {!product.callForPricing && product.originalPrice && (
                         <div className="absolute top-3 right-3 z-10 hidden group-hover:flex items-center gap-1 bg-white/90 backdrop-blur-sm rounded-full px-2.5 py-1 shadow-lg">
                           <span className="text-[10px] font-bold text-emerald-600">₹{product.price}</span>
                           <span className="text-[8px] text-gray-400 line-through">₹{product.originalPrice}</span>
@@ -825,7 +832,20 @@ const CategoryPage = () => {
                       {/* Pricing Row */}
                       <div className="flex items-center justify-between mt-auto pt-2.5 md:pt-3 lg:pt-4 border-t border-white/30">
                         <div className="flex flex-col">
-                          <CallForPricing />
+                          {product.callForPricing ? (
+                            <CallForPricing />
+                          ) : (
+                            <div className="flex items-baseline gap-1.5">
+                              <span className="font-serif-display text-base md:text-lg font-bold text-[var(--color-primary)]">
+                                ₹{product.price}
+                              </span>
+                              {product.originalPrice && (
+                                <span className="text-[11px] text-stone-400 line-through">
+                                  ₹{product.originalPrice}
+                                </span>
+                              )}
+                            </div>
+                          )}
                         </div>
 
                         {/* Quick Cart Button */}

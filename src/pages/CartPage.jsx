@@ -4,15 +4,16 @@ import { useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   selectCartItems,
-  selectCartTotal,
+  selectFixedTotal,
   selectCartCount,
+  selectHasQuotationItems,
+  selectQuotationCount,
   incrementQty,
   decrementQty,
   removeFromCart,
   clearCart,
   addToCart,
 } from "../redux/cartSlice";
-import CallForPricing from "../components/ui/CallForPricing";
 import Badge from "../components/ui/Badge";
 import { CONTACT_PHONE_1, WHATSAPP_LINK } from "../constants";
 import {
@@ -20,6 +21,7 @@ import {
   Leaf, ChevronRight, ArrowLeft, Plus, Minus, X,
   Star, MapPin, PackageCheck, Sparkles, Trash2, Undo2,
   Bookmark, ArrowRight, Flower2, ChevronLeft, ChevronDown,
+  MessageCircle, PhoneCall, Info,
 } from "lucide-react";
 
 const QR_IMAGE = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=9540849659@pthdfc&pn=SHIVAM";
@@ -58,6 +60,39 @@ const trustFeatures = [
   { icon: Sparkles, label: "Handcrafted", desc: "Designed by master florists" },
 ];
 
+// ─── QUOTATION HELPERS ──────────────────────────────────────────────────────
+const QUOTE_WHY =
+  "Flower prices vary based on current market rates, availability, season, quality, quantity and your requirements. Contact us and we'll provide the latest quotation.";
+
+const QUOTE_MESSAGE =
+  "Hi, I have items in my cart that are marked “Call for Pricing”. Please share the current price and a personalized quotation.";
+
+// Reusable CTA block guiding the customer toward a quote (call / WhatsApp).
+function QuotationActions({ size = "md", full = false }) {
+  const pad = size === "lg" ? "px-6 py-3.5 text-xs" : "px-4 py-2.5 text-[11px]";
+  const iconSize = size === "lg" ? 15 : 13;
+  return (
+    <div className={`flex flex-col xs:flex-row gap-2.5 ${full ? "w-full" : ""}`}>
+      <a
+        href={`tel:${CONTACT_PHONE_1}`}
+        className={`inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#163827] to-[#1f4a30] text-white font-bold tracking-[0.08em] uppercase shadow-[0_4px_20px_rgba(22,56,39,0.25)] hover:shadow-[0_8px_30px_rgba(22,56,39,0.35)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] ${pad} ${full ? "w-full" : ""}`}
+      >
+        <PhoneCall size={iconSize} />
+        Get Current Price
+      </a>
+      <a
+        href={`${WHATSAPP_LINK}${encodeURIComponent(QUOTE_MESSAGE)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`inline-flex items-center justify-center gap-2 rounded-xl border-2 border-[var(--color-accent)]/25 text-[var(--color-primary)] dark:text-stone-200 font-bold tracking-[0.08em] uppercase hover:border-[var(--color-accent)]/50 hover:bg-[var(--color-accent)]/5 transition-all duration-300 ${pad} ${full ? "w-full" : ""}`}
+      >
+        <MessageCircle size={iconSize} />
+        WhatsApp Us
+      </a>
+    </div>
+  );
+}
+
 // ─── QUANTITY STEPPER ───────────────────────────────────────────────────────
 function QuantityStepper({ quantity, onIncrement, onDecrement, min = 1 }) {
   return (
@@ -90,7 +125,7 @@ function QuantityStepper({ quantity, onIncrement, onDecrement, min = 1 }) {
 }
 
 // ─── CHECKOUT MODAL (unchanged business logic) ──────────────────────────────
-function CheckoutModal({ isOpen, onClose, onOrderSuccess, grandTotal, items }) {
+function CheckoutModal({ isOpen, onClose, onOrderSuccess, grandTotal, items, hasQuotation, quotationCount }) {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -103,6 +138,57 @@ function CheckoutModal({ isOpen, onClose, onOrderSuccess, grandTotal, items }) {
   const [error, setError] = useState("");
 
   if (!isOpen) return null;
+
+  // Quotation items must never reach the payment/QR step.
+  if (hasQuotation) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        className="fixed inset-0 z-[9999] bg-[#0D1F0F]/60 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto"
+        onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 30, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 30, scale: 0.96 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="relative w-full max-w-[460px] rounded-2xl overflow-hidden bg-white dark:bg-[#0a1c14] shadow-[0_24px_80px_rgba(0,0,0,0.2)] p-8 text-center"
+        >
+          <button
+            onClick={onClose}
+            className="absolute top-[14px] right-[16px] z-10 w-8 h-8 rounded-full bg-stone-100 dark:bg-white/10 border border-stone-200 dark:border-white/10 flex items-center justify-center text-stone-500 dark:text-stone-400 hover:bg-white hover:border-[var(--color-gold)]/30 hover:text-stone-700 transition-all duration-200 cursor-pointer text-sm"
+          >✕</button>
+
+          <div className="w-16 h-16 rounded-full bg-[var(--color-blush)]/30 flex items-center justify-center text-3xl mb-5 mx-auto">
+            <PhoneCall size={26} className="text-[var(--color-accent)]" />
+          </div>
+          <h3 className="font-serif-display text-2xl font-bold text-[#163827] dark:text-stone-100 mb-2">
+            Custom Quotation Needed
+          </h3>
+          <p className="text-sm text-stone-500 dark:text-stone-400 leading-relaxed mb-2">
+            {quotationCount > 1
+              ? `Your cart has ${quotationCount} items that require a custom quotation.`
+              : "Your cart contains an item that requires a custom quotation."}
+          </p>
+          <p className="text-xs text-stone-400 dark:text-stone-500 leading-relaxed mb-6">
+            Prices change with the current flower market and availability, so we'll share the latest price based on your exact requirement.
+          </p>
+
+          <QuotationActions size="lg" full />
+
+          <button
+            onClick={onClose}
+            className="mt-4 w-full py-3 rounded-xl border border-stone-200 dark:border-white/10 bg-white/50 dark:bg-transparent text-stone-500 dark:text-stone-400 text-[10px] font-bold tracking-wider uppercase hover:border-[var(--color-gold)]/30 hover:text-[var(--color-gold)] transition-all duration-300"
+          >
+            ← Back to Cart
+          </button>
+        </motion.div>
+      </motion.div>
+    );
+  }
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -368,31 +454,81 @@ function CartItemCard({ item, onIncrement, onDecrement, onRemove, onSaveLater, i
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-3 mt-auto">
-            <div className="flex items-center gap-3">
-              <QuantityStepper
-                quantity={item.quantity}
-                onIncrement={() => onIncrement(item.id)}
-                onDecrement={() => onDecrement(item.id)}
-              />
-              <div className="hidden sm:flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-1 rounded-lg font-medium whitespace-nowrap">
-                <Truck size={10} />
-                Delivery
+          {item.callForPricing ? (
+            <div className="mt-auto space-y-2.5">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-[11px] font-semibold text-stone-500 dark:text-stone-400">Price:</span>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-blush)]/40 text-[var(--color-accent)] px-2.5 py-1 text-[11px] font-bold">
+                  <Phone size={11} />
+                  Call for Pricing
+                </span>
+                <button
+                  onClick={() => onSaveLater(item)}
+                  className="hidden sm:flex items-center gap-1 text-[10px] text-stone-400 hover:text-[var(--color-accent)] transition-colors font-medium px-2 py-1 rounded-lg hover:bg-rose-50 dark:hover:bg-white/5 ml-auto"
+                  aria-label="Save for later"
+                >
+                  <Bookmark size={10} />
+                  Save
+                </button>
+              </div>
+
+              <p className="text-[10px] text-stone-400 dark:text-stone-500 leading-relaxed">
+                Current pricing depends on market rates, availability, quantity and your requirements. Contact us for the latest quotation.
+              </p>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <QuantityStepper
+                  quantity={item.quantity}
+                  onIncrement={() => onIncrement(item.id)}
+                  onDecrement={() => onDecrement(item.id)}
+                />
+                <a
+                  href={`tel:${CONTACT_PHONE_1}`}
+                  className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-[#163827] to-[#1f4a30] text-white text-[11px] font-bold tracking-[0.06em] uppercase px-3 py-2 shadow-sm hover:shadow-md transition-all duration-300"
+                >
+                  <PhoneCall size={12} />
+                  Get Current Price
+                </a>
+                <a
+                  href={`${WHATSAPP_LINK}${encodeURIComponent(QUOTE_MESSAGE)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-[var(--color-accent)]/25 text-[var(--color-primary)] dark:text-stone-200 text-[11px] font-bold tracking-[0.06em] uppercase px-3 py-2 hover:bg-[var(--color-accent)]/5 transition-all duration-300"
+                >
+                  <MessageCircle size={12} />
+                  WhatsApp
+                </a>
               </div>
             </div>
+          ) : (
+            <div className="flex flex-wrap items-center justify-between gap-3 mt-auto">
+              <div className="flex items-center gap-3">
+                <QuantityStepper
+                  quantity={item.quantity}
+                  onIncrement={() => onIncrement(item.id)}
+                  onDecrement={() => onDecrement(item.id)}
+                />
+                <div className="hidden sm:flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-1 rounded-lg font-medium whitespace-nowrap">
+                  <Truck size={10} />
+                  Delivery
+                </div>
+              </div>
 
-            <div className="flex items-center gap-2">
-              <CallForPricing />
-              <button
-                onClick={() => onSaveLater(item)}
-                className="hidden sm:flex items-center gap-1 text-[10px] text-stone-400 hover:text-[var(--color-accent)] transition-colors font-medium px-2 py-1 rounded-lg hover:bg-rose-50 dark:hover:bg-white/5"
-                aria-label="Save for later"
-              >
-                <Bookmark size={10} />
-                Save
-              </button>
+              <div className="flex items-center gap-2">
+                <span className="font-serif-display text-sm font-bold text-[var(--color-primary)] dark:text-stone-100">
+                  ₹{(Number(item.price) || 0).toFixed(2)}
+                </span>
+                <button
+                  onClick={() => onSaveLater(item)}
+                  className="hidden sm:flex items-center gap-1 text-[10px] text-stone-400 hover:text-[var(--color-accent)] transition-colors font-medium px-2 py-1 rounded-lg hover:bg-rose-50 dark:hover:bg-white/5"
+                  aria-label="Save for later"
+                >
+                  <Bookmark size={10} />
+                  Save
+                </button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
@@ -677,8 +813,16 @@ export default function CartPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const items = useSelector(selectCartItems);
-  const total = useSelector(selectCartTotal);
+  const fixedTotal = useSelector(selectFixedTotal);
+  const total = fixedTotal; // alias for any legacy usage
   const count = useSelector(selectCartCount);
+  const hasQuotation = useSelector(selectHasQuotationItems);
+  const quotationCount = useSelector(selectQuotationCount);
+
+  const hasFixed = fixedTotal > 0;
+  // Delivery fee only applies to billable (fixed-price) items.
+  const delivery = hasFixed ? (fixedTotal > 60 ? 0 : 5.99) : 0;
+  const grandTotal = fixedTotal + delivery;
 
   const [showCheckout, setShowCheckout] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
@@ -690,9 +834,6 @@ export default function CartPage() {
   });
   const [undoState, setUndoState] = useState(null);
   const undoTimer = useRef(null);
-
-  const delivery = total > 60 ? 0 : 5.99;
-  const grandTotal = total + delivery;
 
   useEffect(() => {
     try { localStorage.setItem(SAVED_KEY, JSON.stringify(savedItems)); }
@@ -769,6 +910,8 @@ export default function CartPage() {
         onOrderSuccess={handleOrderSuccess}
         grandTotal={grandTotal}
         items={items}
+        hasQuotation={hasQuotation}
+        quotationCount={quotationCount}
       />
 
       {/* Undo Toast */}
@@ -927,99 +1070,162 @@ export default function CartPage() {
                           <p className="text-[11px] font-medium text-[var(--color-primary)] dark:text-stone-200 truncate">{item.name}</p>
                           <p className="text-[9px] text-stone-400">Qty: {item.quantity} · {item.category}</p>
                         </div>
+                        <span className={`text-[10px] font-bold whitespace-nowrap ${item.callForPricing ? "text-[var(--color-accent)]" : "text-stone-500 dark:text-stone-300"}`}>
+                          {item.callForPricing ? "Call for Pricing" : `₹${((Number(item.price) || 0) * item.quantity).toFixed(2)}`}
+                        </span>
                       </div>
                     ))}
                   </div>
 
                   <div className="h-px bg-gradient-to-r from-stone-200/60 via-stone-200/30 to-transparent dark:from-white/5" />
 
-                  {/* Delivery */}
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] text-stone-500 dark:text-stone-400 flex items-center gap-1.5">
-                      <Truck size={12} />
-                      Estimated Delivery
-                    </span>
-                    <span className="text-[11px] text-stone-600 dark:text-stone-300 font-medium">Today-Tomorrow</span>
-                  </div>
+                  {hasQuotation ? (
+                    <>
+                      {/* Quotation requirement notice */}
+                      <div className="bg-[var(--color-blush)]/15 border border-[var(--color-accent)]/25 rounded-xl px-4 py-3.5">
+                        <div className="flex items-start gap-2.5">
+                          <Info size={15} className="text-[var(--color-accent)] mt-0.5 shrink-0" />
+                          <div>
+                            <p className="text-[11px] font-bold text-[var(--color-primary)] dark:text-stone-100 leading-snug">
+                              {quotationCount > 1
+                                ? `Your cart has ${quotationCount} items requiring a custom quotation.`
+                                : "Your cart contains an item requiring a custom quotation."}
+                            </p>
+                            <p className="text-[10px] text-stone-500 dark:text-stone-400 font-light leading-relaxed mt-1">
+                              Prices change with the current flower market and availability, so we provide the latest price based on your exact requirement.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] text-stone-500 dark:text-stone-400 flex items-center gap-1.5">
-                      <MapPin size={12} />
-                      Delivery Location
-                    </span>
-                    <span className="text-[11px] text-stone-600 dark:text-stone-300 font-medium">Delhi NCR</span>
-                  </div>
+                      {/* Why is the price not shown? */}
+                      <div className="rounded-xl bg-white/50 dark:bg-white/[0.03] border border-stone-200/60 dark:border-white/10 px-4 py-3">
+                        <p className="text-[10px] font-bold text-[var(--color-accent)] tracking-wider uppercase mb-1 flex items-center gap-1.5">
+                          <Phone size={11} /> Why is the price not shown?
+                        </p>
+                        <p className="text-[10px] text-stone-500 dark:text-stone-400 font-light leading-relaxed">
+                          {QUOTE_WHY}
+                        </p>
+                      </div>
 
-                  {delivery > 0 && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="bg-[rgba(214,179,106,0.08)] border border-[rgba(214,179,106,0.2)] rounded-xl px-3 py-2 text-[10px] text-[#D6B36A]/80 leading-relaxed flex items-center gap-2"
-                    >
-                      <span>🚚</span>
-                      <span>Add ₹{(60 - total).toFixed(2)} more for <strong>FREE delivery</strong></span>
-                    </motion.div>
+                      {/* Primary CTA: get the latest quotation */}
+                      <QuotationActions size="lg" full />
+
+                      {hasFixed && (
+                        <>
+                          <div className="h-px bg-gradient-to-r from-stone-200/60 via-stone-200/30 to-transparent dark:from-white/5" />
+
+                          <div className="flex items-center justify-between">
+                            <span className="text-[11px] text-stone-500 dark:text-stone-400">Fixed-price items</span>
+                            <span className="text-[11px] text-[var(--color-primary)] dark:text-stone-200 font-semibold">₹{fixedTotal.toFixed(2)}</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-[11px] text-stone-500 dark:text-stone-400 flex items-center gap-1.5">
+                              <ShieldCheck size={12} />
+                              Delivery Fee
+                            </span>
+                            <span className={`text-[11px] font-semibold ${delivery === 0 ? "text-emerald-600 dark:text-emerald-400" : "text-stone-600 dark:text-stone-300"}`}>
+                              {delivery === 0 ? "FREE" : `₹${delivery.toFixed(2)}`}
+                            </span>
+                          </div>
+                          <p className="text-[10px] text-stone-400 dark:text-stone-500 font-light leading-relaxed">
+                            This amount covers only your fixed-price items. Call-for-Pricing items will be quoted separately before any payment.
+                          </p>
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {/* FIXED-PRICE ONLY FLOW (unchanged business logic) */}
+                      {/* Delivery */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] text-stone-500 dark:text-stone-400 flex items-center gap-1.5">
+                          <Truck size={12} />
+                          Estimated Delivery
+                        </span>
+                        <span className="text-[11px] text-stone-600 dark:text-stone-300 font-medium">Today-Tomorrow</span>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] text-stone-500 dark:text-stone-400 flex items-center gap-1.5">
+                          <MapPin size={12} />
+                          Delivery Location
+                        </span>
+                        <span className="text-[11px] text-stone-600 dark:text-stone-300 font-medium">Delhi NCR</span>
+                      </div>
+
+                      {delivery > 0 && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="bg-[rgba(214,179,106,0.08)] border border-[rgba(214,179,106,0.2)] rounded-xl px-3 py-2 text-[10px] text-[#D6B36A]/80 leading-relaxed flex items-center gap-2"
+                        >
+                          <span>🚚</span>
+                          <span>Add ₹{(60 - total).toFixed(2)} more for <strong>FREE delivery</strong></span>
+                        </motion.div>
+                      )}
+
+                      {delivery === 0 && (
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          className="bg-[rgba(22,163,74,0.06)] border border-[rgba(22,163,74,0.15)] rounded-xl px-3 py-2 text-[10px] text-emerald-700 dark:text-emerald-400 leading-relaxed flex items-center gap-2"
+                        >
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                          <span>You qualify for <strong>FREE delivery</strong>!</span>
+                        </motion.div>
+                      )}
+
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] text-stone-500 dark:text-stone-400 flex items-center gap-1.5">
+                          <ShieldCheck size={12} />
+                          Delivery Fee
+                        </span>
+                        <span className={`text-[11px] font-semibold ${delivery === 0 ? "text-emerald-600 dark:text-emerald-400" : "text-stone-600 dark:text-stone-300"}`}>
+                          {delivery === 0 ? "FREE" : `₹${delivery.toFixed(2)}`}
+                        </span>
+                      </div>
+
+                      <div className="h-px bg-gradient-to-r from-stone-200/60 via-stone-200/30 to-transparent dark:from-white/5" />
+
+                      {/* Pricing note */}
+                      <div className="bg-[var(--color-blush)]/10 border border-[var(--color-blush)]/20 rounded-xl px-4 py-3">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Phone size={12} className="text-[var(--color-accent)]" />
+                          <span className="text-[10px] font-bold text-[var(--color-accent)] tracking-wider uppercase">Expert Consultation</span>
+                        </div>
+                        <p className="text-[10px] text-stone-500 dark:text-stone-400 font-light leading-relaxed">
+                          Our floral experts will confirm pricing and delivery details. Call us at <a href={`tel:${CONTACT_PHONE_1}`} className="text-[var(--color-accent)] font-medium hover:underline">{CONTACT_PHONE_1}</a>
+                        </p>
+                      </div>
+
+                      {/* Items count */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] text-stone-500 dark:text-stone-400">Items ({count})</span>
+                        <span className="text-[11px] text-[var(--color-primary)] dark:text-stone-200 font-semibold">₹{total.toFixed(2)}</span>
+                      </div>
+
+                      <div className="h-px bg-gradient-to-r from-stone-200/60 via-stone-200/30 to-transparent dark:from-white/5" />
+
+                      <div className="flex items-center justify-between">
+                        <span className="font-serif-display text-base font-bold text-[var(--color-primary)] dark:text-stone-100">Total</span>
+                        <span className="font-serif-display text-lg text-[var(--color-primary)] dark:text-stone-100 font-bold">
+                          ₹{grandTotal.toFixed(2)}
+                        </span>
+                      </div>
+
+                      <button
+                        onClick={() => setShowCheckout(true)}
+                        className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#163827] to-[#1f4a30] text-white text-xs font-bold tracking-[0.1em] uppercase shadow-[0_4px_20px_rgba(22,56,39,0.25)] hover:shadow-[0_8px_30px_rgba(22,56,39,0.35)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden group"
+                      >
+                        <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/8 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                        <span className="relative flex items-center justify-center gap-2">
+                          Proceed to Checkout
+                          <ChevronRight size={14} />
+                        </span>
+                      </button>
+                    </>
                   )}
-
-                  {delivery === 0 && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="bg-[rgba(22,163,74,0.06)] border border-[rgba(22,163,74,0.15)] rounded-xl px-3 py-2 text-[10px] text-emerald-700 dark:text-emerald-400 leading-relaxed flex items-center gap-2"
-                    >
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                      <span>You qualify for <strong>FREE delivery</strong>!</span>
-                    </motion.div>
-                  )}
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] text-stone-500 dark:text-stone-400 flex items-center gap-1.5">
-                      <ShieldCheck size={12} />
-                      Delivery Fee
-                    </span>
-                    <span className={`text-[11px] font-semibold ${delivery === 0 ? "text-emerald-600 dark:text-emerald-400" : "text-stone-600 dark:text-stone-300"}`}>
-                      {delivery === 0 ? "FREE" : `₹${delivery.toFixed(2)}`}
-                    </span>
-                  </div>
-
-                  <div className="h-px bg-gradient-to-r from-stone-200/60 via-stone-200/30 to-transparent dark:from-white/5" />
-
-                  {/* Pricing note */}
-                  <div className="bg-[var(--color-blush)]/10 border border-[var(--color-blush)]/20 rounded-xl px-4 py-3">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Phone size={12} className="text-[var(--color-accent)]" />
-                      <span className="text-[10px] font-bold text-[var(--color-accent)] tracking-wider uppercase">Expert Consultation</span>
-                    </div>
-                    <p className="text-[10px] text-stone-500 dark:text-stone-400 font-light leading-relaxed">
-                      Our floral experts will confirm pricing and delivery details. Call us at <a href={`tel:${CONTACT_PHONE_1}`} className="text-[var(--color-accent)] font-medium hover:underline">{CONTACT_PHONE_1}</a>
-                    </p>
-                  </div>
-
-                  {/* Items count */}
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] text-stone-500 dark:text-stone-400">Items ({count})</span>
-                    <span className="text-[11px] text-[var(--color-primary)] dark:text-stone-200 font-semibold">₹{total.toFixed(2)}</span>
-                  </div>
-
-                  <div className="h-px bg-gradient-to-r from-stone-200/60 via-stone-200/30 to-transparent dark:from-white/5" />
-
-                  <div className="flex items-center justify-between">
-                    <span className="font-serif-display text-base font-bold text-[var(--color-primary)] dark:text-stone-100">Total</span>
-                    <span className="font-serif-display text-lg text-[var(--color-primary)] dark:text-stone-100 font-bold">
-                      ₹{grandTotal.toFixed(2)}
-                    </span>
-                  </div>
-
-                  <button
-                    onClick={() => setShowCheckout(true)}
-                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#163827] to-[#1f4a30] text-white text-xs font-bold tracking-[0.1em] uppercase shadow-[0_4px_20px_rgba(22,56,39,0.25)] hover:shadow-[0_8px_30px_rgba(22,56,39,0.35)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden group"
-                  >
-                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/8 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                    <span className="relative flex items-center justify-center gap-2">
-                      Proceed to Checkout
-                      <ChevronRight size={14} />
-                    </span>
-                  </button>
 
                   <button
                     onClick={() => navigate("/category")}

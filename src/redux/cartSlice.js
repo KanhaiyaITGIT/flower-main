@@ -43,11 +43,19 @@ const cartSlice = createSlice({
   },
   reducers: {
     addToCart: (state, action) => {
-      const existing = state.items.find((i) => i.id === action.payload.id);
+      const payload = action.payload;
+      const isQuote = !!payload.callForPricing;
+      const existing = state.items.find((i) => i.id === payload.id);
       if (existing) {
         existing.quantity += 1;
       } else {
-        state.items.push({ ...action.payload, quantity: 1 });
+        state.items.push({
+          ...payload,
+          // Quotation-based items must NEVER carry a billable price.
+          callForPricing: isQuote,
+          price: isQuote ? null : Number(payload.price) || 0,
+          quantity: 1,
+        });
       }
       saveCart(state.items);
     },
@@ -85,7 +93,25 @@ export const { addToCart, removeFromCart, incrementQty, decrementQty, clearCart 
 export const selectCartItems = (state) => state.cart.items;
 export const selectCartCount = (state) =>
   state.cart.items.reduce((sum, i) => sum + i.quantity, 0);
-export const selectCartTotal = (state) =>
-  state.cart.items.reduce((sum, i) => sum + i.price * i.quantity, 0);
+
+// Only items with a real fixed price contribute to the billable total.
+// Call-for-Pricing (quotation) items are intentionally excluded so the
+// cart can never generate a fake/incorrect bill for an unknown-price item.
+export const selectFixedTotal = (state) =>
+  state.cart.items.reduce(
+    (sum, i) => (i.callForPricing ? sum : sum + (Number(i.price) || 0) * i.quantity),
+    0
+  );
+
+// Backwards-compatible alias: total of billable (fixed-price) items only.
+export const selectCartTotal = selectFixedTotal;
+
+export const selectHasQuotationItems = (state) =>
+  state.cart.items.some((i) => i.callForPricing);
+
+export const selectQuotationCount = (state) =>
+  state.cart.items
+    .filter((i) => i.callForPricing)
+    .reduce((sum, i) => sum + i.quantity, 0);
 
 export default cartSlice.reducer;
