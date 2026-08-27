@@ -1,34 +1,41 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import Hero from "./pages/Hero";
-import CategoryPage from "./pages/CategoryPage";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import OccasionsPage from "./pages/OccasionsPage";
-import DecorPage from "./pages/DecorPage";
-import AboutUs from "./pages/AboutUs";
-import Gallery from "./pages/Gallery";
-import CartPage from "./pages/CartPage";
-import Contact from "./pages/Contact";
-import HelpCenter from "./pages/HelpCenter";
-import TrackOrder from "./pages/TrackOrder";
-import DeliveryInfo from "./pages/DeliveryInfo";
-import BulkOrders from "./pages/BulkOrders";
-import Careers from "./pages/Careers";
-import BecomePartner from "./pages/BecomePartner";
-import TermsConditions from "./pages/TermsConditions";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import ShippingPolicy from "./pages/ShippingPolicy";
-import RefundPolicy from "./pages/RefundPolicy";
 import MobileBottomNav from "./components/MobileBottomNav";
 import ScrollToTop from "./components/ScrollToTop";
 import CursorFollower from "./components/CursorFollower";
 import ErrorBoundary from "./components/ErrorBoundary";
 import RouteSeo from "./components/RouteSeo";
-import NotFound from "./pages/NotFound";
 import DecorBackdrop from "./components/DecorBackdrop";
 import { AnimatePresence, motion } from "framer-motion";
 import { Flower2 } from "lucide-react";
+
+const CategoryPage = lazy(() => import("./pages/CategoryPage"));
+const OccasionsPage = lazy(() => import("./pages/OccasionsPage"));
+const DecorPage = lazy(() => import("./pages/DecorPage"));
+const AboutUs = lazy(() => import("./pages/AboutUs"));
+const Gallery = lazy(() => import("./pages/Gallery"));
+const CartPage = lazy(() => import("./pages/CartPage"));
+const Contact = lazy(() => import("./pages/Contact"));
+const HelpCenter = lazy(() => import("./pages/HelpCenter"));
+const TrackOrder = lazy(() => import("./pages/TrackOrder"));
+const DeliveryInfo = lazy(() => import("./pages/DeliveryInfo"));
+const BulkOrders = lazy(() => import("./pages/BulkOrders"));
+const Careers = lazy(() => import("./pages/Careers"));
+const BecomePartner = lazy(() => import("./pages/BecomePartner"));
+const TermsConditions = lazy(() => import("./pages/TermsConditions"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const ShippingPolicy = lazy(() => import("./pages/ShippingPolicy"));
+const RefundPolicy = lazy(() => import("./pages/RefundPolicy"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+
+const PageFallback = () => (
+  <div className="min-h-[60vh] flex items-center justify-center" aria-hidden="true">
+    <div className="w-8 h-8 rounded-full border-2 border-[var(--color-gold)]/30 border-t-[var(--color-gold)] animate-spin" />
+  </div>
+);
 
 const pageVariants = {
   initial: { opacity: 0, y: 12 },
@@ -76,6 +83,7 @@ const App = () => {
           animate="animate"
           exit="exit"
         >
+          <Suspense fallback={<PageFallback />}>
           <Routes location={location}>
             <Route path="/" element={<Hero />} />
             <Route path="/category" element={<ErrorBoundary><CategoryPage /></ErrorBoundary>} />
@@ -97,6 +105,7 @@ const App = () => {
             <Route path="/refund" element={<RefundPolicy />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </Suspense>
         </motion.div>
       </AnimatePresence>
       <Footer />

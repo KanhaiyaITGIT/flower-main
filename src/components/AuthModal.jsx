@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Mail, Loader2 } from "lucide-react";
 import useGoogleAuth from "../hooks/useGoogleAuth";
 
 export default function AuthModal({ isOpen, onClose }) {
-  const { user, googleError, retryGoogle } = useGoogleAuth();
+  const { user, googleError, retryGoogle, initGoogle } = useGoogleAuth();
   const [email, setEmail] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [sending, setSending] = useState(false);
+
+  useEffect(() => {
+    if (isOpen && !user.isLoggedIn) {
+      initGoogle();
+    }
+  }, [isOpen, user.isLoggedIn, initGoogle]);
 
   const handleEmailSubmit = (e) => {
     e.preventDefault();

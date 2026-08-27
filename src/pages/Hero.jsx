@@ -58,7 +58,42 @@ import image12 from "../assets/s13.png";
 import image13 from "../assets/s14.png";
 import image26 from "../assets/recepmarriage/r10.jpg";
 import image27 from "../assets/gift.jpg";
-import hero from "../assets/Bouquet/hero-lifestyle.jpg";
+import heroAvif320 from "../assets/optimized/hero/hero-320.avif";
+import heroAvif480 from "../assets/optimized/hero/hero-480.avif";
+import heroAvif640 from "../assets/optimized/hero/hero-640.avif";
+import heroAvif768 from "../assets/optimized/hero/hero-768.avif";
+import heroAvif960 from "../assets/optimized/hero/hero-960.avif";
+import heroAvif1200 from "../assets/optimized/hero/hero-1200.avif";
+import heroAvif1500 from "../assets/optimized/hero/hero-1500.avif";
+import heroWebp320 from "../assets/optimized/hero/hero-320.webp";
+import heroWebp480 from "../assets/optimized/hero/hero-480.webp";
+import heroWebp640 from "../assets/optimized/hero/hero-640.webp";
+import heroWebp768 from "../assets/optimized/hero/hero-768.webp";
+import heroWebp960 from "../assets/optimized/hero/hero-960.webp";
+import heroWebp1200 from "../assets/optimized/hero/hero-1200.webp";
+import heroWebp1500 from "../assets/optimized/hero/hero-1500.webp";
+import heroJpg1200 from "../assets/optimized/hero/hero-1200.jpg";
+
+const HERO_AVIF_SRCSET = [
+  `${heroAvif320} 320w`,
+  `${heroAvif480} 480w`,
+  `${heroAvif640} 640w`,
+  `${heroAvif768} 768w`,
+  `${heroAvif960} 960w`,
+  `${heroAvif1200} 1200w`,
+  `${heroAvif1500} 1500w`,
+].join(", ");
+const HERO_WEBP_SRCSET = [
+  `${heroWebp320} 320w`,
+  `${heroWebp480} 480w`,
+  `${heroWebp640} 640w`,
+  `${heroWebp768} 768w`,
+  `${heroWebp960} 960w`,
+  `${heroWebp1200} 1200w`,
+  `${heroWebp1500} 1500w`,
+].join(", ");
+const HERO_JPG_SRCSET = `${heroJpg1200} 1200w`;
+
 import forHerImage from "../assets/recepmarriage/bride7.jpg";
 import forHimImage from "../assets/recepmarriage/r12.jpg";
 import forThemImage from "../assets/anniversory/anni10.jpg";
@@ -769,12 +804,20 @@ const Home = () => {
               onClick={() => navigate("/category")}
             >
               <div className="absolute inset-0 w-full h-full overflow-hidden group-hover:scale-[1.03] transition-transform duration-[900ms] ease-out will-change-transform">
-                <LazyImage
-                  src={hero}
-                  alt="Luxury flower collection"
-                  className="w-full h-full object-cover object-[center_30%]"
-                  priority
-                />
+                <picture>
+                  <source type="image/avif" srcSet={HERO_AVIF_SRCSET} sizes="(max-width: 1024px) 100vw, 70vw" />
+                  <source type="image/webp" srcSet={HERO_WEBP_SRCSET} sizes="(max-width: 1024px) 100vw, 70vw" />
+                  <img
+                    src={heroJpg1200}
+                    srcSet={HERO_JPG_SRCSET}
+                    sizes="(max-width: 1024px) 100vw, 70vw"
+                    alt="Luxury flower collection"
+                    className="w-full h-full object-cover object-[center_30%]"
+                    fetchPriority="high"
+                    loading="eager"
+                    decoding="async"
+                  />
+                </picture>
               </div>
               {/* Soft overlay — enhanced darker gradient to improve readability */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent z-10" />
@@ -992,6 +1035,8 @@ const Home = () => {
                       <img
                         src={item.image}
                         alt={item.title}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent pointer-events-none" />
@@ -1079,6 +1124,8 @@ const Home = () => {
                       <img
                         src={item.image}
                         alt={item.title}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent pointer-events-none" />

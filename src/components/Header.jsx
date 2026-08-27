@@ -160,10 +160,16 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
+    let ticking = false;
     const onScroll = () => {
-      setScrolled(window.scrollY > 20);
-      const totalH = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollProgress(totalH > 0 ? Math.min((window.scrollY / totalH) * 100, 100) : 0);
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 20);
+        const totalH = document.documentElement.scrollHeight - window.innerHeight;
+        setScrollProgress(totalH > 0 ? Math.min((window.scrollY / totalH) * 100, 100) : 0);
+        ticking = false;
+      });
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -196,7 +202,7 @@ export default function Header() {
       }`}>
         <div className="max-w-[1440px] mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between h-14 lg:h-16 gap-3 lg:gap-4">
-              <Link to="/" className="flex items-center gap-3 shrink-0 group">
+              <Link to="/" aria-label="Shivam Florist - Home" className="flex items-center gap-3 shrink-0 group">
                   <motion.div
                     whileHover={{ rotate: 12, scale: 1.1 }}
                     className="w-9 h-9 rounded-full bg-gradient-to-br from-[#184D36] to-[#1f5a40] flex items-center justify-center shadow-[0_2px_8px_rgba(24,77,54,0.12)] group-hover:shadow-[0_4px_20px_rgba(24,77,54,0.2)] transition-all duration-400"
@@ -491,10 +497,16 @@ const popularCities = [
 
 function LocationDropdown() {
   const [displayText, setDisplayText] = useState(() => {
-    return localStorage.getItem("manualLocation") || "Detecting location...";
+    return (
+      localStorage.getItem("manualLocation") ||
+      localStorage.getItem("detectedLocation") ||
+      "Delhi NCR, India"
+    );
   });
   const [status, setStatus] = useState(() => {
-    return localStorage.getItem("manualLocation") ? "success" : "loading";
+    return localStorage.getItem("manualLocation") || localStorage.getItem("detectedLocation")
+      ? "success"
+      : "idle";
   });
   const [isOpen, setIsOpen] = useState(false);
   const [manualInput, setManualInput] = useState("");
@@ -505,6 +517,15 @@ function LocationDropdown() {
     setDisplayText(text);
     setStatus("success");
     localStorage.setItem("manualLocation", text);
+    setShowManualInput(false);
+    setManualInput("");
+    setIsOpen(false);
+  }, []);
+
+  const saveDetected = useCallback((text) => {
+    setDisplayText(text);
+    setStatus("success");
+    try { localStorage.setItem("detectedLocation", text); } catch {}
     setShowManualInput(false);
     setManualInput("");
     setIsOpen(false);
@@ -522,9 +543,9 @@ function LocationDropdown() {
         const city = data.city || "Delhi NCR";
         const region = data.region || "";
         const country = data.country_name || "India";
-        saveLocation(region ? `${city}, ${region}` : `${city}, ${country}`);
+        saveDetected(region ? `${city}, ${region}` : `${city}, ${country}`);
       } catch {
-        saveLocation("Delhi NCR, India");
+        saveDetected("Delhi NCR, India");
       }
     };
 
@@ -544,7 +565,7 @@ function LocationDropdown() {
           const data = await res.json();
           const city = data.city || data.locality || "Delhi NCR";
           const ctry = data.countryName || "India";
-          saveLocation(`${city}, ${ctry}`);
+          saveDetected(`${city}, ${ctry}`);
         } catch {
           fallbackByIP();
         }
@@ -558,12 +579,21 @@ function LocationDropdown() {
         maximumAge: 120000,
       }
     );
-  }, [saveLocation]);
+  }, [saveLocation, saveDetected]);
 
   useEffect(() => {
-    if (!localStorage.getItem("manualLocation")) {
-      detectLocation();
+    if (localStorage.getItem("manualLocation") || localStorage.getItem("detectedLocation")) {
+      return;
     }
+    // Defer IP/location detection so it never competes with the LCP hero image
+    // or blocks initial render. Runs during browser idle time after load.
+    const run = () => detectLocation();
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(run, { timeout: 2500 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const t = setTimeout(run, 1800);
+    return () => clearTimeout(t);
   }, [detectLocation]);
 
   useEffect(() => {

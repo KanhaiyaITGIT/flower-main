@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { GOOGLE_CLIENT_ID } from "../constants";
 
 function parseJWT(token) {
@@ -10,6 +10,8 @@ function parseJWT(token) {
   }
 }
 
+const GSI_SRC = "https://accounts.google.com/gsi/client";
+
 export default function useGoogleAuth() {
   const [user, setUser] = useState(() => {
     try {
@@ -20,6 +22,7 @@ export default function useGoogleAuth() {
     }
   });
   const [googleError, setGoogleError] = useState(false);
+  const scriptRef = useRef(null);
 
   const handleCredential = useCallback((response) => {
     const decoded = parseJWT(response.credential);
@@ -35,6 +38,55 @@ export default function useGoogleAuth() {
     try { localStorage.setItem("google_user", JSON.stringify(profile)); } catch {}
   }, []);
 
+  const isClientIdValid = GOOGLE_CLIENT_ID && GOOGLE_CLIENT_ID !== "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
+
+  // Loads the Google Identity Services script only when explicitly needed
+  // (when the auth modal is opened) and initializes the client.
+  const initGoogle = useCallback(() => {
+    if (user.isLoggedIn) return;
+    if (!isClientIdValid) {
+      setGoogleError(true);
+      return;
+    }
+
+    const onReady = () => {
+      try {
+        window.google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: handleCredential,
+          cancel_on_tap_outside: false,
+        });
+        window.google.accounts.id.prompt();
+      } catch (err) {
+        console.warn("Google Auth init failed:", err.message);
+        setGoogleError(true);
+      }
+    };
+
+    const existing = document.querySelector(`script[src="${GSI_SRC}"]`);
+    if (existing) {
+      scriptRef.current = existing;
+      if (window.google?.accounts?.id) {
+        onReady();
+      } else {
+        existing.addEventListener("load", onReady, { once: true });
+      }
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = GSI_SRC;
+    script.async = true;
+    script.defer = true;
+    script.onload = onReady;
+    script.onerror = () => {
+      console.warn("Google GSI script failed to load");
+      setGoogleError(true);
+    };
+    document.head.appendChild(script);
+    scriptRef.current = script;
+  }, [user.isLoggedIn, isClientIdValid, handleCredential]);
+
   const logout = useCallback(() => {
     setUser({ name: "Guest", email: "", picture: "", isLoggedIn: false });
     try { localStorage.removeItem("google_user"); } catch {}
@@ -45,67 +97,19 @@ export default function useGoogleAuth() {
 
   const retryGoogle = useCallback(() => {
     setGoogleError(false);
-    const script = document.createElement("script");
-    script.src = "https://accounts.google.com/gsi/client";
-    script.async = true;
-    script.defer = true;
-    script.onload = () => {
-      try {
-        if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID === "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com") {
-          throw new Error("Invalid or missing Google Client ID");
-        }
-        window.google.accounts.id.initialize({
-          client_id: GOOGLE_CLIENT_ID,
-          callback: handleCredential,
-          cancel_on_tap_outside: false,
-        });
-        window.google.accounts.id.prompt();
-      } catch (err) {
-        console.warn("Google Auth init failed:", err.message);
-        setGoogleError(true);
-      }
-    };
-    script.onerror = () => {
-      console.warn("Google GSI script failed to load");
-      setGoogleError(true);
-    };
-    document.head.appendChild(script);
-  }, [handleCredential]);
+    initGoogle();
+  }, [initGoogle]);
 
+  // Do NOT auto-load the GSI script on mount. It is only loaded when the
+  // authentication UI is actually opened (see AuthModal).
   useEffect(() => {
-    if (user.isLoggedIn) return;
-    const script = document.createElement("script");
-    script.src = "https://accounts.google.com/gsi/client";
-    script.async = true;
-    script.defer = true;
-    script.onload = () => {
-      try {
-        if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID === "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com") {
-          throw new Error("Invalid or missing Google Client ID");
-        }
-        window.google.accounts.id.initialize({
-          client_id: GOOGLE_CLIENT_ID,
-          callback: handleCredential,
-          cancel_on_tap_outside: false,
-        });
-        window.google.accounts.id.prompt();
-      } catch (err) {
-        console.warn("Google Auth init failed:", err.message);
-        setGoogleError(true);
-      }
-    };
-    script.onerror = () => {
-      console.warn("Google GSI script failed to load");
-      setGoogleError(true);
-    };
-    document.head.appendChild(script);
     return () => {
-      const existing = document.querySelector('script[src="https://accounts.google.com/gsi/client"]');
+      const existing = document.querySelector(`script[src="${GSI_SRC}"]`);
       if (existing && existing.parentNode) {
         existing.parentNode.removeChild(existing);
       }
     };
-  }, [user.isLoggedIn, handleCredential]);
+  }, []);
 
-  return { user, logout, googleError, retryGoogle };
+  return { user, logout, googleError, retryGoogle, initGoogle };
 }

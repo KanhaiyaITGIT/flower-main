@@ -6,6 +6,10 @@ export default function CursorFollower() {
   useEffect(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) return;
+    // Only attach on devices with a precise pointer (mouse). Touch/mobile devices
+    // never fire mousemove, so skipping this avoids unnecessary listeners/work.
+    const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+    if (!hasFinePointer) return;
 
     const onMove = (e) => {
       if (cursorRef.current) {
