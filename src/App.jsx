@@ -1,6 +1,6 @@
-import React, { Suspense, lazy, useEffect } from "react";
+import React, { Suspense, lazy } from "react";
 import Hero from "./pages/Hero";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import MobileBottomNav from "./components/MobileBottomNav";
@@ -53,19 +53,6 @@ const pageVariants = {
 
 const App = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-
-  // Restore deep links that arrived via the SPA fallback (public/404.html).
-  useEffect(() => {
-    try {
-      const redirect = sessionStorage.getItem("spa_redirect");
-      if (!redirect) return;
-      sessionStorage.removeItem("spa_redirect");
-      if (redirect !== location.pathname + location.search + location.hash) {
-        navigate(redirect);
-      }
-    } catch (e) {}
-  }, [navigate, location.pathname, location.search, location.hash]);
 
   return (
     <div className="min-h-screen bg-transparent text-[#1a0f0a] transition-colors duration-300 dark:text-stone-100 pb-[64px] md:pb-0">

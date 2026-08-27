@@ -3,6 +3,51 @@ import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { Star, ArrowRight, Phone, Sparkles } from "lucide-react";
 
+// Local brand assets (no external/remote image sources).
+import bouquet1 from "../assets/Bouquet/Bouquet1.jpg";
+import bouquet11 from "../assets/Bouquet/Bouquet11.jpg";
+import bouquet20 from "../assets/Bouquet/Bouquet20.jpg";
+import wed1 from "../assets/recepmarriage/wed1.jpg";
+import wed5 from "../assets/recepmarriage/wed5.jpg";
+import bride1 from "../assets/recepmarriage/bride1.jpg";
+import rece1 from "../assets/recepmarriage/rece1.jpg";
+import rece5 from "../assets/recepmarriage/rece5.jpg";
+import birthday1 from "../assets/birthday/birthday1.png";
+import birthday15 from "../assets/birthday/bi15.jpg";
+import anni2 from "../assets/anniversory/anni2.jpg";
+import anni13 from "../assets/anniversory/anni13.jpg";
+import haldi1 from "../assets/haldi/h1.jpg";
+import haldi7 from "../assets/haldi/h7.jpg";
+import dev1 from "../assets/devotional/dev1.jpg";
+import dev8 from "../assets/devotional/dev8.jpg";
+import baloon2 from "../assets/baloons/b2.jpg";
+import baloon6 from "../assets/baloons/b6.jpg";
+import candle1 from "../assets/candle/c1.jpg";
+import candle10 from "../assets/candle/c10.jpg";
+
+const L = {
+  bouquet1,
+  bouquet11,
+  bouquet20,
+  wed1,
+  wed5,
+  bride1,
+  rece1,
+  rece5,
+  birthday1,
+  birthday15,
+  anni2,
+  anni13,
+  haldi1,
+  haldi7,
+  dev1,
+  dev8,
+  baloon2,
+  baloon6,
+  candle1,
+  candle10,
+};
+
 const AnimatedStat = ({ value, label, accent }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-40px" });
@@ -60,8 +105,8 @@ const categoryConfig = {
     badgeEmoji: "👑",
     badgeText: "Luxury Wedding Collection",
     gradient: "from-[#3c0f1a] via-[#5c1a2a] to-[#2d0a12]",
-    bgImage: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=700&q=80",
-    bgIllustration: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&q=80",
+    bgImage: L.wed1,
+    bgIllustration: L.bride1,
     accent: "#C9A15A",
     badges: [
       { text: "Luxury Stage Decoration" },
@@ -73,11 +118,11 @@ const categoryConfig = {
       { value: "4.9★", label: "Customer Rating" },
       { value: "Same Day", label: "Delivery Available" },
     ],
-    heroImage: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=600&q=80",
+    heroImage: L.wed5,
     sliderImages: [
-      { src: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=600&q=80", label: "Luxury Wedding Bouquet" },
-      { src: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&q=80", label: "Grand Stage Decor" },
-      { src: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=600&q=80", label: "Mandap Design" },
+      { src: L.wed5, label: "Luxury Wedding Bouquet" },
+      { src: L.wed1, label: "Grand Stage Decor" },
+      { src: L.bride1, label: "Mandap Design" },
     ],
   },
   Birthday: {
@@ -88,8 +133,8 @@ const categoryConfig = {
     badgeEmoji: "🎂",
     badgeText: "Trending Birthday Themes",
     gradient: "from-[#f8a5a5] via-[#f5cdcd] to-[#fce4e4]",
-    bgImage: "https://images.unsplash.com/photo-1498579150354-977475b7ea0b?w=700&q=80",
-    bgIllustration: "https://images.unsplash.com/photo-1468327768560-75b778c8f20b?w=400&q=80",
+    bgImage: L.birthday1,
+    bgIllustration: L.birthday15,
     accent: "#F472B6",
     badges: [
       { text: "Balloon Decoration" },
@@ -101,11 +146,11 @@ const categoryConfig = {
       { value: "4.8★", label: "Customer Rating" },
       { value: "Same Day", label: "Delivery Available" },
     ],
-    heroImage: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=700&q=80",
+    heroImage: L.birthday15,
     sliderImages: [
-      { src: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", label: "Luxury Birthday Cake" },
-      { src: "https://images.unsplash.com/photo-1498579150354-977475b7ea0b?w=600&q=80", label: "Birthday Floral Basket" },
-      { src: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", label: "Birthday Bouquet" },
+      { src: L.birthday15, label: "Luxury Birthday Cake" },
+      { src: L.birthday1, label: "Birthday Floral Basket" },
+      { src: L.birthday15, label: "Birthday Bouquet" },
     ],
   },
   Anniversary: {
@@ -116,8 +161,8 @@ const categoryConfig = {
     badgeEmoji: "❤️",
     badgeText: "Romantic Collection",
     gradient: "from-[#4a0e1b] via-[#6b1d30] to-[#3a0a15]",
-    bgImage: "https://images.unsplash.com/photo-1549465220-1a8b2308cd89?w=700&q=80",
-    bgIllustration: "https://images.unsplash.com/photo-1519378458060-57e16e3cfa83?w=400&q=80",
+    bgImage: L.anni2,
+    bgIllustration: L.anni13,
     accent: "#E11D48",
     badges: [
       { text: "Luxury Rose Boxes" },
@@ -129,11 +174,11 @@ const categoryConfig = {
       { value: "4.9★", label: "Customer Rating" },
       { value: "Gift Wrap", label: "Premium Packaging" },
     ],
-    heroImage: "https://images.unsplash.com/photo-1519378458060-57e16e3cfa83?w=600&q=80",
+    heroImage: L.anni13,
     sliderImages: [
-      { src: "https://images.unsplash.com/photo-1519378458060-57e16e3cfa83?w=600&q=80", label: "Eternal Love Bouquet" },
-      { src: "https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=600&q=80", label: "Preserved Flower Box" },
-      { src: "https://images.unsplash.com/photo-1549465220-1a8b2308cd89?w=600&q=80", label: "Luxury Rose Arrangement" },
+      { src: L.anni13, label: "Eternal Love Bouquet" },
+      { src: L.anni2, label: "Preserved Flower Box" },
+      { src: L.anni13, label: "Luxury Rose Arrangement" },
     ],
   },
   Reception: {
@@ -144,8 +189,8 @@ const categoryConfig = {
     badgeEmoji: "💎",
     badgeText: "Premium Reception Decor",
     gradient: "from-[#0a2e1a] via-[#0d4a2a] to-[#061f12]",
-    bgImage: "https://images.unsplash.com/photo-1478146059778-8fad5fb5a185?w=700&q=80",
-    bgIllustration: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&q=80",
+    bgImage: L.rece1,
+    bgIllustration: L.rece5,
     accent: "#C9A15A",
     badges: [
       { text: "Grand Floral Backdrop" },
@@ -157,11 +202,11 @@ const categoryConfig = {
       { value: "4.9★", label: "Customer Rating" },
       { value: "Bespoke", label: "Custom Designs" },
     ],
-    heroImage: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&q=80",
+    heroImage: L.wed1,
     sliderImages: [
-      { src: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&q=80", label: "Grand Reception Setup" },
-      { src: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&q=80", label: "Elegant Table Decor" },
-      { src: "https://images.unsplash.com/photo-1478146059778-8fad5fb5a185?w=600&q=80", label: "Floral Backdrop" },
+      { src: L.wed1, label: "Grand Reception Setup" },
+      { src: L.rece5, label: "Elegant Table Decor" },
+      { src: L.rece1, label: "Floral Backdrop" },
     ],
   },
   Haldi: {
@@ -172,8 +217,8 @@ const categoryConfig = {
     badgeEmoji: "🌼",
     badgeText: "Traditional Haldi Decor",
     gradient: "from-[#8a5a1a] via-[#c47a2a] to-[#6a4010]",
-    bgImage: "https://images.unsplash.com/photo-1495954484750-af469f2f9be5?w=700&q=80",
-    bgIllustration: "https://images.unsplash.com/photo-1527330662700-1a16b10c2596?w=400&q=80",
+    bgImage: L.haldi1,
+    bgIllustration: L.haldi7,
     accent: "#F59E0B",
     badges: [
       { text: "Marigold Decor" },
@@ -185,11 +230,11 @@ const categoryConfig = {
       { value: "4.8★", label: "Customer Rating" },
       { value: "Fresh", label: "Farm Direct" },
     ],
-    heroImage: "https://images.unsplash.com/photo-1522758971460-1d21eed7dc1d?w=600&q=80",
+    heroImage: L.haldi7,
     sliderImages: [
-      { src: "https://images.unsplash.com/photo-1522758971460-1d21eed7dc1d?w=600&q=80", label: "Haldi Stage Setup" },
-      { src: "https://images.unsplash.com/photo-1495954484750-af469f2f9be5?w=600&q=80", label: "Marigold Decor" },
-      { src: "https://images.unsplash.com/photo-1527330662700-1a16b10c2596?w=600&q=80", label: "Traditional Floral Setup" },
+      { src: L.haldi7, label: "Haldi Stage Setup" },
+      { src: L.haldi1, label: "Marigold Decor" },
+      { src: L.haldi7, label: "Traditional Floral Setup" },
     ],
   },
   Devotional: {
@@ -200,8 +245,8 @@ const categoryConfig = {
     badgeEmoji: "🪷",
     badgeText: "Sacred Floral Offerings",
     gradient: "from-[#8a3a0a] via-[#b85a1a] to-[#6a2a08]",
-    bgImage: "https://images.unsplash.com/photo-1530092285049-1c42085fd395?w=700&q=80",
-    bgIllustration: "https://images.unsplash.com/photo-1527330662700-1a16b10c2596?w=400&q=80",
+    bgImage: L.dev1,
+    bgIllustration: L.dev8,
     accent: "#D97706",
     badges: [
       { text: "Temple Decoration" },
@@ -213,11 +258,11 @@ const categoryConfig = {
       { value: "4.7★", label: "Customer Rating" },
       { value: "Fresh", label: "Daily Farm Picked" },
     ],
-    heroImage: "https://images.unsplash.com/photo-1530092285049-1c42085fd395?w=600&q=80",
+    heroImage: L.dev8,
     sliderImages: [
-      { src: "https://images.unsplash.com/photo-1530092285049-1c42085fd395?w=600&q=80", label: "Temple Flowers" },
-      { src: "https://images.unsplash.com/photo-1527330662700-1a16b10c2596?w=600&q=80", label: "Fresh Garlands" },
-      { src: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=600&q=80", label: "Aromatic Offerings" },
+      { src: L.dev8, label: "Temple Flowers" },
+      { src: L.dev1, label: "Fresh Garlands" },
+      { src: L.dev8, label: "Aromatic Offerings" },
     ],
   },
   Bouquets: {
@@ -228,8 +273,8 @@ const categoryConfig = {
     badgeEmoji: "💐",
     badgeText: "Handcrafted Bouquets",
     gradient: "from-[#2d1a12] via-[#4a2a1a] to-[#1f120a]",
-    bgImage: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=700&q=80",
-    bgIllustration: "https://images.unsplash.com/photo-1490757467854-4d9434b1d2f0?w=400&q=80",
+    bgImage: L.bouquet1,
+    bgIllustration: L.bouquet11,
     accent: "#C9A15A",
     badges: [
       { text: "Handcrafted Bouquets" },
@@ -241,11 +286,11 @@ const categoryConfig = {
       { value: "4.9★", label: "Customer Rating" },
       { value: "Fresh", label: "Farm Direct" },
     ],
-    heroImage: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80",
+    heroImage: L.bouquet20,
     sliderImages: [
-      { src: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", label: "Classic Rose Bouquet" },
-      { src: "https://images.unsplash.com/photo-1494972308805-463bc619d34e?w=600&q=80", label: "Premium Wrapped Bouquet" },
-      { src: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=600&q=80", label: "Luxury Floral Arrangement" },
+      { src: L.bouquet20, label: "Classic Rose Bouquet" },
+      { src: L.bouquet1, label: "Premium Wrapped Bouquet" },
+      { src: L.bouquet11, label: "Luxury Floral Arrangement" },
     ],
   },
   Flowers: {
@@ -256,8 +301,8 @@ const categoryConfig = {
     badgeEmoji: "🌸",
     badgeText: "Fresh Imported Flowers",
     gradient: "from-[#2d1a12] via-[#4a2a1a] to-[#1f120a]",
-    bgImage: "https://images.unsplash.com/photo-1490757467854-4d9434b1d2f0?w=700&q=80",
-    bgIllustration: "https://images.unsplash.com/photo-1508615070457-399a42d32061?w=400&q=80",
+    bgImage: L.bouquet11,
+    bgIllustration: L.bouquet1,
     accent: "#C9A15A",
     badges: [
       { text: "Premium Fresh Flowers" },
@@ -269,11 +314,11 @@ const categoryConfig = {
       { value: "4.8★", label: "Customer Rating" },
       { value: "Farm", label: "Direct Sourcing" },
     ],
-    heroImage: "https://images.unsplash.com/photo-1490757467854-4d9434b1d2f0?w=600&q=80",
+    heroImage: L.bouquet1,
     sliderImages: [
-      { src: "https://images.unsplash.com/photo-1490757467854-4d9434b1d2f0?w=600&q=80", label: "Mixed Fresh Blooms" },
-      { src: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", label: "Seasonal Specials" },
-      { src: "https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=600&q=80", label: "Exquisite Floral Art" },
+      { src: L.bouquet1, label: "Mixed Fresh Blooms" },
+      { src: L.bouquet20, label: "Seasonal Specials" },
+      { src: L.bouquet11, label: "Exquisite Floral Art" },
     ],
   },
   Corporate: {
@@ -284,8 +329,8 @@ const categoryConfig = {
     badgeEmoji: "💼",
     badgeText: "Corporate Floral Design",
     gradient: "from-[#1a1a1a] via-[#2a2a2a] to-[#0f0f0f]",
-    bgImage: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=700&q=80",
-    bgIllustration: "https://images.unsplash.com/photo-1470509037660-dbebadaeb3b6?w=400&q=80",
+    bgImage: L.wed5,
+    bgIllustration: L.bride1,
     accent: "#84CC16",
     badges: [
       { text: "Event Decoration" },
@@ -297,11 +342,11 @@ const categoryConfig = {
       { value: "4.8★", label: "Client Rating" },
       { value: "Pan India", label: "Delivery" },
     ],
-    heroImage: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&q=80",
+    heroImage: L.wed1,
     sliderImages: [
-      { src: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&q=80", label: "Corporate Event Decor" },
-      { src: "https://images.unsplash.com/photo-1478146059778-8fad5fb5a185?w=600&q=80", label: "Lobby Arrangement" },
-      { src: "https://images.unsplash.com/photo-1490757467854-4d9434b1d2f0?w=600&q=80", label: "Premium Floral Design" },
+      { src: L.wed1, label: "Corporate Event Decor" },
+      { src: L.rece5, label: "Lobby Arrangement" },
+      { src: L.bouquet1, label: "Premium Floral Design" },
     ],
   },
   Luxury: {
@@ -312,8 +357,8 @@ const categoryConfig = {
     badgeEmoji: "💎",
     badgeText: "Bespoke Luxury Collection",
     gradient: "from-[#1a1208] via-[#2a1a0a] to-[#0f0a04]",
-    bgImage: "https://images.unsplash.com/photo-1519378458060-57e16e3cfa83?w=700&q=80",
-    bgIllustration: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=400&q=80",
+    bgImage: L.bouquet20,
+    bgIllustration: L.bride1,
     accent: "#C9A15A",
     badges: [
       { text: "Imported Flowers" },
@@ -325,11 +370,11 @@ const categoryConfig = {
       { value: "4.9★", label: "Premium Rating" },
       { value: "White Glove", label: "Delivery" },
     ],
-    heroImage: "https://images.unsplash.com/photo-1519378458060-57e16e3cfa83?w=600&q=80",
+    heroImage: L.wed5,
     sliderImages: [
-      { src: "https://images.unsplash.com/photo-1519378458060-57e16e3cfa83?w=600&q=80", label: "Exquisite Luxury Bouquet" },
-      { src: "https://images.unsplash.com/photo-1494972308805-463bc619d34e?w=600&q=80", label: "Premium Gift Packaging" },
-      { src: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=600&q=80", label: "Imported Floral Design" },
+      { src: L.wed5, label: "Exquisite Luxury Bouquet" },
+      { src: L.bouquet11, label: "Premium Gift Packaging" },
+      { src: L.bride1, label: "Imported Floral Design" },
     ],
   },
   Balloon: {
@@ -340,8 +385,8 @@ const categoryConfig = {
     badgeEmoji: "🎈",
     badgeText: "Balloon Magic Collection",
     gradient: "from-[#3a1a4a] via-[#5a2a6a] to-[#2a0f3a]",
-    bgImage: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=700&q=80",
-    bgIllustration: "https://images.unsplash.com/photo-1518599212517-bf1f0c137833?w=400&q=80",
+    bgImage: L.baloon2,
+    bgIllustration: L.baloon6,
     accent: "#A855F7",
     badges: [
       { text: "Balloon Arches" },
@@ -353,11 +398,11 @@ const categoryConfig = {
       { value: "4.7★", label: "Customer Rating" },
       { value: "Same Day", label: "Setup Available" },
     ],
-    heroImage: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&q=80",
+    heroImage: L.baloon6,
     sliderImages: [
-      { src: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&q=80", label: "Elegant Balloon Arch" },
-      { src: "https://images.unsplash.com/photo-1518599212517-bf1f0c137833?w=600&q=80", label: "Custom Installation" },
-      { src: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", label: "Party Setup" },
+      { src: L.baloon6, label: "Elegant Balloon Arch" },
+      { src: L.baloon2, label: "Custom Installation" },
+      { src: L.baloon6, label: "Party Setup" },
     ],
   },
   Gallery: {
@@ -368,8 +413,8 @@ const categoryConfig = {
     badgeEmoji: "🖼️",
     badgeText: "Floral Masterpieces",
     gradient: "from-[#1a1a2a] via-[#2a2a3a] to-[#0f0f1a]",
-    bgImage: "https://images.unsplash.com/photo-1478146059778-8fad5fb5a185?w=700&q=80",
-    bgIllustration: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&q=80",
+    bgImage: L.wed1,
+    bgIllustration: L.rece5,
     accent: "#C9A15A",
     badges: [
       { text: "Wedding Gallery" },
@@ -381,11 +426,11 @@ const categoryConfig = {
       { value: "4.9★", label: "Portfolio Rating" },
       { value: "Award", label: "Winning Designs" },
     ],
-    heroImage: "https://images.unsplash.com/photo-1478146059778-8fad5fb5a185?w=600&q=80",
+    heroImage: L.rece1,
     sliderImages: [
-      { src: "https://images.unsplash.com/photo-1478146059778-8fad5fb5a185?w=600&q=80", label: "Premium Floral Gallery" },
-      { src: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&q=80", label: "Wedding Portfolio" },
-      { src: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", label: "Event Showcase" },
+      { src: L.rece1, label: "Premium Floral Gallery" },
+      { src: L.wed5, label: "Wedding Portfolio" },
+      { src: L.bouquet20, label: "Event Showcase" },
     ],
   },
   Candles: {
@@ -396,8 +441,8 @@ const categoryConfig = {
     badgeEmoji: "🕯️",
     badgeText: "Luxury Candle Collection",
     gradient: "from-[#2a1a0a] via-[#3a2a1a] to-[#1a0f05]",
-    bgImage: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=700&q=80",
-    bgIllustration: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&q=80",
+    bgImage: L.candle1,
+    bgIllustration: L.candle10,
     accent: "#D97706",
     badges: [
       { text: "Scented Candles" },
@@ -409,11 +454,11 @@ const categoryConfig = {
       { value: "4.8★", label: "Product Rating" },
       { value: "Gift Ready", label: "Packaging" },
     ],
-    heroImage: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=700&q=80",
+    heroImage: L.candle10,
     sliderImages: [
-      { src: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=600&q=80", label: "Premium Scented Candle" },
-      { src: "https://images.pexels.com/photos/29570066/pexels-photo-29570066.jpeg?auto=compress&cs=tinysrgb&w=600&q=80", label: "Candle & Flowers Gift Set" },
-      { src: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", label: "Luxury Home Fragrance" },
+      { src: L.candle10, label: "Premium Scented Candle" },
+      { src: L.candle1, label: "Luxury Home Diffuser" },
+      { src: L.candle10, label: "Luxury Home Fragrance" },
     ],
   },
   Gifts: {
@@ -424,8 +469,8 @@ const categoryConfig = {
     badgeEmoji: "🎁",
     badgeText: "Luxury Gift Collection",
     gradient: "from-[#2a0a1a] via-[#4a1a2a] to-[#1a0510]",
-    bgImage: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=700&q=80",
-    bgIllustration: "https://images.unsplash.com/photo-1496062031456-07b8f6f0c2e5?w=400&q=80",
+    bgImage: L.bouquet1,
+    bgIllustration: L.candle10,
     accent: "#E11D48",
     badges: [
       { text: "Flower Hampers" },
@@ -437,11 +482,11 @@ const categoryConfig = {
       { value: "4.9★", label: "Gift Rating" },
       { value: "Gift Wrap", label: "Included" },
     ],
-    heroImage: "https://images.unsplash.com/photo-1519378458060-57e16e3cfa83?w=600&q=80",
+    heroImage: L.wed5,
     sliderImages: [
-      { src: "https://images.unsplash.com/photo-1519378458060-57e16e3cfa83?w=600&q=80", label: "Luxury Gift Hamper" },
-      { src: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", label: "Chocolate & Flowers Combo" },
-      { src: "https://images.unsplash.com/photo-1494972308805-463bc619d34e?w=600&q=80", label: "Personalized Gift Box" },
+      { src: L.wed5, label: "Luxury Gift Hamper" },
+      { src: L.bouquet11, label: "Chocolate & Flowers Combo" },
+      { src: L.candle1, label: "Personalized Gift Box" },
     ],
   },
   "Candles & More": {
@@ -452,8 +497,8 @@ const categoryConfig = {
     badgeEmoji: "🕯️",
     badgeText: "Candles & Home Fragrance",
     gradient: "from-[#2a1a0a] via-[#3a2a1a] to-[#1a0f05]",
-    bgImage: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=700&q=80",
-    bgIllustration: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&q=80",
+    bgImage: L.candle1,
+    bgIllustration: L.candle10,
     accent: "#D97706",
     badges: [
       { text: "Scented Candles" },
@@ -465,11 +510,11 @@ const categoryConfig = {
       { value: "4.8★", label: "Product Rating" },
       { value: "Gift Ready", label: "Packaging" },
     ],
-    heroImage: "https://images.pexels.com/photos/29570066/pexels-photo-29570066.jpeg?auto=compress&cs=tinysrgb&w=700&q=80",
+    heroImage: L.candle1,
     sliderImages: [
-      { src: "https://images.pexels.com/photos/29570066/pexels-photo-29570066.jpeg?auto=compress&cs=tinysrgb&w=600&q=80", label: "Scented Candle Set" },
-      { src: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=600&q=80", label: "Luxury Home Diffuser" },
-      { src: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80", label: "Gift Ready Packaging" },
+      { src: L.candle1, label: "Scented Candle Set" },
+      { src: L.candle10, label: "Luxury Home Diffuser" },
+      { src: L.candle10, label: "Gift Ready Packaging" },
     ],
   },
   Default: {
@@ -480,8 +525,8 @@ const categoryConfig = {
     badgeEmoji: "🌸",
     badgeText: "Premium Floral Collection",
     gradient: "from-rose-950 via-rose-900 to-pink-950",
-    bgImage: "https://images.unsplash.com/photo-1490757467854-4d9434b1d2f0?w=700&q=80",
-    bgIllustration: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=400&q=80",
+    bgImage: L.bouquet1,
+    bgIllustration: L.bouquet11,
     accent: "#C9A15A",
     badges: [
       { text: "Free delivery available" },
@@ -493,11 +538,11 @@ const categoryConfig = {
       { value: "4.9★", label: "Customer Rating" },
       { value: "Same Day", label: "Delivery" },
     ],
-    heroImage: "https://images.unsplash.com/photo-1490757467854-4d9434b1d2f0?w=600&q=80",
+    heroImage: L.bouquet20,
     sliderImages: [
-      { src: "https://images.unsplash.com/photo-1490757467854-4d9434b1d2f0?w=600&q=80", label: "Premium Fresh Flowers" },
-      { src: "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&q=80", label: "Handcrafted Bouquet" },
-      { src: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=600&q=80", label: "Luxury Arrangement" },
+      { src: L.bouquet20, label: "Premium Fresh Flowers" },
+      { src: L.bouquet1, label: "Handcrafted Bouquet" },
+      { src: L.bouquet11, label: "Luxury Arrangement" },
     ],
   },
 };
