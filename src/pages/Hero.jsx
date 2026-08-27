@@ -754,11 +754,12 @@ const Home = () => {
                   className="flex flex-col items-center gap-5 shrink-0 group"
                 >
                   <div className="cat-circle-glass">
-                    <LazyImage
-                      src={cat.image}
-                      alt={cat.label}
-                      className="w-full h-full object-cover"
-                    />
+                      <LazyImage
+                        src={cat.image}
+                        alt={cat.label}
+                        className="w-full h-full object-cover"
+                        sizes="96px"
+                      />
                     {cat.discount && (
                       <div className="absolute -top-1 -right-1 bg-gradient-to-r from-[#E67A9E] to-[#C89B3C] text-white text-[8px] md:text-[9px] font-bold px-2 py-0.5 rounded-full shadow-lg shadow-[rgba(230,122,158,0.2)] whitespace-nowrap z-10">
                         {cat.discount}
@@ -903,6 +904,7 @@ const Home = () => {
                     src={grandWeddingImg}
                     alt="Wedding collection"
                     className="w-full h-full object-cover object-center"
+                    sizes="(max-width: 1024px) 100vw, 960px"
                   />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent z-10" />
@@ -934,6 +936,7 @@ const Home = () => {
                     src={forHerImage}
                     alt="Occasions"
                     className="w-full h-full object-cover object-center"
+                    sizes="(max-width: 1024px) 100vw, 960px"
                   />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent z-10" />
@@ -1032,12 +1035,12 @@ const Home = () => {
                     className="group relative rounded-[20px] overflow-hidden bg-white dark:bg-white/5 border border-stone-100 dark:border-white/5 hover:shadow-[0_16px_40px_-12px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-500 cursor-pointer"
                   >
                     <div className="relative h-[280px] lg:h-[320px] overflow-hidden bg-stone-50 dark:bg-white/5">
-                      <img
+                      <LazyImage
                         src={item.image}
                         alt={item.title}
-                        loading="lazy"
-                        decoding="async"
+                        shimmer={false}
                         className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                        sizes="(max-width: 1024px) 50vw, 340px"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent pointer-events-none" />
 
@@ -1121,12 +1124,12 @@ const Home = () => {
                     className="group relative rounded-[20px] overflow-hidden bg-white dark:bg-white/5 border border-stone-100 dark:border-white/5 hover:shadow-[0_12px_32px_-12px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
                   >
                     <div className="relative h-[220px] overflow-hidden bg-stone-50 dark:bg-white/5">
-                      <img
+                      <LazyImage
                         src={item.image}
                         alt={item.title}
-                        loading="lazy"
-                        decoding="async"
+                        shimmer={false}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 1024px) 50vw, 340px"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent pointer-events-none" />
                       {item.badge && (
@@ -1313,11 +1316,12 @@ const Home = () => {
                     className="group rounded-[18px] overflow-hidden bg-white/90 backdrop-blur-sm shadow-[0_4px_24px_-6px_rgba(0,0,0,0.07)] hover:shadow-[0_32px_64px_-16px_rgba(200,155,60,0.25)] cursor-pointer shrink-0 min-w-[180px] w-[180px] sm:w-[220px] lg:w-[240px] ring-1 ring-white/80 hover:ring-[var(--color-gold)]/40 transition-all duration-400"
                   >
                     <div className="h-[160px] sm:h-[200px] lg:h-[260px] overflow-hidden relative bg-gradient-to-br from-[#f5ede4] to-[#ece0d0]">
-                      <img
+                      <LazyImage
                         src={item.image}
                         alt={item.title}
-                        loading="lazy"
+                        shimmer={false}
                         className="w-full h-full object-cover transition-transform duration-400 ease-out group-hover:scale-[1.08]"
+                        sizes="(max-width: 1024px) 60vw, 240px"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f0a]/80 via-[#1a0f0a]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
                       <div className="absolute top-4 left-3.5 z-10 opacity-0 group-hover:opacity-100 transition-all duration-400">
@@ -1383,12 +1387,12 @@ const Home = () => {
 
               {/* Left floral illustration */}
               <div className="absolute -left-6 sm:-left-4 top-1/2 -translate-y-1/2 w-28 sm:w-36 lg:w-44 opacity-[0.10] lg:opacity-[0.13] pointer-events-none mix-blend-soft-light">
-                <img src={igShot1} alt="" className="w-full h-full object-contain" loading="lazy" />
+                <LazyImage src={igShot1} alt="" shimmer={false} className="w-full h-full object-contain" sizes="180px" />
               </div>
 
               {/* Right bride with bouquet */}
               <div className="absolute -right-6 sm:-right-4 top-1/2 -translate-y-1/2 w-28 sm:w-36 lg:w-44 opacity-[0.10] lg:opacity-[0.13] pointer-events-none mix-blend-soft-light">
-                <img src={forHerImage} alt="" className="w-full h-full object-contain" loading="lazy" />
+                <LazyImage src={forHerImage} alt="" shimmer={false} className="w-full h-full object-contain" sizes="180px" />
               </div>
 
               {/* Animated glow orbs */}
@@ -1985,11 +1989,12 @@ const Home = () => {
                 onClick={() => navigate(item.route)}
               >
                 <div className="relative overflow-hidden" style={{ aspectRatio: '4 / 5.2' }}>
-                  <img
+                  <LazyImage
                     src={item.image}
                     alt={item.title}
-                    loading="lazy"
+                    shimmer={false}
                     className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105"
+                    sizes="(max-width: 1024px) 90vw, 480px"
                   />
 
                   {/* Premium dark overlay */}
@@ -2645,11 +2650,12 @@ const Home = () => {
 
                     {/* Image container (inset within glass border) */}
                     <div className="absolute inset-[2px] rounded-[28px] overflow-hidden z-[2]">
-                      <img
+                      <LazyImage
                         src={occ.img}
                         alt={occ.title}
-                        loading="lazy"
+                        shimmer={false}
                         className="object-cover w-full h-full block group-hover:scale-[1.08] transition-transform duration-[700ms] ease-out group-hover:brightness-[1.05] group-hover:contrast-[1.03]"
+                        sizes="(max-width: 1024px) 100vw, 33vw"
                       />
 
                       {/* Cinematic gradient overlay */}

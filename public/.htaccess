@@ -8,6 +8,10 @@
   RewriteRule . /index.html [L]
 </IfModule>
 
+# Fallback for hosts where mod_rewrite is unavailable: serve the SPA shell
+# so client-side routing can resolve deep links (e.g. /category).
+ErrorDocument 404 /404.html
+
 <IfModule mod_headers.c>
   <FilesMatch "^index\.html$">
     Header set Cache-Control "no-cache, no-store, must-revalidate"
