@@ -31,7 +31,7 @@ import AuthModal from "./AuthModal";
 
 const navLinks = [
   { name: "Home", path: "/" },
-  { name: "Categories", path: "/category" },
+  { name: "Categories", path: "/" },
   { name: "Occasions", path: "/occasions" },
   { name: "Decor", path: "/decor" },
   { name: "About", path: "/about" },

@@ -737,7 +737,7 @@ function EmptyCart({ onNavigate, orderSuccess }) {
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  onClick={() => onNavigate("/category")}
+                  onClick={() => onNavigate("/")}
                   className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-[#163827] to-[#1f4a30] text-white text-xs font-bold tracking-[0.1em] uppercase shadow-[0_4px_20px_rgba(22,56,39,0.25)] hover:shadow-[0_8px_30px_rgba(22,56,39,0.35)] transition-all duration-300"
                 >
                   <ShoppingBag size={14} />
@@ -781,7 +781,7 @@ function EmptyCart({ onNavigate, orderSuccess }) {
                     {trendingProducts.map((p) => (
                       <Link
                         key={p.id}
-                        to="/category"
+                        to="/"
                         className="group rounded-xl overflow-hidden bg-white/40 border border-stone-100 hover:border-[var(--color-gold)]/20 hover:shadow-md transition-all duration-300"
                       >
                         <div className="aspect-square bg-[var(--color-blush)]/20 overflow-hidden">
@@ -1038,7 +1038,7 @@ export default function CartPage() {
             {/* ── Continue Shopping ── */}
             <div className="flex items-center justify-center pt-4">
               <button
-                onClick={() => navigate("/category")}
+                onClick={() => navigate("/")}
                 className="inline-flex items-center gap-2 text-xs font-medium text-stone-400 hover:text-[var(--color-accent)] transition-colors group"
               >
                 <ArrowLeft size={13} className="transition-transform group-hover:-translate-x-1" />
@@ -1228,7 +1228,7 @@ export default function CartPage() {
                   )}
 
                   <button
-                    onClick={() => navigate("/category")}
+                    onClick={() => navigate("/")}
                     className="w-full py-3 rounded-xl border border-stone-200 dark:border-white/10 bg-white/50 dark:bg-transparent text-stone-500 dark:text-stone-400 text-[10px] font-bold tracking-wider uppercase hover:border-[var(--color-gold)]/30 hover:text-[var(--color-gold)] transition-all duration-300"
                   >
                     ← Continue Shopping

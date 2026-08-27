@@ -33,6 +33,9 @@ function resolveSeo(location) {
       ...baseSeo,
       title: override ? override.title : baseSeo.title,
       description: override ? override.description : baseSeo.description,
+      // Bare /category redirects home; keep filtered pages' canonical
+      // self-referential so they aren't collapsed into the homepage.
+      path: cat ? `/category${search}` : "/category",
       breadcrumbs: [
         { name: "Home", path: "/" },
         { name: override ? cat : "All Flowers & Gifts", path: "/category" },

@@ -548,7 +548,7 @@ const OccasionsPage = () => {
               <h2 className="text-3xl sm:text-4xl font-serif-display font-black text-[var(--color-primary)] mt-2">Most-Loved Gifts</h2>
             </div>
             <Link
-              to="/category"
+              to="/"
               className="group flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-[var(--color-accent)] hover:text-[var(--color-accent)] hover:scale-[1.04] transition-all duration-300"
             >
               View All Products

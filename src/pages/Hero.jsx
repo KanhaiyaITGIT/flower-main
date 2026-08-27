@@ -740,8 +740,8 @@ const Home = () => {
               { label: "Wedding", image: image7, link: "/category?cat=Wedding", discount: null },
               { label: "Balloons", image: image16, link: "/category?cat=Balloon", discount: "Up to 30% Off" },
               { label: "Devotional", image: image9, link: "/category?cat=Devotional", discount: null },
-              { label: "Luxury", image: image26, link: "/category", discount: null },
-              { label: "Gifts", image: image27, link: "/category", discount: "10% Off" },
+              { label: "Luxury", image: image26, link: "/", discount: null },
+              { label: "Gifts", image: image27, link: "/", discount: "10% Off" },
               { label: "Flowers", image: image6, link: "/category?cat=Bouquets", discount: null },
               { label: "Plants", image: image5, link: "/category?cat=Birthday", discount: null },
               { label: "Birthday", image: image8, link: "/category?cat=Birthday", discount: "Flat 15%" },
@@ -802,7 +802,7 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               className="relative rounded-[32px] overflow-hidden min-h-[450px] lg:min-h-[680px] group cursor-pointer"
-              onClick={() => navigate("/category")}
+              onClick={() => navigate("/")}
             >
               <div className="absolute inset-0 w-full h-full overflow-hidden group-hover:scale-[1.03] transition-transform duration-[900ms] ease-out will-change-transform">
                 <picture>
@@ -1009,7 +1009,7 @@ const Home = () => {
               </div>
               <div className="flex items-center gap-4 flex-wrap">
                 <Link
-                  to="/category"
+                  to="/"
                   className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-wider uppercase text-[#C89B3C] hover:text-[#c89e44] transition-colors shrink-0"
                 >
                   View All <ArrowRight size={12} />
@@ -1176,7 +1176,7 @@ const Home = () => {
             <div className="mt-16 lg:mt-20 flex items-center gap-4">
               <div className="flex-1 h-px bg-gradient-to-r from-transparent via-stone-200 dark:via-white/10 to-transparent" />
               <Link
-                to="/category"
+                to="/"
                 className="inline-flex items-center gap-2 text-[11px] font-bold tracking-wider uppercase text-[#C89B3C] hover:text-[#c89e44] transition-colors shrink-0 whitespace-nowrap"
               >
                 Explore More Collections
@@ -1452,7 +1452,7 @@ const Home = () => {
                 {/* CTA */}
                 <div className="mt-8">
                   <Link
-                    to="/category"
+                    to="/"
                     className="group inline-flex items-center gap-2.5 bg-[#1a3c2e] text-white text-[11px] font-bold tracking-[0.2em] uppercase px-8 py-3.5 rounded-full shadow-lg shadow-[#1a3c2e]/20 hover:bg-[var(--color-gold)] hover:text-[#1a3c2e] hover:shadow-[0_12px_32px_rgba(200,155,60,0.25)] hover:-translate-y-0.5 transition-all duration-400"
                   >
                     Explore Luxury Collection
@@ -1494,7 +1494,7 @@ const Home = () => {
               </p>
             </div>
             <Link
-              to="/category"
+              to="/"
               className="group inline-flex items-center gap-2 text-stone-400 hover:text-[var(--color-gold)] font-semibold text-[10px] tracking-[0.2em] uppercase transition-all duration-300"
             >
               <span className="relative">
@@ -1785,7 +1785,7 @@ const Home = () => {
                   </span>
                 </a>
                 <Link
-                  to="/category"
+                  to="/"
                   className="inline-flex items-center justify-center gap-2 bg-white/[0.06] backdrop-blur-md border border-white/[0.1] hover:bg-white/[0.1] text-white/80 font-semibold tracking-wider text-xs uppercase px-8 py-4 rounded-full transition-all duration-300 hover:-translate-y-0.5"
                 >
                   View Details

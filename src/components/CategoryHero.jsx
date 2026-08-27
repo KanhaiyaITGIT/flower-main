@@ -732,7 +732,7 @@ const CategoryHero = ({ category }) => {
             {/* CTA Buttons */}
             <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3 mt-7">
               <Link
-                to="/category"
+                to="/"
                 className="group relative inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-[10px] font-bold tracking-[0.2em] uppercase px-6 py-3 rounded-full hover:bg-[var(--color-gold)] hover:border-[var(--color-gold)] hover:text-[#1a0f0a] hover:-translate-y-0.5 transition-all duration-400 shadow-sm overflow-hidden"
               >
                 {/* Shine effect (suggestion 8) */}

@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import Hero from "./pages/Hero";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useSearchParams, Navigate } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import MobileBottomNav from "./components/MobileBottomNav";
@@ -30,6 +30,19 @@ const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const ShippingPolicy = lazy(() => import("./pages/ShippingPolicy"));
 const RefundPolicy = lazy(() => import("./pages/RefundPolicy"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+
+// /category (no cat filter) is intentionally retired as a landing page and
+// safely redirects to the homepage. Category browsing via /category?cat=...
+// is preserved.
+const CategoryRoute = () => {
+  const [searchParams] = useSearchParams();
+  if (!searchParams.get("cat")) return <Navigate to="/" replace />;
+  return (
+    <ErrorBoundary>
+      <CategoryPage />
+    </ErrorBoundary>
+  );
+};
 
 const PageFallback = () => (
   <div className="min-h-[60vh] flex items-center justify-center" aria-hidden="true">
@@ -86,7 +99,8 @@ const App = () => {
           <Suspense fallback={<PageFallback />}>
           <Routes location={location}>
             <Route path="/" element={<Hero />} />
-            <Route path="/category" element={<ErrorBoundary><CategoryPage /></ErrorBoundary>} />
+            <Route path="/category" element={<CategoryRoute />} />
+            <Route path="/category/" element={<CategoryRoute />} />
             <Route path="/occasions" element={<OccasionsPage />} />
             <Route path="/decor" element={<DecorPage />} />
             <Route path="/about" element={<AboutUs />} />

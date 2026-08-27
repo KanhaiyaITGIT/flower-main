@@ -39,7 +39,7 @@ export default function NotFound() {
             Back to Home
           </Link>
           <Link
-            to="/category"
+            to="/"
             className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/15 rounded-2xl px-7 py-3.5 text-xs font-bold tracking-[0.15em] uppercase transition-all duration-300 hover:scale-[1.03]"
           >
             Shop Flowers

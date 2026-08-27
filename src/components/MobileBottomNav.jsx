@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 const navItems = [
   { icon: House, label: "Home", path: "/" },
-  { icon: LayoutGrid, label: "Categories", path: "/category" },
+  { icon: LayoutGrid, label: "Categories", path: "/" },
   { icon: Heart, label: "Wishlist", path: "#" },
   { icon: ShoppingCart, label: "Cart", path: "/cart" },
   { icon: User, label: "Profile", path: "#" },
